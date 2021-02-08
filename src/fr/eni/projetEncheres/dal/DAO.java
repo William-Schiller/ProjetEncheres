@@ -1,5 +1,8 @@
 package fr.eni.projetEncheres.dal;
 
-public interface DAO {
-
+public interface DAO<T> {
+	
+	public void insert(T t) throws DALException;
+	
+	
 }
