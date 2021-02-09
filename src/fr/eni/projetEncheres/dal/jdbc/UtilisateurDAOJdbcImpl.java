@@ -33,8 +33,14 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 	}
 
 	@Override
-	public Utilisateur select(int id) throws DALException {
-		// TODO SA
+	public Utilisateur selectByID(int id) throws DALException {
+		// TODO Aurelien
+		return null;
+	}
+
+	@Override
+	public Utilisateur selectByPseudo(String pseudo) throws DALException {
+		// TODO Auto-generated method stub
 		return null;
 	}
 

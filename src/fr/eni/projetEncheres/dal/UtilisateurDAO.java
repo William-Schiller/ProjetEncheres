@@ -4,6 +4,8 @@ import fr.eni.projetEncheres.bean.Utilisateur;
 
 public interface UtilisateurDAO extends DAO<Utilisateur> {
 	
-	public Utilisateur select(int id) throws DALException;
+	public Utilisateur selectByID(int id) throws DALException;
+	
+	public Utilisateur selectByPseudo(String pseudo) throws DALException;
 
 }
