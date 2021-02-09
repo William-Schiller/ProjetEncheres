@@ -129,8 +129,8 @@ public class Utilisateur implements Serializable{
 		return code_postal;
 	}
 
-	public void setCode_postal(int code_postal) {
-		this.code_postal = code_postal;
+	public void setCode_postal(int string) {
+		this.code_postal = string;
 	}
 
 	public String getVille() {
@@ -172,5 +172,8 @@ public class Utilisateur implements Serializable{
 				+ code_postal + ", ville=" + ville + ", mot_de_passe=" + mot_de_passe + ", credit=" + credit
 				+ ", administrateur=" + administrateur + "]";
 	}
+
 	
-}
+		
+	}
+	
