@@ -14,7 +14,7 @@
 		<div class="row">
 			<h2>Mon profil</h2>
 			<div>
-				<form action="<%=request.getContextPath() %>/inscription" method="post">
+				<form class="row position-absolute top-50 start-50 translate-middle" action="<%=request.getContextPath() %>/inscription" method="post">
 					<div class="col-md-6">
 						<div>
 							Pseudo : <input type="text" name="spseudo" value="<%=request.getParameter("spseudo") %>" > 
@@ -49,12 +49,21 @@
 							Confirmation : <input type="text" name="sconfirmation" value="<%=request.getParameter("sconfirmation") %>" > 
 						</div>
 					</div>
-					<br>
-					<div>
+					<div class="row p-3"></div>
+					<div class="row">
+					<div class="col-md-4">
+					</div>
+					<div class="col-md-4 ">
 						<input type="submit" value="Creer">
 						<a href="<%=request.getContextPath()%>">
 							<input type="button" value="Annuler">
 						</a>
+					</div>
+					<div class="col-md-4">
+					</div>
+				</div>
+					<div>
+						
 					</div>
 				</form>
 			</div>

@@ -15,7 +15,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 
 	@Override
 	public void insert(Utilisateur u) throws DALException {
-		// TODO DR (pensé à recuperer le clé auto générer
+		
 		
 	}
 
@@ -75,5 +75,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 		
 		return user;
 	}
+	
+	
+	
 
 }

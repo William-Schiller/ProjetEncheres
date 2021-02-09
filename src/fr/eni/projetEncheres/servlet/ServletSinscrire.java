@@ -21,7 +21,6 @@ public class ServletSinscrire extends HttpServlet {
 
     public ServletSinscrire() {
         super();
-
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
