@@ -25,6 +25,7 @@ public class Utilisateur implements Serializable{
 
 	public Utilisateur(int no_utlisateur, String pseudo, String nom, String prenom, String email, String telephone,
 			String rue, int code_postal, String ville, String mot_de_passe, int credit, byte administrateur) {
+		
 		this.no_utlisateur = no_utlisateur;
 		this.pseudo = pseudo;
 		this.nom = nom;
@@ -38,37 +39,7 @@ public class Utilisateur implements Serializable{
 		this.credit = credit;
 		this.administrateur = administrateur;
 	}
-	
-	public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone,
-			String rue, int code_postal, String ville, String mot_de_passe, byte administrateur) {
-		this.pseudo = pseudo;
-		this.nom = nom;
-		this.prenom = prenom;
-		this.email = email;
-		this.telephone = telephone;
-		this.rue = rue;
-		this.code_postal = code_postal;
-		this.ville = ville;
-		this.mot_de_passe = mot_de_passe;
-		this.credit = 100;
-		this.administrateur = administrateur;
-	}
-	
-	public Utilisateur(String pseudo, String nom, String prenom, String email,
-			String rue, int code_postal, String ville, String mot_de_passe, byte administrateur) {
-		this.pseudo = pseudo;
-		this.nom = nom;
-		this.prenom = prenom;
-		this.email = email;
-		this.rue = rue;
-		this.code_postal = code_postal;
-		this.ville = ville;
-		this.mot_de_passe = mot_de_passe;
-		this.credit = 100;
-		this.administrateur = administrateur;
-	}
-	
-	
+
 	public int getNo_utlisateur() {
 		return no_utlisateur;
 	}
@@ -164,13 +135,8 @@ public class Utilisateur implements Serializable{
 	public void setAdministrateur(byte administrateur) {
 		this.administrateur = administrateur;
 	}
-
-	@Override
-	public String toString() {
-		return "Utilisateur [no_utlisateur=" + no_utlisateur + ", pseudo=" + pseudo + ", nom=" + nom + ", prenom="
-				+ prenom + ", email=" + email + ", telephone=" + telephone + ", rue=" + rue + ", code_postal="
-				+ code_postal + ", ville=" + ville + ", mot_de_passe=" + mot_de_passe + ", credit=" + credit
-				+ ", administrateur=" + administrateur + "]";
-	}
+	
+	
+	
 	
 }
