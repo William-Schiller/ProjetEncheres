@@ -40,8 +40,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 	/**aurelien suel
 	 * 
 	 */
-
-	@Override
+    @Override
 	public Utilisateur selectByID(int id) throws DALException {
 
 
@@ -68,7 +67,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 				utilisateur.setEmail(rs.getString("email"));
 				utilisateur.setTelephone(rs.getString("telephone"));
 				utilisateur.setRue(rs.getString("rue"));
-				utilisateur.setCode_postal(rs.getString("code_postal"));
+				utilisateur.setCode_postal(Integer.parseInt(rs.getString("code_postal")));
 				utilisateur.setVille(rs.getString("ville"));
 
 			}
