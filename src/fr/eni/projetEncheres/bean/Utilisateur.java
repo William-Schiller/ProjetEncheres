@@ -176,7 +176,7 @@ public class Utilisateur implements Serializable{
 				+ ", administrateur=" + administrateur + "]";
 	}
 
-	// aurelien merde git
+	
 		
 	}
 	
