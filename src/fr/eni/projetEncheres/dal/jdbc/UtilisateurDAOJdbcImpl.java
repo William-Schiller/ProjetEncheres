@@ -42,9 +42,12 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 		// TODO Aurelien
 		return null;
 	}
-
+	
+	/**
+	 * @author : sw 
+	 */
 	@Override
-	public Utilisateur selectByPseudo(String pseudo) throws DALException {
+	public Utilisateur selectByPseudo(String pseudo, String mot_de_passe) throws DALException {
 		Utilisateur user = null;
 		PreparedStatement stmt = null;
 		Connection con = null;
@@ -53,11 +56,12 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 			con = ConnectionProvider.getConnection();
 			
 			String sql = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur"
-					+ " FROM Utilisateurs WHERE pseudo=?";
+					+ " FROM Utilisateurs WHERE pseudo=? AND mot_de_passe=?";
 			
 			stmt = con.prepareStatement(sql);
 			
 			stmt.setString(1, pseudo);
+			stmt.setString(2, mot_de_passe);
 			
 			ResultSet rs = stmt.executeQuery();
 			
