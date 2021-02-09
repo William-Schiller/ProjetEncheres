@@ -172,5 +172,7 @@ public class Utilisateur implements Serializable{
 				+ code_postal + ", ville=" + ville + ", mot_de_passe=" + mot_de_passe + ", credit=" + credit
 				+ ", administrateur=" + administrateur + "]";
 	}
+
+
 	
 }

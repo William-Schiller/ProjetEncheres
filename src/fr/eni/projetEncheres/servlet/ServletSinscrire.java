@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.projetEncheres.bean.Utilisateur;
+import fr.eni.projetEncheres.bll.UtilisateurManager;
 
 
 
@@ -43,20 +44,20 @@ public class ServletSinscrire extends HttpServlet {
 		String rue = request.getParameter("rue");
 		String ville = request.getParameter("ville");
 		
-		Utilisateur utilisateur = new Utilisateur();
-		utilisateur.setPseudo(pseudo);
-		utilisateur.setPrenom(prenom);
-		utilisateur.setTelephone(telephone);
-		utilisateur.setCode_postal(postal);
-		utilisateur.setMot_de_passe(mdp);
-		utilisateur.setNom(nom);
-		utilisateur.setEmail(email);
-		utilisateur.setRue(rue);
-		utilisateur.setVille(ville);
+		Utilisateur u = new Utilisateur();
+		u.setPseudo(pseudo);
+		u.setPrenom(prenom);
+		u.setTelephone(telephone);
+		u.setCode_postal(postal);
+		u.setMot_de_passe(mdp);
+		u.setNom(nom);
+		u.setEmail(email);
+		u.setRue(rue);
+		u.setVille(ville);
 
 
 		try {
-			//UtilisateurManager.inscriptionUtilisateur(utilisateur);
+			UtilisateurManager.inscriptionUtilisateur(u);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

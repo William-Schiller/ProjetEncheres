@@ -75,5 +75,10 @@ public class UtilisateurManager {
 			
 	}
 
+	public static void inscriptionUtilisateur(Utilisateur utilisateur) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }
