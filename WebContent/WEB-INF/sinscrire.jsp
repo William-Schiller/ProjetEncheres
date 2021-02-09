@@ -21,7 +21,15 @@
 						<label class="control-label col-sm-2">Pseudo : </label>
 						<input class="form-control" type="text" name="spseudo" value="<%=request.getParameter("spseudo") %>" >
 					</div>
-					<div class="form-input"></div>
+					<div class="form-input">
+					
+					</div>
+					<div class="form-input">
+					
+					</div>
+					<div class="form-input">
+					
+					</div>
 				</div>
 			</div>
 		</form>
