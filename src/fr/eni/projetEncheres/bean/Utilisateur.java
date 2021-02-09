@@ -131,6 +131,7 @@ public class Utilisateur implements Serializable{
 
 	public void setCode_postal(int code_postal) {
 		this.code_postal = code_postal;
+		//commentaire inutile
 	}
 
 	public String getVille() {
