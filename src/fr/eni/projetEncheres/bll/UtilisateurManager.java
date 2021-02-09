@@ -9,7 +9,7 @@ import fr.eni.projetEncheres.dal.DAOFactory;
 import fr.eni.projetEncheres.dal.UtilisateurDAO;
 
 public class UtilisateurManager {
-	
+	//test william 
 	private static UtilisateurManager utilisateurManager;
 	private UtilisateurDAO utilisateurDAO;
 	
