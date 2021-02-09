@@ -2,6 +2,8 @@ package fr.eni.projetEncheres.dal;
 
 import java.util.List;
 
+import fr.eni.projetEncheres.bean.Utilisateur;
+
 public interface DAO<T> {
 	
 	public void insert(T t) throws DALException;
@@ -12,4 +14,11 @@ public interface DAO<T> {
 	
 	public void delete(int id) throws DALException;
 	
-}
+   
+	}
+		
+		
+	
+		
+	
+
