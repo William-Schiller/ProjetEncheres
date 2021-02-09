@@ -116,10 +116,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 			}
 		}catch (SQLException e){
 			throw new DALException ("Probleme - rechercherUtilisateur - " + e.getMessage());
-		}finally{
-			
-			ConnectionProvider.connectionClosed(cnx, stmt);
-			
+		}finally{	
+			ConnectionProvider.connectionClosed(cnx, stmt);	
 		}
 		return utilisateur;
 	}

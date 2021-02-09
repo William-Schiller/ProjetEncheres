@@ -1,5 +1,3 @@
-
-
 package fr.eni.projetEncheres.bll;
 
 import java.util.ArrayList;
