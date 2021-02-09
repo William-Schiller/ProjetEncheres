@@ -31,23 +31,24 @@ public class UtilisateurManager {
 	 * @throws BLLException 
 	 */
 	public Utilisateur connexionUser(String pseudo, String mot_de_passe) throws BLLException {
-		
 		listError = new ArrayList<>();
 		Utilisateur user = null;
 		
 		checkPseudo(pseudo, listError);
 		checkPassword(mot_de_passe, listError);
 		
-		if(listError != null) {
+		if(!listError.isEmpty()) {
 			throw new BLLException("Echec connexionUser : vérification pseudo et mot de passe");
 		}
-		
 		try {
 			user = utilisateurDAO.selectByPseudo(pseudo, mot_de_passe);
 		} catch (DALException e) {
 			throw new BLLException("Echec connexionUser");
 		}
-			
+		
+		if(user == null) {
+			throw new BLLException("utilisateur inexistant");
+		}
 		return user;
 	}
 	
