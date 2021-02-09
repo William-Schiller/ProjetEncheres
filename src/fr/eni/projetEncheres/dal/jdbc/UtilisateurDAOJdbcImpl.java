@@ -1,9 +1,12 @@
 package fr.eni.projetEncheres.dal.jdbc;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
+import java.sql.Types;
 import java.util.List;
 
 import fr.eni.projetEncheres.bean.Utilisateur;
@@ -11,12 +14,54 @@ import fr.eni.projetEncheres.dal.ConnectionProvider;
 import fr.eni.projetEncheres.dal.DALException;
 import fr.eni.projetEncheres.dal.UtilisateurDAO;
 
+
 public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 
+	
+	/**rose dorleans
+	 * 
+	 */
 	@Override
 	public void insert(Utilisateur u) throws DALException {
-		// TODO DR (pensé à recuperer le clé auto générer
+
+		final String INSERT_INFO =
+				"INSERT INTO UTILISATEURS (pseudo,nom,prenom,email,telephone,rue,codePostal,ville,motDePasse)"
+				+ " VALUES (?,?,?,?,?,?,?,?,?)";
 		
+		Utilisateur utilisateurCree = null;
+	    int idAjout = 0;
+
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Connection con = null;
+
+	    try {
+	    	con = ConnectionProvider.getConnection();
+	      pstmt = con.prepareStatement(INSERT_INFO, PreparedStatement.RETURN_GENERATED_KEYS);
+	      
+	      pstmt.setString(1, u.getPseudo());
+	      pstmt.setString(2, u.getNom());
+	      pstmt.setString(3, u.getPrenom());
+	      pstmt.setString(4, u.getEmail());
+	      pstmt.setString(5, u.getTelephone());   
+	      pstmt.setString(6, u.getRue());
+	      pstmt.setLong(7, u.getCode_postal());
+	      pstmt.setString(8, u.getVille());
+	      pstmt.setString(9, u.getMot_de_passe());
+	      System.out.println(pstmt.toString());
+	      pstmt.executeUpdate();
+	      
+	      if (rs.next()) {
+	          idAjout = rs.getInt(1);
+	          utilisateurCree = selectByID(idAjout);
+	        }
+
+	    }
+	    catch(SQLException e){
+	    	throw new DALException ("Erreur methode insert : " + u.toString());
+	    } finally {
+	    	ConnectionProvider.connectionClosed(con, pstmt);
+	    }
 	}
 
 	@Override
@@ -37,19 +82,17 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 		
 	}
 	
+	
 	/**aurelien suel
 	 * 
 	 */
-    @Override
+	@Override
 	public Utilisateur selectByID(int id) throws DALException {
-
-
-		Connection cnx=null;
+     	Connection cnx=null;
 		PreparedStatement stmt=null;
 		ResultSet rs=null;
 		Utilisateur utilisateur = null;
-		
-		try {
+	    try {
 			cnx = ConnectionProvider.getConnection();
 			
 			String sql = "select pseudo,nom,prenom,email,telephone,rue,code_postal,ville from UTILISATEURS where no_utilisateur = ?;";
@@ -118,5 +161,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 		
 		return user;
 	}
+	
+	
+	
 
 }

@@ -131,7 +131,6 @@ public class Utilisateur implements Serializable{
 
 	public void setCode_postal(int code_postal) {
 		this.code_postal = code_postal;
-		
 
 	}
 
@@ -175,6 +174,7 @@ public class Utilisateur implements Serializable{
 				+ code_postal + ", ville=" + ville + ", mot_de_passe=" + mot_de_passe + ", credit=" + credit
 				+ ", administrateur=" + administrateur + "]";
 	}
+
 
 	
 		

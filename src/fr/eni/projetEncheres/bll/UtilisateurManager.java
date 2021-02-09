@@ -1,3 +1,5 @@
+
+
 package fr.eni.projetEncheres.bll;
 
 import java.util.ArrayList;
@@ -5,13 +7,11 @@ import java.util.List;
 
 import fr.eni.projetEncheres.bean.Utilisateur;
 import fr.eni.projetEncheres.dal.DALException;
-import fr.eni.projetEncheres.dal.DAO;
 import fr.eni.projetEncheres.dal.DAOFactory;
 import fr.eni.projetEncheres.dal.UtilisateurDAO;
 
 public class UtilisateurManager {
 	
-	//test william 
 	private static UtilisateurManager utilisateurManager;
 	private UtilisateurDAO utilisateurDAO;
 	
@@ -28,51 +28,29 @@ public class UtilisateurManager {
 		return utilisateurManager;
 	}
 	
-	
-	/**aureliensuel
-	 * 
-	 */
-	public Utilisateur selectUser(int id) throws BLLException {
-	
-		Utilisateur user =null;
-		
-		try {
-			user = utilisateurDAO.selectByID(id);
-			
-			
-		}catch (Exception e) {
-			throw new BLLException("echec de l'id ");
-		}
-		
-		
-		return user;
-		
-		
-	}
-	
-	
-	 /**
+	/**
 	 * @author : sw
 	 * @throws BLLException 
 	 */
 	public Utilisateur connexionUser(String pseudo, String mot_de_passe) throws BLLException {
-		
 		listError = new ArrayList<>();
 		Utilisateur user = null;
 		
 		checkPseudo(pseudo, listError);
 		checkPassword(mot_de_passe, listError);
 		
-		if(listError != null) {
+		if(!listError.isEmpty()) {
 			throw new BLLException("Echec connexionUser : vérification pseudo et mot de passe");
 		}
-		
 		try {
 			user = utilisateurDAO.selectByPseudo(pseudo, mot_de_passe);
 		} catch (DALException e) {
 			throw new BLLException("Echec connexionUser");
 		}
-			
+		
+		if(user == null) {
+			throw new BLLException("utilisateur inexistant");
+		}
 		return user;
 	}
 	
@@ -99,9 +77,12 @@ public class UtilisateurManager {
 		}
 			
 	}
-	
-	
-	
-	
-	
+
+	public static void inscriptionUtilisateur(Utilisateur utilisateur) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 }
+
