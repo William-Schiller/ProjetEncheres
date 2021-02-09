@@ -19,6 +19,7 @@ public class ServletConnexionUtilisateur extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
+		request.setAttribute("title", getPageName(request, response)); 
 		
 		this.getServletContext().getRequestDispatcher("/WEB-INF/connexion.jsp").forward(request, response);
 	}
@@ -29,6 +30,29 @@ public class ServletConnexionUtilisateur extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		doGet(request, response);
+	}
+	
+	/**
+	 * @author : ws
+	 * 
+	 */
+	protected String getPageName(HttpServletRequest request, HttpServletResponse response) {
+		String pageName = request.getServletPath().replaceAll("/.", String.valueOf(request.getServletPath().charAt(1)).toUpperCase());
+		boolean check = false;
+		
+		while(!check) {
+			for(int i=1; i<= pageName.length()-1; i++) {
+				if( (pageName.charAt(i-1) >= 'a' && pageName.charAt(i-1) <= 'z') && (pageName.charAt(i) >= 'A' && pageName.charAt(i) <= 'Z') ) {
+					pageName = pageName.substring(0, i) + " " + pageName.substring(i, pageName.length());
+				break;
+				}
+				if(i == pageName.length()-1) {
+					check =true;
+				}
+			}
+		}
+		
+		return pageName;
 	}
 
 }

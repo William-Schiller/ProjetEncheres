@@ -36,15 +36,57 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 		// TODO Auto-generated method stub
 		
 	}
-
+	
+	/**aurelien suel
+	 * 
+	 */
 	@Override
 	public Utilisateur selectByID(int id) throws DALException {
-		// TODO Aurelien
-		return null;
-	}
 
+
+		Connection cnx=null;
+		PreparedStatement stmt=null;
+		ResultSet rs=null;
+		Utilisateur utilisateur = null;
+		
+		try {
+			cnx = ConnectionProvider.getConnection();
+			
+			String sql = "select pseudo,nom,prenom,email,telephone,rue,code_postal,ville from UTILISATEURS where no_utilisateur = ?;";
+			stmt=cnx.prepareStatement(sql);
+			stmt.setInt(1, id);
+			rs=stmt.executeQuery();
+		
+			if (rs.next()){
+			
+				utilisateur = new Utilisateur();
+				
+				utilisateur.setPseudo(rs.getString("pseudo"));
+				utilisateur.setNom(rs.getString("nom"));
+				utilisateur.setPrenom(rs.getString("prenom"));
+				utilisateur.setEmail(rs.getString("email"));
+				utilisateur.setTelephone(rs.getString("telephone"));
+				utilisateur.setRue(rs.getString("rue"));
+				utilisateur.setCode_postal(Integer.parseInt(rs.getString("code_postal")));
+				utilisateur.setVille(rs.getString("ville"));
+
+			}
+		}catch (SQLException e){
+			throw new DALException ("Probleme - rechercherUtilisateur - " + e.getMessage());
+		}finally{
+			
+			ConnectionProvider.connectionClosed(cnx, stmt);
+			
+		}
+		return utilisateur;
+	}
+	
+	
+	/**
+	 * @author : sw 
+	 */
 	@Override
-	public Utilisateur selectByPseudo(String pseudo) throws DALException {
+	public Utilisateur selectByPseudo(String pseudo, String mot_de_passe) throws DALException {
 		Utilisateur user = null;
 		PreparedStatement stmt = null;
 		Connection con = null;
@@ -53,11 +95,12 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 			con = ConnectionProvider.getConnection();
 			
 			String sql = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur"
-					+ " FROM Utilisateurs WHERE pseudo=?";
+					+ " FROM Utilisateurs WHERE pseudo=? AND mot_de_passe=?";
 			
 			stmt = con.prepareStatement(sql);
 			
 			stmt.setString(1, pseudo);
+			stmt.setString(2, mot_de_passe);
 			
 			ResultSet rs = stmt.executeQuery();
 			
