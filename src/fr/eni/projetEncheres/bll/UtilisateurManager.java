@@ -5,10 +5,12 @@ import java.util.List;
 
 import fr.eni.projetEncheres.bean.Utilisateur;
 import fr.eni.projetEncheres.dal.DALException;
+import fr.eni.projetEncheres.dal.DAO;
 import fr.eni.projetEncheres.dal.DAOFactory;
 import fr.eni.projetEncheres.dal.UtilisateurDAO;
 
 public class UtilisateurManager {
+	
 	//test william 
 	private static UtilisateurManager utilisateurManager;
 	private UtilisateurDAO utilisateurDAO;
@@ -26,7 +28,30 @@ public class UtilisateurManager {
 		return utilisateurManager;
 	}
 	
-	/**
+	
+	/**aureliensuel
+	 * 
+	 */
+	public Utilisateur selectUser(int id) throws BLLException {
+	
+		Utilisateur user =null;
+		
+		try {
+			user = utilisateurDAO.selectByID(id);
+			
+			
+		}catch (Exception e) {
+			throw new BLLException("echec de l'id ");
+		}
+		
+		
+		return user;
+		
+		
+	}
+	
+	
+	 /**
 	 * @author : sw
 	 * @throws BLLException 
 	 */
@@ -75,6 +100,8 @@ public class UtilisateurManager {
 			
 	}
 	
-	// test commit
-
+	
+	
+	
+	
 }
