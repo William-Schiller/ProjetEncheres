@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.projetEncheres.bean.Utilisateur;
+import fr.eni.projetEncheres.dal.DALException;
 import fr.eni.projetEncheres.dal.DAOFactory;
 import fr.eni.projetEncheres.dal.UtilisateurDAO;
 
@@ -29,19 +30,23 @@ public class UtilisateurManager {
 	 * @author : sw
 	 * @throws BLLException 
 	 */
-	public Utilisateur connexionUser(String pseudo, String mot_de_pass) throws BLLException {
+	public Utilisateur connexionUser(String pseudo, String mot_de_passe) throws BLLException {
 		
-		listError = new ArrayList<String>();
+		listError = new ArrayList<>();
 		Utilisateur user = null;
 		
 		checkPseudo(pseudo, listError);
-		checkPassword(mot_de_pass, listError);
+		checkPassword(mot_de_passe, listError);
 		
 		if(listError != null) {
 			throw new BLLException("Echec connexionUser : vérification pseudo et mot de passe");
 		}
 		
-		user = utilisateurManager.connexionUser(pseudo, mot_de_pass);
+		try {
+			user = utilisateurDAO.selectByPseudo(pseudo, mot_de_passe);
+		} catch (DALException e) {
+			throw new BLLException("Echec connexionUser");
+		}
 			
 		return user;
 	}
