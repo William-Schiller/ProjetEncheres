@@ -162,6 +162,7 @@ public class Utilisateur implements Serializable{
 	}
 
 	public void setAdministrateur(byte administrateur) {
+		this.administrateur = 0;
 		this.administrateur = administrateur;
 	}
 
@@ -173,8 +174,4 @@ public class Utilisateur implements Serializable{
 				+ ", administrateur=" + administrateur + "]";
 	}
 
-
-
-
-	
 }

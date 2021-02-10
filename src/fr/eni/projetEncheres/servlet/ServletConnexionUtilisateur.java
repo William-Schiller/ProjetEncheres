@@ -36,14 +36,11 @@ public class ServletConnexionUtilisateur extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		request.setAttribute("title", getPageName(request, response)); 
-		
-		
-		HttpSession session = request.getSession();
-		
-		Utilisateur user = (Utilisateur) session.getAttribute("myUser");
+
+		Utilisateur user = (Utilisateur) request.getSession().getAttribute("myUser");
 		
 		if(user != null && !user.getPseudo().isEmpty()) {
-			this.getServletContext().getRequestDispatcher("/WEB-INF/accueil.jsp").forward(request, response); // TODO transfèrer à une servlet
+			this.getServletContext().getRequestDispatcher("/Accueil").forward(request, response);
 		}
 
 		
@@ -55,8 +52,8 @@ public class ServletConnexionUtilisateur extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		request.setAttribute("title", getPageName(request, response)); 
-		
+		request.setAttribute("title", getPageName(request, response));
+
 		List<String> listError = new ArrayList<>();
 		Utilisateur user = null;
 		String pseudo =null;
@@ -94,7 +91,7 @@ public class ServletConnexionUtilisateur extends HttpServlet {
 		
 		session.setAttribute("myUser", user);
 		
-		this.getServletContext().getRequestDispatcher("/WEB-INF/accueil.jsp").forward(request, response); // TODO transfèrer à une servlet
+		this.getServletContext().getRequestDispatcher("/Accueil").forward(request, response);
 	}	
 	
 	/**
