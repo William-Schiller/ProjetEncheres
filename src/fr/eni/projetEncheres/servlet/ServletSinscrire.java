@@ -91,6 +91,7 @@ public class ServletSinscrire extends HttpServlet {
 //				dispatcher.forward(request, response);
 			} else {
 
+
 				try {
 					utilisateurManager.inscriptionUser(u);
 				} catch (Exception e) {
@@ -109,9 +110,9 @@ public class ServletSinscrire extends HttpServlet {
 			this.getServletContext().getRequestDispatcher("/WEB-INF/sinscrire.jsp").forward(request, response);
 //			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/sinscrire.jsp");
 //			dispatcher.forward(request, response);
+
+		
 		}
-		
-		
 		
 	}
 

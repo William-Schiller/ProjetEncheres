@@ -17,7 +17,7 @@ import fr.eni.projetEncheres.dal.DAOFactory;
 import fr.eni.projetEncheres.dal.UtilisateurDAO;
 
 public class UtilisateurManager {
-	
+
 	private static UtilisateurManager utilisateurManager;
 	private UtilisateurDAO utilisateurDAO;
 	
@@ -33,6 +33,12 @@ public class UtilisateurManager {
 		}
 		return utilisateurManager;
 	}
+	
+	public List<String> getListError() {
+		return listError;
+	}
+	
+	//******************* METHODE : *******************************
 	
 	/**
 	 * @author : sw
@@ -60,28 +66,16 @@ public class UtilisateurManager {
 		return user;
 	}
 	
-	public List<String> getListError() {
-		return listError;
-	}
-	
 	/**
-	 * @author : sw
+	 * @author : ws
 	 */
-	public void checkPseudo(String pseudo, List<String> listError){
-		if(pseudo.length() > 30) {
-			listError.add("Le pseudonyme ne doit pas dépasser 30 caractères");
-		}
-			
-	}
-	
-	/**
-	 * @author : sw
-	 */
-	public void checkPassword(String mot_de_pass, List<String> listError){
-		if(mot_de_pass.length() > 30) {
-			listError.add("Le mot de passe ne doit pas dépasser 30 caractères");
-		}
-			
+	public void updateUser(Utilisateur u) throws BLLException {
+		listError = new ArrayList<>();
+		
+		checkPseudo(u.getPseudo(), listError);
+		checkPassword(u.getMot_de_passe(), listError);
+		
+		
 	}
 	
 	/**
@@ -111,10 +105,70 @@ public class UtilisateurManager {
         return u;
     }
 	
-	//méthode pseudo unique renvoi un boolean
-	public boolean checkUniquePseudo(String pseudo, List<String> listError) throws BLLException{
+
+	//**************** VERIFICATION ************************************
+	
+	/**
+	 * @author : sw
+	 */
+	public void checkPseudo(String pseudo, List<String> listError){
+		if(pseudo.length() > 30) {
+			listError.add("Le pseudonyme ne doit pas dépasser 30 caractères");
+		}
+	}
+	
+	/**
+	 * @author : sw
+	 */
+	public void checkNom(String nom, List<String> listError){
+		if(nom.length() > 30) {
+			listError.add("Le nom ne doit pas dépasser 30 caractères");
+		}	
+	}
+	
+	/**
+	 * @author : sw
+	 */
+	public void checkPrenom(String prenom, List<String> listError){
+		if(prenom.length() > 30) {
+			listError.add("Le prenom ne doit pas dépasser 30 caractères");
+		}	
+	}
+	
+	/**
+	 * @author : sw
+	 */
+	public void checkEmail(String email, List<String> listError){
+		if(email.length() > 50) {
+			listError.add("L'Email ne doit pas dépasser 50 caractères");
+		}	
+	}
+	
+	/**
+	 * @author : sw
+	 */
+	public void checkTelephone(String telephone, List<String> listError){
+		if(telephone.length() > 15) {
+			listError.add("Le numero de telephone ne doit pas dépasser 15 caractères");
+		}	
+	}
+	
+	/**
+	 * @author : sw
+	 */
+	public void checkPassword(String mot_de_pass, List<String> listError){
+		if(mot_de_pass.length() > 30) {
+			listError.add("Le mot de passe ne doit pas dépasser 30 caractères");
+		}	
+	}
+	
+	
+	
+	//TODO méthode checkUniquePseudo renvois un boolean
+	public boolean checkUniquePseudo1(String pseudo, List<String> listError) throws BLLException{
+	
+		List<Utilisateur> liste;
 		boolean verifPseudo = true;
-		List<Utilisateur> liste = new ArrayList<>();
 		
 		try {
 			liste = utilisateurDAO.selectAll();
