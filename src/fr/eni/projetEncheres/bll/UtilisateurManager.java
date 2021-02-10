@@ -27,6 +27,23 @@ public class UtilisateurManager {
 	}
 	
 	/**
+	 * aurelien
+	 * TODO peut etre traitement a voir plus tard
+	 */
+	 public Utilisateur postUser(int id) throws BLLException {
+		 
+		 Utilisateur user = null;
+		 try {
+			user = utilisateurDAO.selectByID(id);
+		} catch (DALException e) {
+			throw new BLLException("echec postuser");
+			
+		}
+		 return user;
+		 
+	 }
+	
+	/**
 	 * @author : sw
 	 * @throws BLLException 
 	 */
