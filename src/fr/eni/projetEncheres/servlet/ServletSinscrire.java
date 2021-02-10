@@ -59,10 +59,11 @@ public class ServletSinscrire extends HttpServlet {
 		String confirmation = request.getParameter("confirmation");
 		
 		
-		if(!pseudo.isEmpty() && !prenom.isEmpty() && !telephone.isEmpty() && !postal.isEmpty() && 
+		if
+		(!pseudo.isEmpty() && !prenom.isEmpty() && !telephone.isEmpty() && !postal.isEmpty() && 
 				!mdp.isEmpty() && !nom.isEmpty() && !email.isEmpty() && !rue.isEmpty() && !ville.isEmpty() && !confirmation.isEmpty()) {
-//		(pseudo != null || prenom != null || telephone != null || postal != null 
-//				|| mdp != null || nom != null || email != null || rue != null || ville != null || confirmation != null) {
+//		(pseudo != null && prenom != null && telephone != null && postal != null 
+//				&& mdp != null && nom != null && email != null && rue != null && ville != null && confirmation != null) {
 			
 			Utilisateur u = new Utilisateur();
 
