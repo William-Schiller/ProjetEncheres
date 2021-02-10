@@ -7,13 +7,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Types;
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.projetEncheres.bean.Utilisateur;
 import fr.eni.projetEncheres.dal.ConnectionProvider;
 import fr.eni.projetEncheres.dal.DALException;
 import fr.eni.projetEncheres.dal.UtilisateurDAO;
-
 
 public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 
@@ -64,10 +64,47 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 	    }
 	}
 
+	/**
+	 * @author : ws
+	 */
 	@Override
 	public List<Utilisateur> selectAll() throws DALException {
-		// TODO Auto-generated method stub
-		return null;
+		List<Utilisateur> list = new ArrayList<>();
+		PreparedStatement stmt = null;
+		Connection con = null;
+		
+		try {
+			
+			con = ConnectionProvider.getConnection();
+			
+			String sql = "SELECT * FROM Utilisateurs";
+			
+			stmt = con.prepareStatement(sql);
+			
+			ResultSet rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				list.add(new Utilisateur(
+						rs.getInt("no_utilisateur"), rs.getString("pseudo"), rs.getString("nom"), rs.getString("prenom"), 
+						rs.getString("email"), rs.getString("telephone"), rs.getString("rue"), rs.getInt("code_postal"), 
+						rs.getString("ville"), rs.getString("mot_de_passe"), rs.getInt("credit"), rs.getByte("administrateur")
+						));
+			}
+	
+		} catch (SQLException e) {
+			throw new DALException("Echec method selectAll()");
+		} finally {
+		
+			try {
+				if(stmt != null) {
+					stmt.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+		}
+		return list;
 	}
 
 	@Override
