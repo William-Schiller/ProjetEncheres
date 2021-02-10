@@ -26,7 +26,7 @@
                             <p class="my-1" style="color:red">${item}</p>
                         </c:forEach>
                     </div>
-                    <div class="row my-5">
+                    <div class="row my-4" style="justify-content: center">
                         <form class="row" action="<%= request.getContextPath() %>/inscription" method="post">
                             <div class="col-md-6 p-3 mb-4">
                                 <div class="input-group mb-3">
