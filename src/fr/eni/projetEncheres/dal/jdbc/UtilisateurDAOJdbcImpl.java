@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Time;
 import java.sql.Types;
 import java.util.List;
@@ -27,17 +28,13 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 		final String INSERT_INFO =
 				"INSERT INTO UTILISATEURS (pseudo,nom,prenom,email,telephone,rue,codePostal,ville,motDePasse)"
 				+ " VALUES (?,?,?,?,?,?,?,?,?)";
-		
-		Utilisateur utilisateurCree = null;
-	    int idAjout = 0;
 
 		PreparedStatement pstmt = null;
-		ResultSet rs = null;
 		Connection con = null;
 
 	    try {
 	    	con = ConnectionProvider.getConnection();
-	      pstmt = con.prepareStatement(INSERT_INFO, PreparedStatement.RETURN_GENERATED_KEYS);
+	      pstmt = con.prepareStatement(INSERT_INFO, Statement.RETURN_GENERATED_KEYS);
 	      
 	      pstmt.setString(1, u.getPseudo());
 	      pstmt.setString(2, u.getNom());
@@ -48,14 +45,18 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 	      pstmt.setLong(7, u.getCode_postal());
 	      pstmt.setString(8, u.getVille());
 	      pstmt.setString(9, u.getMot_de_passe());
+	      
 	      System.out.println(pstmt.toString());
+	      
 	      pstmt.executeUpdate();
 	      
-	      if (rs.next()) {
-	          idAjout = rs.getInt(1);
-	          utilisateurCree = selectByID(idAjout);
-	        }
-
+	      ResultSet rs = pstmt.getGeneratedKeys();
+	      
+	      if(rs.next()) {
+	    	  u.setNo_utlisateur(rs.getInt(1));
+	      }
+	      
+	      
 	    }
 	    catch(SQLException e){
 	    	throw new DALException ("Erreur methode insert : " + u.toString());

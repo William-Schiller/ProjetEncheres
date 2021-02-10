@@ -9,122 +9,76 @@
 		<link rel="stylesheet" type="text/css" href="/public/css/style.css" media="screen">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-		<style>.form-row , .form-group {width:50%}</style>
+		<style>#inscription {display:flex}</style>
 		<title>S'inscrire</title>
 	</head>
 	<body>
-		
+		<div class="row text-center">
+			<h1>S'inscrire</h1>
+			<h2>Mon profil</h2>
+		</div>
 		<form method="POST">
-			<div class="form-row">
-				<div class="form-group">
-					<div class="form-input">
-						<label class="control-label col-sm-2">Pseudo : </label>
-						<input class="form-control" type="text" name="spseudo" value="<%=request.getParameter("spseudo") %>" >
-					</div>
-					<div class="form-input">
-					
-					</div>
-					<div class="form-input">
-					
-					</div>
-					<div class="form-input">
-					
-					</div>
+			<div class="m-4"></div>
+			<div class="form-row row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6" id="inscription">
+                    <div class="form-group col-md-6">
+                        <div class="form-input">
+                            <label class="required" for="pseudo">Pseudo : </label>
+                            <input class="error" type="text" name="speudo" aria-invalid="true" value="<%=request.getParameter("pseudo") %>">
+                        </div>
+                        <div class="form-input">
+                            <label class="required" for="prenom">Prénom : </label>
+                            <input class="error" type="text" name="prenom" aria-invalid="true" value="<%=request.getParameter("prenom") %>" > 
+                        </div>
+                        <div class="form-input">
+                            <label class="required" for="telephone">Téléphone : </label>
+                            <input class="error" type="text" name="telephone" aria-invalid="true" value="<%=request.getParameter("telephone") %>" >
+                        </div>
+                        <div class="form-input">
+                            <label class="required" for="postal">Code Postal : </label>
+                            <input class="error" type="text" name="postal" aria-invalid="true" value="<%=request.getParameter("postal") %>" >
+                        </div>
+                        <div class="form-input">
+                            <label class="required" for="mdp">Mot de Passe : </label>
+                            <input class="error" type="text" name="mdp" aria-invalid="true" value="<%=request.getParameter("mdp") %>" >
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <div class="form-input">
+                            <label class="required" for="nom">Nom : </label>
+                            <input class="error" type="text" name="nom" aria-invalid="true" value="<%=request.getParameter("nom") %>" >
+                        </div>
+                        <div class="form-input">
+                            <label class="required" for="email">Email : </label>
+                            <input class="error" type="text" name="email" aria-invalid="true" value="<%=request.getParameter("email") %>" >
+                        </div>
+                        <div class="form-input">
+                            <label class="required" for="rue">Rue : </label>
+                            <input class="error" type="text" name="rue" aria-invalid="true" value="<%=request.getParameter("rue") %>" >
+                        </div>
+                        <div class="form-input">
+                            <label class="required" for="ville">Ville : </label>
+                            <input class="error" type="text" name="ville" aria-invalid="true" value="<%=request.getParameter("ville") %>" >
+                        </div>
+                        <div class="form-input">
+                            <label class="required" for="confirmation">Confirmation : </label>
+                            <input class="error" type="text" name="confirmation" aria-invalid="true" value="<%=request.getParameter("confirmation") %>" >
+                        </div>
+                    </div>
+                </div>
+				<div class="col-md-3"></div>
+			</div>
+			<div class="m-4"></div>
+			<div class="text-center">
+				<div>
+					<input type="submit" value="Creer" class="btn btn-success">
+					<a href="<%=request.getContextPath()%>">
+						<input type="button" value="Annuler" class="btn btn-danger">
+					</a>
 				</div>
 			</div>
 		</form>
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		<h1 class="p-3 text-center">S'INSCRIRE</h1>
-		<h2 class="text-center">Mon profil</h2>
-		<div class="container-fluid">
-		
-			<div class="row">
-				<div class="col-md-2"></div>
-				<form role="form" class="form-horizontal row col-md-8 pt-4" action="<%=request.getContextPath() %>/inscription" method="post">
-					<div class="col-md-6">
-						<div class="form-group">
-							<label class="control-label col-sm-2">Pseudo : </label>
-							<div class="col-sm-7">
-								<input class="form-control" type="text" name="spseudo" value="<%=request.getParameter("spseudo") %>" > 
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-sm-2">Prénom : </label>
-							<div class="col-sm-7">
-								<input class="form-control" type="text" name="sprenom" value="<%=request.getParameter("sprenom") %>" > 
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-sm-2">Téléphone : </label>
-							<div class="col-sm-7">
-								<input class="form-control" type="tel" name="stelephone" value="<%=request.getParameter("stelephone") %>" > 
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-sm-2">Code postal : </label>
-							<div class="col-sm-7">
-								<input class="form-control" type="number" name="spostal" value="<%=request.getParameter("spostal") %>" > 
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-sm-2">Mot de passe : </label>
-							<div class="col-sm-7">
-								<input class="form-control" type="text" name="smdp" value="<%=request.getParameter("smdp") %>" >
-							</div>
-						</div> 
-					</div>
-					<div class="col-md-6">
-						<div class="form-group">
-							<label class="control-label col-sm-2">Nom : </label>
-							<div class="col-sm-7">
-								<input class="form-control" type="text" name="snom" value="<%=request.getParameter("snom") %>" > 
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-sm-2">Email : </label>
-							<div class="col-sm-7">
-								<input class="form-control" type="email" name="semail" value="<%=request.getParameter("semail") %>" > 
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-sm-2">Rue : </label>
-							<div class="col-sm-7">
-								<input class="form-control" type="text" name="srue" value="<%=request.getParameter("srue") %>" > 
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-sm-2">Ville : </label>
-							<div class="col-sm-7">
-								<input class="form-control" type="text" name="sville" value="<%=request.getParameter("sville") %>" > 
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-sm-2">Confirmation : </label>
-							<div class="col-sm-7">
-								<input class="form-control" type="text" name="sconfirmation" value="<%=request.getParameter("sconfirmation") %>" > 
-							</div>
-						</div>
-					</div>
-					<div class="row p-3"></div>
-					<div class="text-center">
-						<div>
-							<input type="submit" value="Creer" class="btn btn-success">
-							<a href="<%=request.getContextPath()%>">
-								<input type="button" value="Annuler" class="btn btn-danger">
-							</a>
-						</div>
-					</div>
-				</form>
-				<div class="col-md-2"></div>
-			</div>
-		</div>
+
 	</body>
 </html>

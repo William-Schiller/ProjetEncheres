@@ -31,8 +31,7 @@ public class ConnectionProvider {
 			}
 		} catch (SQLException e) {
 			throw new DALException("Erreur fermeture connexion");
-		}
-		
+		}	
 	}
 	
 	public static void connectionClosed(Connection con, PreparedStatement stmt) throws DALException {
@@ -46,6 +45,6 @@ public class ConnectionProvider {
 		} catch (SQLException e) {
 			throw new DALException("Erreur fermeture connexion");
 		}
-		
 	}
+	
 }
