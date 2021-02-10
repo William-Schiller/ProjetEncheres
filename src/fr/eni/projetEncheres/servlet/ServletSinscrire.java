@@ -57,7 +57,7 @@ public class ServletSinscrire extends HttpServlet {
 
 
 		try {
-			UtilisateurManager.inscriptionUser(u);
+//			UtilisateurManager.inscriptionUser(u);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

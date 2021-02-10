@@ -110,13 +110,65 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 
 	@Override
 	public void update(Utilisateur u) throws DALException {
-		// TODO Auto-generated method stub
+		PreparedStatement stmt = null;
+		Connection con = null;
+		
+		try {
+			
+			con = ConnectionProvider.getConnection();
+					
+			String sql = "UPDATE Utilisateurs SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ?, "
+					+ "rue = ?, code_postal = ?, ville = ?, mot_de_passe = ? WHERE no_utilisateur=?";	
+			
+			stmt = con.prepareStatement(sql);
+			
+			stmt.setString(1, u.getPseudo());
+			stmt.setString(2, u.getNom());
+			stmt.setString(3, u.getPrenom());
+			stmt.setString(4, u.getEmail());
+			stmt.setString(5, u.getTelephone());
+			stmt.setString(6, u.getRue());
+			stmt.setInt(7, u.getCode_postal());
+			stmt.setString(8, u.getVille());
+			stmt.setString(9, u.getMot_de_passe());
+			
+			stmt.setInt(10, u.getNo_utlisateur());
+			
+			stmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			throw new DALException("Echec method update()");
+		} finally {
+			ConnectionProvider.connectionClosed(con, stmt);
+		}
 		
 	}
-
+	
+	/**
+	 * @author : ws
+	 */
 	@Override
 	public void delete(int id) throws DALException {
-		// TODO Auto-generated method stub
+		PreparedStatement stmt = null;
+		Connection con = null;
+		
+		try {
+			
+			con = ConnectionProvider.getConnection();
+			
+			String sql = "DELETE FROM Utilisateurs WHERE no_utilisateur = ?";
+			
+			stmt = con.prepareStatement(sql);
+			
+			stmt.setInt(1, id);
+			
+			stmt.executeUpdate();
+		
+		} catch (SQLException e) {
+			throw new DALException("Echec method delete()");
+		} finally {
+			ConnectionProvider.connectionClosed(con, stmt);
+		}
 		
 	}
 	
