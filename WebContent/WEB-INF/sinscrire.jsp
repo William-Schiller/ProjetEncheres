@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib  prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -7,78 +8,73 @@
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 		<link rel="stylesheet" type="text/css" href="/public/css/style.css" media="screen">
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-		<style>#inscription {display:flex}</style>
+		<link rel="preconnect" href="https://fonts.gstatic.com">
+		<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+		<style>body{font-family: 'Roboto', sans-serif}h1{font-weight: bold}h2{text-decoration: underline}</style>
 		<title>S'inscrire</title>
 	</head>
 	<body>
-		<div class="row text-center">
-			<h1>S'inscrire</h1>
-			<h2>Mon profil</h2>
-		</div>
-		<form method="POST">
-			<div class="m-4"></div>
-			<div class="form-row row">
+        <div class="container">
+        	<div class="mb-5"></div>
+            <div class="row text-center">
+                <h1>S'inscrire</h1>
+                <br>
+                <h2>Mon profil</h2>
+                <c:forEach var="item" items="${ListeErreurs}">
+                	<p class="my-1" style="color:red">${item}</p>
+                </c:forEach>
+            </div>
+            <div class="row">
                 <div class="col-md-3"></div>
-                <div class="col-md-6" id="inscription">
-                    <div class="form-group col-md-6">
-                        <div class="form-input">
-                            <label class="required" for="pseudo">Pseudo : </label>
-                            <input class="error" type="text" name="speudo" aria-invalid="true" value="<%=request.getParameter("pseudo") %>">
+                <div class="col-md-6">
+                    <form class="row" action="<%= request.getContextPath() %>/inscription" method="post">
+                        <div class="col-md-6 p-3 mb-4">
+                            <div class="input-group mb-3">
+                            <input type="text" class="form-control" name="pseudo" placeholder="Pseudo" aria-label="Pseudo" aria-describedby="basic-addon1">
+                            </div>
+                            <div class="input-group mb-3">
+                            <input type="text" class="form-control" name="prenom" placeholder="Prénom" aria-label="Prenom" aria-describedby="basic-addon1">
+                            </div>
+                            <div class="input-group mb-3">
+                            <input type="text" class="form-control" name="telephone" placeholder="Telephone" aria-label="Telephone" aria-describedby="basic-addon1">
+                            </div>
+                            <div class="input-group mb-3">
+                            <input type="number" class="form-control" name="postal" placeholder="Code postal" aria-label="Code postal" aria-describedby="basic-addon1">
+                            </div>
+                            
+                            <div class="input-group mb-3">
+                            <input type="password" class="form-control" name="mdp" placeholder="Mot de passe" aria-label="Mot de passe" aria-describedby="basic-addon1">
+                            </div>
                         </div>
-                        <div class="form-input">
-                            <label class="required" for="prenom">Prénom : </label>
-                            <input class="error" type="text" name="prenom" aria-invalid="true" value="<%=request.getParameter("prenom") %>" > 
+                        <div class="col-md-6 p-3 mb-4">
+                            <div class="input-group mb-3">
+                            <input type="text" class="form-control" name="nom" placeholder="Nom" aria-label="Nom" aria-describedby="basic-addon1">
+                            </div>
+                            <div class="input-group mb-3">
+                            <input type="email" class="form-control" name="email" placeholder="Email" aria-label="Email" aria-describedby="basic-addon1">
+                            </div>
+                            <div class="input-group mb-3">
+                            <input type="text" class="form-control" name="rue" placeholder="Rue" aria-label="Rue" aria-describedby="basic-addon1">
+                            </div>
+                            <div class="input-group mb-3">
+                            <input type="text" class="form-control" name="ville" placeholder="Ville" aria-label="Ville" aria-describedby="basic-addon1">
+                            </div>
+                            <div class="input-group mb-3">
+                            <input type="password" class="form-control" name="confirmation" placeholder="Confirmation" aria-label="Confirmation" aria-describedby="basic-addon1">
+                            </div>
                         </div>
-                        <div class="form-input">
-                            <label class="required" for="telephone">Téléphone : </label>
-                            <input class="error" type="text" name="telephone" aria-invalid="true" value="<%=request.getParameter("telephone") %>" >
+                        <div class="text-center">
+                            <div>
+                                <input class="btn btn-success me-2" type="submit" value="Creer">
+                                <a href="<%=request.getContextPath()%>">
+                                    <input class="btn btn-danger ms-2" type="button" value="Annuler">
+                                </a>
+                            </div>
                         </div>
-                        <div class="form-input">
-                            <label class="required" for="postal">Code Postal : </label>
-                            <input class="error" type="text" name="postal" aria-invalid="true" value="<%=request.getParameter("postal") %>" >
-                        </div>
-                        <div class="form-input">
-                            <label class="required" for="mdp">Mot de Passe : </label>
-                            <input class="error" type="text" name="mdp" aria-invalid="true" value="<%=request.getParameter("mdp") %>" >
-                        </div>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <div class="form-input">
-                            <label class="required" for="nom">Nom : </label>
-                            <input class="error" type="text" name="nom" aria-invalid="true" value="<%=request.getParameter("nom") %>" >
-                        </div>
-                        <div class="form-input">
-                            <label class="required" for="email">Email : </label>
-                            <input class="error" type="text" name="email" aria-invalid="true" value="<%=request.getParameter("email") %>" >
-                        </div>
-                        <div class="form-input">
-                            <label class="required" for="rue">Rue : </label>
-                            <input class="error" type="text" name="rue" aria-invalid="true" value="<%=request.getParameter("rue") %>" >
-                        </div>
-                        <div class="form-input">
-                            <label class="required" for="ville">Ville : </label>
-                            <input class="error" type="text" name="ville" aria-invalid="true" value="<%=request.getParameter("ville") %>" >
-                        </div>
-                        <div class="form-input">
-                            <label class="required" for="confirmation">Confirmation : </label>
-                            <input class="error" type="text" name="confirmation" aria-invalid="true" value="<%=request.getParameter("confirmation") %>" >
-                        </div>
-                    </div>
+                    </form>
                 </div>
-				<div class="col-md-3"></div>
-			</div>
-			<div class="m-4"></div>
-			<div class="text-center">
-				<div>
-					<input type="submit" value="Creer" class="btn btn-success">
-					<a href="<%=request.getContextPath()%>">
-						<input type="button" value="Annuler" class="btn btn-danger">
-					</a>
-				</div>
-			</div>
-		</form>
-
+                <div class="col-md-3"></div>
+            </div>
+        </div>
 	</body>
 </html>
