@@ -54,9 +54,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 	      
 	      if(rs.next()) {
 	    	  u.setNo_utlisateur(rs.getInt(1));
-	      }
-	      
-	      
+	      }      
 	    }
 	    catch(SQLException e){
 	    	throw new DALException ("Erreur methode insert : " + u.toString());
