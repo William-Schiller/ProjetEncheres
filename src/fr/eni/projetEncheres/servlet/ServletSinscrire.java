@@ -106,7 +106,7 @@ public class ServletSinscrire extends HttpServlet {
 		else {
 			listeErreurs.add("Tous les champs doivent être remplis");
 			request.setAttribute("listeErreurs", listeErreurs);
-			
+			System.out.println("ICIII");
 			this.getServletContext().getRequestDispatcher("/WEB-INF/sinscrire.jsp").forward(request, response);
 //			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/sinscrire.jsp");
 //			dispatcher.forward(request, response);
