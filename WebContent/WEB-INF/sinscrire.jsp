@@ -14,11 +14,10 @@
 		<title>S'inscrire</title>
 	</head>
 	<body>
-        <div class="container">
+        <div class="container position-absolute top-50 start-50 translate-middle">
             <div class="row">
-                <div class="col-md-3">
-                </div>
-                <div class="col-md-6">
+                <div class="col-md-3"></div>
+                <div class="col-md-6 p-4 border">
                     <div class="row text-center">
                         <h1>S'inscrire</h1>
                         <br>
@@ -28,57 +27,54 @@
                         </c:forEach>
                     </div>
                     <div class="row my-5">
-
-                            <form class="row" action="<%= request.getContextPath() %>/inscription" method="post">
-                                <div class="col-md-6 p-3 mb-4">
-                                    <div class="input-group mb-3">
-                                    <input type="text" class="form-control" name="pseudo" placeholder="Pseudo" aria-label="Pseudo" aria-describedby="basic-addon1">
-                                    </div>
-                                    <div class="input-group mb-3">
-                                    <input type="text" class="form-control" name="prenom" placeholder="Prénom" aria-label="Prenom" aria-describedby="basic-addon1">
-                                    </div>
-                                    <div class="input-group mb-3">
-                                    <input type="text" class="form-control" name="telephone" placeholder="Telephone" aria-label="Telephone" aria-describedby="basic-addon1">
-                                    </div>
-                                    <div class="input-group mb-3">
-                                    <input type="number" class="form-control" name="postal" placeholder="Code postal" aria-label="Code postal" aria-describedby="basic-addon1">
-                                    </div>
-                                    
-                                    <div class="input-group mb-3">
-                                    <input type="password" class="form-control" name="mdp" placeholder="Mot de passe" aria-label="Mot de passe" aria-describedby="basic-addon1">
-                                    </div>
+                        <form class="row" action="<%= request.getContextPath() %>/inscription" method="post">
+                            <div class="col-md-6 p-3 mb-4">
+                                <div class="input-group mb-3">
+                                <input type="text" class="form-control" name="pseudo" placeholder="Pseudo" aria-label="Pseudo" aria-describedby="basic-addon1">
                                 </div>
-                                <div class="col-md-6 p-3 mb-4">
-                                    <div class="input-group mb-3">
-                                    <input type="text" class="form-control" name="nom" placeholder="Nom" aria-label="Nom" aria-describedby="basic-addon1">
-                                    </div>
-                                    <div class="input-group mb-3">
-                                    <input type="email" class="form-control" name="email" placeholder="Email" aria-label="Email" aria-describedby="basic-addon1">
-                                    </div>
-                                    <div class="input-group mb-3">
-                                    <input type="text" class="form-control" name="rue" placeholder="Rue" aria-label="Rue" aria-describedby="basic-addon1">
-                                    </div>
-                                    <div class="input-group mb-3">
-                                    <input type="text" class="form-control" name="ville" placeholder="Ville" aria-label="Ville" aria-describedby="basic-addon1">
-                                    </div>
-                                    <div class="input-group mb-3">
-                                    <input type="password" class="form-control" name="confirmation" placeholder="Confirmation" aria-label="Confirmation" aria-describedby="basic-addon1">
-                                    </div>
+                                <div class="input-group mb-3">
+                                <input type="text" class="form-control" name="prenom" placeholder="Prénom" aria-label="Prenom" aria-describedby="basic-addon1">
                                 </div>
-                                <div class="text-center">
-                                    <div>
-                                        <input class="btn btn-success me-2" type="submit" value="Creer">
-                                        <a href="<%=request.getContextPath()%>">
-                                            <input class="btn btn-danger ms-2" type="button" value="Annuler">
-                                        </a>
-                                    </div>
+                                <div class="input-group mb-3">
+                                <input type="text" class="form-control" name="telephone" placeholder="Telephone" aria-label="Telephone" aria-describedby="basic-addon1">
                                 </div>
-                            </form>
-
+                                <div class="input-group mb-3">
+                                <input type="number" class="form-control" name="postal" placeholder="Code postal" aria-label="Code postal" aria-describedby="basic-addon1">
+                                </div>
+                                
+                                <div class="input-group mb-3">
+                                <input type="password" class="form-control" name="mdp" placeholder="Mot de passe" aria-label="Mot de passe" aria-describedby="basic-addon1">
+                                </div>
+                            </div>
+                            <div class="col-md-6 p-3 mb-4">
+                                <div class="input-group mb-3">
+                                <input type="text" class="form-control" name="nom" placeholder="Nom" aria-label="Nom" aria-describedby="basic-addon1">
+                                </div>
+                                <div class="input-group mb-3">
+                                <input type="email" class="form-control" name="email" placeholder="Email" aria-label="Email" aria-describedby="basic-addon1">
+                                </div>
+                                <div class="input-group mb-3">
+                                <input type="text" class="form-control" name="rue" placeholder="Rue" aria-label="Rue" aria-describedby="basic-addon1">
+                                </div>
+                                <div class="input-group mb-3">
+                                <input type="text" class="form-control" name="ville" placeholder="Ville" aria-label="Ville" aria-describedby="basic-addon1">
+                                </div>
+                                <div class="input-group mb-3">
+                                <input type="password" class="form-control" name="confirmation" placeholder="Confirmation" aria-label="Confirmation" aria-describedby="basic-addon1">
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <div>
+                                    <input class="btn btn-success me-2" type="submit" value="Creer">
+                                    <a href="<%=request.getContextPath()%>">
+                                        <input class="btn btn-danger ms-2" type="button" value="Annuler">
+                                    </a>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
-                <div class="col-md-3">
-                </div>
+                <div class="col-md-3"></div>
             </div>
         </div>
 	</body>
