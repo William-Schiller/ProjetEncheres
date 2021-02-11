@@ -108,6 +108,9 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 		return list;
 	}
 
+	/**
+	 * @author : ws
+	 */
 	@Override
 	public void update(Utilisateur u) throws DALException {
 		PreparedStatement stmt = null;

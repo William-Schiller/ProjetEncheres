@@ -122,20 +122,9 @@ public class ServletMonProfilUtilisateur extends HttpServlet {
 			
 			request.setAttribute("listError", listError);
 					
-			System.out.println(pseudo + "- ");
-			System.out.println(nom + "- ");
-			System.out.println(prenom + "- ");
-			System.out.println(email + "- ");
-			System.out.println(telephone + "- ");
-			System.out.println(rue + "- ");
-			System.out.println(codePostal + "- ");
-			System.out.println(ville + "- ");
-			System.out.println(motDePasseActuel + "- ");
-			System.out.println(motDePasseNouveau + "- ");
-			System.out.println(motDePasseConfirme + "- ");
 		}
 		if(request.getParameter("sdelete") != null && request.getParameter("sdelete").equals("ok")) {
-			System.out.println("supprimer");
+			this.getServletContext().getRequestDispatcher("/SuppressionCompte").forward(request, response);
 		}
 		
 		doGet(request, response);

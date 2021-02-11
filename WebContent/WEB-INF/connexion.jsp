@@ -51,7 +51,7 @@
 		</form>
 		
 		<div class="row col-6 offset-3">
-			<form action="#" method="get">
+			<form action="./inscription" method="get">
 				<button type="submit">Créer un compte</button>
 			</form>
 		</div>

@@ -91,6 +91,19 @@ public class UtilisateurManager {
 	}
 	
 	/**
+	 * @author : ws
+	 */
+	public void deleteUser(Utilisateur u) throws BLLException {
+		
+		try {
+			utilisateurDAO.delete(u.getNo_utlisateur());
+		} catch (DALException e) {
+			throw new BLLException("Echec updateUser");
+		}
+		
+	}
+	
+	/**
 	 * 
 	 * @author : DR
 	 */
