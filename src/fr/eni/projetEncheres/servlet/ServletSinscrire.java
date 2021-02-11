@@ -66,7 +66,12 @@ public class ServletSinscrire extends HttpServlet {
 
 			u.setPseudo(pseudo);
 			u.setPrenom(prenom);
-			u.setTelephone(telephone);
+			try {
+				Integer.parseInt(telephone.trim());
+				u.setTelephone(telephone.trim());
+			} catch (NumberFormatException e) {
+				listeErreurs.add("Le téléphone doit être en chiffres");
+			}
 			try {
 				u.setCode_postal(Integer.parseInt(postal));
 			} catch (NumberFormatException e) {

@@ -23,10 +23,10 @@
                         <br>
                         <h2>Mon profil</h2>
                         <c:forEach var="item" items="${listeDesErreurs}">
-                            <p class="my-1" style="color:red">${item}</p>
+                            <p class="my-3" style="color:red">${item}</p>
                         </c:forEach>
                     </div>
-                    <div class="row my-4" style="justify-content: center">
+                    <div class="row mb-4" style="justify-content: center">
                         <form class="row" action="<%= request.getContextPath() %>/inscription" method="post">
                             <div class="col-md-6 p-3 mb-4">
                                 <div class="input-group mb-3">
