@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import fr.eni.projetEncheres.bean.Utilisateur;
 import fr.eni.projetEncheres.bll.UtilisateurManager;
@@ -93,23 +94,24 @@ public class ServletSinscrire extends HttpServlet {
 //				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/sinscrire.jsp");
 //				dispatcher.forward(request, response);
 			} else {
-
-
+				
 				try {
 					utilisateurManager.inscriptionUser(u);
+					HttpSession session = request.getSession();
+					session.setAttribute("myUser", u);
 				} catch (Exception e) {
-					e.printStackTrace();
+					listeErreurs = utilisateurManager.getListError();
+					request.setAttribute("listeDesErreurs", listeErreurs);
+					this.getServletContext().getRequestDispatcher("/WEB-INF/sinscrire.jsp").forward(request, response);
 				}
 				
-				this.getServletContext().getRequestDispatcher("/WEB-INF/accueilConnecte.jsp").forward(request, response);
+				this.getServletContext().getRequestDispatcher("/WEB-INF/accueil.jsp").forward(request, response);
 //				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/accueilConnecte.jsp");
 //				dispatcher.forward(request, response);
 			}
-		} 
-		else {
+		} else {
 			listeErreurs.add("Tous les champs doivent être remplis");
 			request.setAttribute("listeDesErreurs", listeErreurs);
-
 			this.getServletContext().getRequestDispatcher("/WEB-INF/sinscrire.jsp").forward(request, response);
 //			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/sinscrire.jsp");
 //			dispatcher.forward(request, response);
