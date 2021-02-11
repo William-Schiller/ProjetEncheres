@@ -204,8 +204,19 @@ public class UtilisateurManager {
 	
 	
 	//TODO méthode checkUniquePseudo renvois un boolean
-	public void checkUniquePseudo(String pseudo, List<String> listError){
+	//public boolean checkUniquePseudo(String pseudo, List<String> listError){
 		
+			
+	//}
+	
+	//TODO méthode checkUniquePseudo renvois un boolean
+	public boolean checkUniqueEmail(String pseudo, List<String> listError){
+		boolean verifEmail = true;
+	    if (verifEmail == false) {
+			
+		}
+
+	    return verifEmail;
 			
 	}
 	

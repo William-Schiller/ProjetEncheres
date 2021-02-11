@@ -48,7 +48,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 	      pstmt.setInt(10, 100);
 	      pstmt.setByte(11, (byte)0);
 	      
-	      System.out.println(pstmt.toString());
+
 	      
 	      pstmt.executeUpdate();
 	      
