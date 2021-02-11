@@ -14,10 +14,10 @@
 		<title>S'inscrire</title>
 	</head>
 	<body>
-        <div class="container position-absolute top-50 start-50 translate-middle">
+        <div class="container">
             <div class="row">
-                <div class="col-md-3"></div>
-                <div class="col-md-6 p-4 border">
+                <div class="col-md-2"></div>
+                <div class="col-md-8 p-4 border  position-absolute top-50 start-50 translate-middle">
                     <div class="row text-center">
                         <h1>Créer un compte</h1>
                         <br>
@@ -73,7 +73,7 @@
                         </form>
                     </div>
                 </div>
-                <div class="col-md-3"></div>
+                <div class="col-md-2"></div>
             </div>
         </div>
 	</body>
