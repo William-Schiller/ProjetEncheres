@@ -14,7 +14,7 @@
 	</head>
 	
 	<body>
-		<div class="text-danger">
+		<div class="text-danger row text-center">
 			<c:forEach var="item" items="${ listError }">
 				<p>${ item }</p>	
 			</c:forEach>
@@ -51,7 +51,7 @@
 		</form>
 		
 		<div class="row col-6 offset-3">
-			<form action="#" method="get">
+			<form action="./inscription" method="get">
 				<button type="submit">Créer un compte</button>
 			</form>
 		</div>

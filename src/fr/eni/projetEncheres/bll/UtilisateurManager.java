@@ -87,42 +87,61 @@ public class UtilisateurManager {
 		listError = new ArrayList<>();
 		
 		checkPseudo(u.getPseudo(), listError);
-		
+		checkNom(u.getNom(), listError);
+		checkPrenom(u.getPrenom(), listError);
+		checkEmail(u.getEmail(), listError);
+		checkTelephone(u.getTelephone(), listError);
+		checkRue(u.getRue(), listError);
+		checkCodePostal(String.valueOf(u.getCode_postal()), listError);
+		checkVille(u.getVille(), listError);
 		checkPassword(u.getMot_de_passe(), listError);
 		
-//		pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ?, "
-//				+ "rue = ?, code_postal = ?, ville = ?, mot_de_passe = ?
+		if(!listError.isEmpty()) {
+			throw new BLLException("Echec updateUser : vérification des attributs");
+		}
 		
+		try {
+			utilisateurDAO.update(u);
+		} catch (DALException e) {
+			throw new BLLException("Echec updateUser");
+		}
+		
+	}
+	
+	/**
+	 * @author : ws
+	 */
+	public void deleteUser(Utilisateur u) throws BLLException {
+		
+		try {
+			utilisateurDAO.delete(u.getNo_utlisateur());
+		} catch (DALException e) {
+			throw new BLLException("Echec updateUser");
+		}
 		
 	}
 	
 	/**
 	 * 
 	 * @author : DR
+	 * @throws DALException 
 	 */
-	public Utilisateur inscriptionUser(Utilisateur u) throws BLLException {
-        Utilisateur user = null;
-//        verifEmail(u);
-//        verifPseudo(u);
-//        boolean verifEmail = verifEmail(u.getEmail());
-//        boolean verifPseudo = verifPseudo(u.getPseudo());
-//
-//        if ((verifEmail) & (verifPseudo)) {
-//            throw new Exception("L'email et le pseudo existent déjà");
-//        } else if ((verifEmail) & (!verifPseudo)) {
-//            throw new Exception("L'email existe déjà");
-//        } else if ((!verifEmail) & (verifPseudo)) {
-//            throw new Exception("Ce pseudo est déjà pris, choisissez-en un autre");
-//        }
-        
-        try {
-        	utilisateurDAO.insert(u);
-		} catch (DALException e) {
-				e.printStackTrace();
+	public void inscriptionUser(Utilisateur u) throws BLLException {
+		listError = new ArrayList<>();
+		
+		checkPseudoUnique(u.getPseudo(), listError);
+		checkEmailUnique(u.getEmail(), listError);
+		
+		if (!listError.isEmpty()) {
+			throw new BLLException("Echec inscriptionUser : verification pseudo et email");
 		}
-            
-        return u;
-    }
+		try {
+			utilisateurDAO.insert(u);
+		} catch (DALException e) {
+			throw new BLLException("Echec inscriptionUser");
+		}
+	}
+	
 	
 	//**************** VERIFICATION ************************************
 	
@@ -208,11 +227,50 @@ public class UtilisateurManager {
 	}
 	
 	
-	
-	//TODO méthode checkUniquePseudo renvois un boolean
-	public void checkUniquePseudo(String pseudo, List<String> listError){
+	/**
+	 * @author : dr
+	 * @throws BLLException 
+	 */
+	public boolean checkPseudoUnique(String pseudo, List<String> listError) throws BLLException{
+		boolean verifPseudo = true;
+		List<Utilisateur> listeUtilisateur = new ArrayList<>();
+		try {
+			listeUtilisateur = utilisateurDAO.selectAll();
+		} catch (DALException e) {
+			throw new BLLException("Echec checkPseudoUnique");
+		}
 		
-			
+		for (Utilisateur utilisateur : listeUtilisateur) {
+			if (utilisateur.getPseudo().equals(pseudo)) {
+				verifPseudo = false;
+				break;
+			}	
+		}
+		if (verifPseudo == false) {
+			listError.add("Ce pseudo existe déjà");
+		}
+		return verifPseudo;	
+	}
+	
+	public boolean checkEmailUnique(String email, List<String> listError) throws BLLException{
+		boolean verifEmail = true;
+		List<Utilisateur> listeUtilisateur = new ArrayList<>();
+		try {
+			listeUtilisateur = utilisateurDAO.selectAll();
+		} catch (DALException e) {
+			throw new BLLException("Echec checkEmailUnique");
+		}
+		
+		for (Utilisateur utilisateur : listeUtilisateur) {
+			if (utilisateur.getEmail().equals(email)) {
+				verifEmail = false;
+				break;
+			}	
+		}
+		if (verifEmail == false) {
+			listError.add("Cet email est déjà utilisé");
+		}
+		return verifEmail;	
 	}
 	
 	//TODO méthode checkUniqueEmail  renvois un boolean

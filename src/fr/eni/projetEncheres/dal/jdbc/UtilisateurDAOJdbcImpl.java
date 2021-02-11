@@ -25,9 +25,12 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 	@Override
 	public void insert(Utilisateur u) throws DALException {
 
-		  final String INSERT_INFO =
-				"INSERT INTO UTILISATEURS (pseudo,nom,prenom,email,telephone,rue,codePostal,ville,motDePasse)"
-				+ " VALUES (?,?,?,?,?,?,?,?,?)";
+
+		 
+		final String INSERT_INFO =
+				"INSERT INTO UTILISATEURS (pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur)"
+				+ " VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+
 
 		PreparedStatement pstmt = null;
 		Connection con = null;
@@ -42,11 +45,13 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 	      pstmt.setString(4, u.getEmail());
 	      pstmt.setString(5, u.getTelephone());   
 	      pstmt.setString(6, u.getRue());
-	      pstmt.setLong(7, u.getCode_postal());
+	      pstmt.setInt(7, u.getCode_postal());
 	      pstmt.setString(8, u.getVille());
 	      pstmt.setString(9, u.getMot_de_passe());
+	      pstmt.setInt(10, 100);
+	      pstmt.setByte(11, (byte)0);
 	      
-	      System.out.println(pstmt.toString());
+
 	      
 	      pstmt.executeUpdate();
 	      
@@ -106,6 +111,9 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 		return list;
 	}
 
+	/**
+	 * @author : ws
+	 */
 	@Override
 	public void update(Utilisateur u) throws DALException {
 		PreparedStatement stmt = null;
