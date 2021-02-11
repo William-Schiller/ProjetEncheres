@@ -25,7 +25,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 	@Override
 	public void insert(Utilisateur u) throws DALException {
 
-		final String INSERT_INFO =
+		  final String INSERT_INFO =
 				"INSERT INTO UTILISATEURS (pseudo,nom,prenom,email,telephone,rue,codePostal,ville,motDePasse)"
 				+ " VALUES (?,?,?,?,?,?,?,?,?)";
 

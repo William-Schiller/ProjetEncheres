@@ -36,6 +36,24 @@ public class UtilisateurManager {
 	//******************* METHODE : *******************************
 	
 	/**
+	 * aurelien
+	 */
+	public Utilisateur postUser(int id ) throws BLLException{
+		Utilisateur user = null;
+		try {
+			
+			user = utilisateurDAO.selectByID(id);
+			
+		}catch (DALException e) {
+	
+			throw new BLLException("Echec profil");
+		}
+		return user;
+	}
+	
+	
+	
+	/**
 	 * @author : sw
 	 * @throws BLLException 
 	 */
