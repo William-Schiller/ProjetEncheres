@@ -202,22 +202,38 @@ public class UtilisateurManager {
 	}
 	
 	
-	
-	//TODO méthode checkUniquePseudo renvois un boolean
-	//public boolean checkUniquePseudo(String pseudo, List<String> listError){
+	/**
+	 * @author : dr
+	 */
+	public boolean checkUniquePseudo(String pseudo, List<String> listError) throws DALException{
+		boolean verifPseudo = true;
+		List<Utilisateur> listeUtilisateur = new ArrayList<>();
+		listeUtilisateur = utilisateurDAO.selectAll();
 		
-			
-	//}
-	
-	//TODO méthode checkUniquePseudo renvois un boolean
-	public boolean checkUniqueEmail(String pseudo, List<String> listError){
-		boolean verifEmail = true;
-	    if (verifEmail == false) {
-			
+		for (Utilisateur utilisateur : listeUtilisateur) {
+			if (utilisateur.getEmail().equals(pseudo)) {
+				verifPseudo = false;
+				break;
+			}	
 		}
-
-	    return verifEmail;
-			
+		return verifPseudo;	
+	}
+	
+	/**
+	 * @author : dr
+	 */
+	public boolean checkUniqueEmail(String email, List<String> listError) throws DALException{
+		boolean verifEmail = true;
+		List<Utilisateur> listeUtilisateur = new ArrayList<>();
+		listeUtilisateur = utilisateurDAO.selectAll();
+		
+		for (Utilisateur utilisateur : listeUtilisateur) {
+			if (utilisateur.getEmail().equals(email)) {
+				verifEmail = false;
+				break;
+			}	
+		}
+		return verifEmail;	
 	}
 	
 	//TODO méthode checkUniqueEmail  renvois un boolean
