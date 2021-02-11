@@ -14,7 +14,7 @@
 	</head>
 	
 	<body>
-		<div class="text-danger">
+		<div class="text-danger row text-center">
 			<c:forEach var="item" items="${ listError }">
 				<p>${ item }</p>	
 			</c:forEach>

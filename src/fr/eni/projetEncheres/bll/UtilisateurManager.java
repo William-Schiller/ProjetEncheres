@@ -69,12 +69,24 @@ public class UtilisateurManager {
 		listError = new ArrayList<>();
 		
 		checkPseudo(u.getPseudo(), listError);
-		
+		checkNom(u.getNom(), listError);
+		checkPrenom(u.getPrenom(), listError);
+		checkEmail(u.getEmail(), listError);
+		checkTelephone(u.getTelephone(), listError);
+		checkRue(u.getRue(), listError);
+		checkCodePostal(String.valueOf(u.getCode_postal()), listError);
+		checkVille(u.getVille(), listError);
 		checkPassword(u.getMot_de_passe(), listError);
 		
-//		pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ?, "
-//				+ "rue = ?, code_postal = ?, ville = ?, mot_de_passe = ?
+		if(!listError.isEmpty()) {
+			throw new BLLException("Echec updateUser : vérification des attributs");
+		}
 		
+		try {
+			utilisateurDAO.update(u);
+		} catch (DALException e) {
+			throw new BLLException("Echec updateUser");
+		}
 		
 	}
 	
