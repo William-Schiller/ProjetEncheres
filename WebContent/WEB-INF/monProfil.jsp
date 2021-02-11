@@ -35,6 +35,12 @@
 	
 	<h1>Mon Profil</h1>
 	
+		<div class="text-danger row text-center">
+			<c:forEach var="item" items="${ listError }">
+				<p>${ item }</p>	
+			</c:forEach>
+		</div>
+	
 		<form action="<%= request.getContextPath() %>/MonProfil" method="post">
 			<div class="row">
 				<div class="col-2 offset-2">

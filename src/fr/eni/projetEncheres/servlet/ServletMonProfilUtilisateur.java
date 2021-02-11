@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.projetEncheres.bean.Utilisateur;
+import fr.eni.projetEncheres.bll.BLLException;
+import fr.eni.projetEncheres.bll.UtilisateurManager;
 
 /**
  * Servlet implementation class ServletMonProfilUtilisateur
@@ -18,7 +20,14 @@ import fr.eni.projetEncheres.bean.Utilisateur;
 @WebServlet("/MonProfil")
 public class ServletMonProfilUtilisateur extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private UtilisateurManager utilisateurManager;
        
+	
+	public void init() throws ServletException {
+		utilisateurManager = UtilisateurManager.getInstance();
+    	super.init();
+    }
+	
 	
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -87,6 +96,31 @@ public class ServletMonProfilUtilisateur extends HttpServlet {
 				utilisateurModif.setVille(ville);
 			}
 			
+			if(!motDePasseActuel.isEmpty() && !motDePasseNouveau.isEmpty() && !motDePasseConfirme.isEmpty()) {
+				if(motDePasseActuel.equals(((Utilisateur)request.getSession().getAttribute("myUser")).getMot_de_passe())) {
+					if(motDePasseNouveau.equals(motDePasseConfirme)) {
+						utilisateurModif.setMot_de_passe(motDePasseConfirme);
+					} else {
+						listError.add("La confirmation de mot de passe est incorrect");
+					}
+				} else {
+					listError.add("Le mot de passe est incorrect");
+				}
+				
+			}
+			
+			if(!listError.isEmpty()) {
+				listError.add("Modification du profil impossible");
+			} else {
+				try {
+					utilisateurManager.updateUser(utilisateurModif);
+				} catch (BLLException e) {
+					listError = utilisateurManager.getListError();
+					listError.add("Impossible de modifier le profil");
+				}
+			}
+			
+			request.setAttribute("listError", listError);
 					
 			System.out.println(pseudo + "- ");
 			System.out.println(nom + "- ");
