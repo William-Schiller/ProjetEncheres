@@ -1,9 +1,5 @@
 package fr.eni.projetEncheres.bll;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -11,13 +7,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import fr.eni.projetEncheres.bean.Utilisateur;
-import fr.eni.projetEncheres.dal.ConnectionProvider;
 import fr.eni.projetEncheres.dal.DALException;
 import fr.eni.projetEncheres.dal.DAOFactory;
 import fr.eni.projetEncheres.dal.UtilisateurDAO;
 
 public class UtilisateurManager {
-
+		
 	private static UtilisateurManager utilisateurManager;
 	private UtilisateurDAO utilisateurDAO;
 	
@@ -41,23 +36,6 @@ public class UtilisateurManager {
 	//******************* METHODE : *******************************
 	
 	/**
-	 * aurelien
-	 * TODO peut etre traitement a voir plus tard
-	 */
-	 public Utilisateur postUser(int id) throws BLLException {
-		 
-		 Utilisateur user = null;
-		 try {
-			user = utilisateurDAO.selectByID(id);
-		} catch (DALException e) {
-			throw new BLLException("echec postuser");
-			
-		}
-		 return user;
-		 
-	 }
-	
-	/**
 	 * @author : sw
 	 * @throws BLLException 
 	 */
@@ -66,6 +44,7 @@ public class UtilisateurManager {
 		Utilisateur user = null;
 		
 		checkPseudo(pseudo, listError);
+		checkEmail(pseudo, listError);
 		checkPassword(mot_de_passe, listError);
 		
 		if(!listError.isEmpty()) {
@@ -90,7 +69,11 @@ public class UtilisateurManager {
 		listError = new ArrayList<>();
 		
 		checkPseudo(u.getPseudo(), listError);
+		
 		checkPassword(u.getMot_de_passe(), listError);
+		
+//		pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ?, "
+//				+ "rue = ?, code_postal = ?, ville = ?, mot_de_passe = ?
 		
 		
 	}
@@ -99,8 +82,8 @@ public class UtilisateurManager {
 	 * 
 	 * @author : DR
 	 */
-	//
 	public Utilisateur inscriptionUser(Utilisateur u) throws BLLException {
+        Utilisateur user = null;
 //        verifEmail(u);
 //        verifPseudo(u);
 //        boolean verifEmail = verifEmail(u.getEmail());
@@ -118,11 +101,11 @@ public class UtilisateurManager {
         	utilisateurDAO.insert(u);
 		} catch (DALException e) {
 				e.printStackTrace();
-		}          
+		}
+            
         return u;
     }
 	
-
 	//**************** VERIFICATION ************************************
 	
 	/**
@@ -173,6 +156,33 @@ public class UtilisateurManager {
 	/**
 	 * @author : sw
 	 */
+	public void checkRue(String rue, List<String> listError){
+		if(rue.length() > 100) {
+			listError.add("La rue ne doit pas dépasser 100 caractères");
+		}	
+	}
+	
+	/**
+	 * @author : sw
+	 */
+	public void checkCodePostal(String codePostal, List<String> listError){
+		if(codePostal.length() > 10) {
+			listError.add("Le code postal ne doit pas dépasser 10 caractères");
+		}	
+	}
+	
+	/**
+	 * @author : sw
+	 */
+	public void checkVille(String ville, List<String> listError){
+		if(ville.length() > 30) {
+			listError.add("La ville ne doit pas dépasser 30 caractères");
+		}	
+	}
+	
+	/**
+	 * @author : sw
+	 */
 	public void checkPassword(String mot_de_pass, List<String> listError){
 		if(mot_de_pass.length() > 30) {
 			listError.add("Le mot de passe ne doit pas dépasser 30 caractères");
@@ -182,49 +192,13 @@ public class UtilisateurManager {
 	
 	
 	//TODO méthode checkUniquePseudo renvois un boolean
-	public boolean checkUniquePseudo1(String pseudo, List<String> listError) throws BLLException{
-	
-		List<Utilisateur> liste;
-		boolean verifPseudo = true;
+	public void checkUniquePseudo(String pseudo, List<String> listError){
 		
-		try {
-			liste = utilisateurDAO.selectAll();
-		} catch (DALException e1) {
-			throw new BLLException();
-			// TODO message erreur
-		}
-		
-		for (Utilisateur u : liste) {
-			if (u.getPseudo().equals(pseudo)) {
-				verifPseudo = false;
-				break;
-			}
-		}
-	    return verifPseudo;		
+			
 	}
 	
-	//méthode email unique renvoi un boolean
-	public boolean checkUniqueEmail(String email, List<String> listError) throws BLLException{
-		boolean verifEmail = true;
-		List<Utilisateur> liste = new ArrayList<>();
-		
-		try {
-			liste = utilisateurDAO.selectAll();
-		} catch (DALException e1) {
-			throw new BLLException();
-			// TODO message erreur
-		}
-		for (Utilisateur u : liste) {
-			if (u.getEmail().equals(email)) {
-				verifEmail = false;
-				break;
-			}
-		}
-	    return verifEmail;	
-	}
-	
-	
-	
+	//TODO méthode checkUniqueEmail  renvois un boolean
+
 //	private void verifPseudo(String pseudo) throws Exception {
 //		String characteres = "[a-zA-Z\\d]*";
 //        Pattern p = Pattern.compile(characteres);
