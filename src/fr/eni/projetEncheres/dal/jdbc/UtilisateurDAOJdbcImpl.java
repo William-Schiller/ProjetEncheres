@@ -224,12 +224,13 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 			con = ConnectionProvider.getConnection();
 			
 			String sql = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur"
-					+ " FROM Utilisateurs WHERE pseudo=? AND mot_de_passe=?";
+					+ " FROM Utilisateurs WHERE (pseudo=? OR email=?) AND mot_de_passe=?";
 			
 			stmt = con.prepareStatement(sql);
 			
 			stmt.setString(1, pseudo);
-			stmt.setString(2, mot_de_passe);
+			stmt.setString(2, pseudo);
+			stmt.setString(3, mot_de_passe);
 			
 			ResultSet rs = stmt.executeQuery();
 			

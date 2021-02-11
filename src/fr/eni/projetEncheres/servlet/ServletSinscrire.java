@@ -6,8 +6,6 @@ import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -59,8 +57,7 @@ public class ServletSinscrire extends HttpServlet {
 		String confirmation = request.getParameter("confirmation");
 		
 		
-		if
-		(!pseudo.isEmpty() && !prenom.isEmpty() && !telephone.isEmpty() && !postal.isEmpty() && 
+		if(!pseudo.isEmpty() && !prenom.isEmpty() && !telephone.isEmpty() && !postal.isEmpty() && 
 				!mdp.isEmpty() && !nom.isEmpty() && !email.isEmpty() && !rue.isEmpty() && !ville.isEmpty() && !confirmation.isEmpty()) {
 //		(pseudo != null && prenom != null && telephone != null && postal != null 
 //				&& mdp != null && nom != null && email != null && rue != null && ville != null && confirmation != null) {
@@ -86,7 +83,7 @@ public class ServletSinscrire extends HttpServlet {
 			u.setVille(ville);
 			
 			if (!listeErreurs.isEmpty()) {
-				request.setAttribute("ListeErreurs", listeErreurs);
+				request.setAttribute("listeDesErreurs", listeErreurs);
 				this.getServletContext().getRequestDispatcher("/WEB-INF/sinscrire.jsp").forward(request, response);
 //				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/sinscrire.jsp");
 //				dispatcher.forward(request, response);
@@ -106,7 +103,7 @@ public class ServletSinscrire extends HttpServlet {
 		} 
 		else {
 			listeErreurs.add("Tous les champs doivent être remplis");
-			request.setAttribute("listeErreurs", listeErreurs);
+			request.setAttribute("listeDesErreurs", listeErreurs);
 
 			this.getServletContext().getRequestDispatcher("/WEB-INF/sinscrire.jsp").forward(request, response);
 //			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/sinscrire.jsp");

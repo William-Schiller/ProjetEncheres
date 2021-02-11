@@ -22,7 +22,7 @@
                         <h1>Créer un compte</h1>
                         <br>
                         <h2>Mon profil</h2>
-                        <c:forEach var="item" items="${ListeErreurs}">
+                        <c:forEach var="item" items="${listeDesErreurs}">
                             <p class="my-1" style="color:red">${item}</p>
                         </c:forEach>
                     </div>
