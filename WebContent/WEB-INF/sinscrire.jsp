@@ -19,7 +19,7 @@
                 <div class="col-md-3"></div>
                 <div class="col-md-6 p-4 border">
                     <div class="row text-center">
-                        <h1>S'inscrire</h1>
+                        <h1>Créer un compte</h1>
                         <br>
                         <h2>Mon profil</h2>
                         <c:forEach var="item" items="${ListeErreurs}">
@@ -36,7 +36,7 @@
                                 	<input type="text" class="form-control" name="prenom" placeholder="Prénom" aria-label="Prenom" aria-describedby="basic-addon1">
                                 </div>
                                 <div class="input-group mb-3">
-                                	<input type="text" class="form-control" name="telephone" placeholder="Telephone" aria-label="Telephone" aria-describedby="basic-addon1">
+                                	<input type="text" class="form-control" name="telephone" placeholder="Téléphone" aria-label="Telephone" aria-describedby="basic-addon1">
                                 </div>
                                 <div class="input-group mb-3">
                                 	<input type="number" class="form-control" name="postal" placeholder="Code postal" aria-label="Code postal" aria-describedby="basic-addon1">
