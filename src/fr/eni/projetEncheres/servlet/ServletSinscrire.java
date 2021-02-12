@@ -120,6 +120,7 @@ public class ServletSinscrire extends HttpServlet {
 			} else {
 				try {
 					utilisateurManager.inscriptionUser(u);
+					u = utilisateurManager.connexionUser(u.getPseudo(), u.getMot_de_passe());
 					HttpSession session = request.getSession();
 					session.setAttribute("myUser", u);
 				} catch (Exception e) {
