@@ -13,14 +13,14 @@ public class Categorie implements Serializable{
 	super();
 	}
 	
-	// sans no_categorie insert en base de donner l indenfiant s'insert automatiquement
+	// sans no_categorie insert en base de donner l identifiant s'insert automatiquement
 	
 	public Categorie(String libelle) {
 	   this.libelle = libelle;
 		
 	}
 
-	   public Categorie(int no_categorie, String libelle) {
+	  public Categorie(int no_categorie, String libelle) {
 		this.no_categorie = no_categorie;
 		this.libelle = libelle;
 	}

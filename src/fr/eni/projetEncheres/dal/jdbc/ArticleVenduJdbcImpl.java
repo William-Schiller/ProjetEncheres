@@ -25,7 +25,7 @@ public class ArticleVenduJdbcImpl implements DAO<ArticleVendu> {
 			con = ConnectionProvider.getConnection();
 			
 			String sql = "INSERT INTO ARTICLES_VENDUS(nom_article, description, date_debut_encheres, date_fin_encheres, "
-					+ "prix_initial, no_utilisateur, no_categorie, no_retrait) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+					+ "prix_initial, image_article, no_utilisateur, no_categorie, no_retrait) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			
 			stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			
@@ -34,9 +34,10 @@ public class ArticleVenduJdbcImpl implements DAO<ArticleVendu> {
 			stmt.setTimestamp(3, Timestamp.valueOf(a.getDate_debut_encheres())); // TODO Vérif
 			stmt.setTimestamp(4, Timestamp.valueOf(a.getDate_fin_encheres())); // TODO Vérif
 			stmt.setInt(5, a.getPrix_initial());
-			stmt.setInt(6, a.getNo_utilisateur());
-			stmt.setInt(7, a.getNo_categorie());
-			stmt.setInt(8, a.getNo_retrait());
+			stmt.setString(6, a.getImage());
+			stmt.setInt(7, a.getNo_utilisateur());
+			stmt.setInt(8, a.getNo_categorie());
+			stmt.setInt(9, a.getNo_retrait());
 			
 			stmt.executeUpdate();
 			
@@ -64,7 +65,7 @@ public class ArticleVenduJdbcImpl implements DAO<ArticleVendu> {
 			con = ConnectionProvider.getConnection();
 			
 			String sql = "SELECT (no_article, nom_article, description, date_debut_encheres, date_fin_encheres, "
-					+ "prix_initial, prix_vente, no_utilisateur, no_categorie, no_retrait) FROM ARTICLES_VENDUS";
+					+ "prix_initial, prix_vente, image_article, no_utilisateur, no_categorie, no_retrait) FROM ARTICLES_VENDUS";
 			
 			stmt = con.prepareStatement(sql);
 			
@@ -74,7 +75,7 @@ public class ArticleVenduJdbcImpl implements DAO<ArticleVendu> {
 				list.add(new ArticleVendu(
 						rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"), 
 						rs.getTimestamp("date_debut_encheres").toLocalDateTime(), rs.getTimestamp("date_fin_encheres").toLocalDateTime(), 
-						rs.getInt("prix_initial"), rs.getInt("prix_vente"), 
+						rs.getInt("prix_initial"), rs.getInt("prix_vente"), rs.getString("image_article"),
 						rs.getInt("no_utilisateur"), rs.getInt("no_categorie"), rs.getInt("no_retrait")
 						));
 			}
@@ -109,7 +110,7 @@ public class ArticleVenduJdbcImpl implements DAO<ArticleVendu> {
 				article = new ArticleVendu(
 						rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"), 
 						rs.getTimestamp("date_debut_encheres").toLocalDateTime(), rs.getTimestamp("date_fin_encheres").toLocalDateTime(), 
-						rs.getInt("prix_initial"), rs.getInt("prix_vente"), 
+						rs.getInt("prix_initial"), rs.getInt("prix_vente"), rs.getString("image_article"),
 						rs.getInt("no_utilisateur"), rs.getInt("no_categorie"), rs.getInt("no_retrait")
 						);
 			}
@@ -133,7 +134,7 @@ public class ArticleVenduJdbcImpl implements DAO<ArticleVendu> {
 			con = ConnectionProvider.getConnection();
 					
 			String sql = "UPDATE ARTICLES_VENDUS SET nom_article = ?, description = ?, date_debut_encheres = ?, date_fin_encheres = ?,"
-					+ " prix_initial = ?, prix_vente = ?, no_utilisateur = ?, no_categorie = ?, no_retrait = ? WHERE no_article=?";	
+					+ " prix_initial = ?, prix_vente = ?, image_article = ?, no_utilisateur = ?, no_categorie = ?, no_retrait = ? WHERE no_article=?";	
 
 			
 			stmt = con.prepareStatement(sql);
@@ -144,11 +145,12 @@ public class ArticleVenduJdbcImpl implements DAO<ArticleVendu> {
 			stmt.setTimestamp(4, Timestamp.valueOf(a.getDate_fin_encheres())); // TODO Vérif
 			stmt.setInt(5, a.getPrix_initial());
 			stmt.setInt(6, a.getPrix_vente());
-			stmt.setInt(7, a.getNo_utilisateur());
-			stmt.setInt(8, a.getNo_categorie());
-			stmt.setInt(9, a.getNo_retrait());
+			stmt.setString(7, a.getImage());
+			stmt.setInt(8, a.getNo_utilisateur());
+			stmt.setInt(9, a.getNo_categorie());
+			stmt.setInt(10, a.getNo_retrait());
 			
-			stmt.setInt(10, a.getNo_article());
+			stmt.setInt(11, a.getNo_article());
 			
 			stmt.executeUpdate();
 			
