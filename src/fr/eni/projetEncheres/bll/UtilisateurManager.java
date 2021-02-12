@@ -131,6 +131,7 @@ public class UtilisateurManager {
 		
 		checkPseudoUnique(u.getPseudo(), listError);
 		checkEmailUnique(u.getEmail(), listError);
+		checkPseudo(u.getPseudo(), listError);
 		
 		if (!listError.isEmpty()) {
 			throw new BLLException("Echec inscriptionUser : verification pseudo et email");
@@ -151,6 +152,9 @@ public class UtilisateurManager {
 	public void checkPseudo(String pseudo, List<String> listError){
 		if(pseudo.length() > 30) {
 			listError.add("Le pseudonyme ne doit pas dépasser 30 caractères");
+		}
+		if (!pseudo.matches("[a-zA-Z0-9]*")) {
+			listError.add("Le pseudo doit être uniquement composé de lettres ou de chiffres");
 		}
 	}
 	
@@ -273,30 +277,5 @@ public class UtilisateurManager {
 		return verifEmail;	
 	}
 	
-	//TODO méthode checkUniqueEmail  renvois un boolean
-
-//	private void verifPseudo(String pseudo) throws Exception {
-//		String characteres = "[a-zA-Z\\d]*";
-//        Pattern p = Pattern.compile(characteres);
-//        Matcher m = p.matcher(pseudo.getPseudo());
-//        boolean verifPseudo = m.matches();
-//        if (!verifPseudo) {
-//            logger.severe("Le pseudo doit être au format alpha-numérique " + pseudo.getPseudo());
-//            throw new Exception("Le pseudo doit être au format alpha numérique");
-//        }	
-//	}
-//	
-//	private void verifEmail(String email) throws Exception {
-//		String characteres = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$";
-//        Pattern p = Pattern.compile(characteres);
-//        Matcher m = p.matcher(email.getEmail());
-//        boolean verifEmail = m.matches();
-//        if (!verifEmail) {
-//            logger.severe("Tentative de création de compte avec un email incorrect: " + email.getEmail());
-//            throw new Exception("L'adresse email n'est pas dans un format valide");
-//        }
-//	}
-
-
 }
 
