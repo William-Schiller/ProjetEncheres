@@ -1,18 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib  prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib  prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<jsp:include page="/WEB-INF/fragments/header.jspf"/>
-
-<!-- ... header jspf -->
+<%@ include file="/WEB-INF/fragments/header.jsp" %>
 
 
-        <div class="container">
+        <div class="container pt-4">
             <div class="row">
                 <div class="col-md-2"></div>
-                <div class="col-md-8 p-4 border  position-absolute top-50 start-50 translate-middle">
+                <div class="col-md-8 p-4 border">
                     <div class="row text-center">
-                        <h1>CrÃ©er un compte</h1>
+                        <h1>Créer un compte</h1>
                         <br>
                         <h2>Mon profil</h2>
                         <c:forEach var="item" items="${listeDesErreurs}">
@@ -26,11 +21,11 @@
                                 	<input type="text" class="form-control" name="pseudo" placeholder="Pseudo" value="${ empty pseudoForm ? '' : pseudoForm }">
                                 </div>
                                 <div class="input-group mb-3">
-                                	<input type="text" class="form-control" name="prenom" placeholder="PrÃ©nom" 
+                                	<input type="text" class="form-control" name="prenom" placeholder="Prénom" 
                                 	aria-label="Prenom" aria-describedby="basic-addon1" value="${ empty prenomForm? '' : prenomForm }">
                                 </div>
                                 <div class="input-group mb-3">
-                                	<input type="text" class="form-control" name="telephone" placeholder="TÃ©lÃ©phone" 
+                                	<input type="text" class="form-control" name="telephone" placeholder="Téléphone" 
                                 	aria-label="Telephone" aria-describedby="basic-addon1" value="${ empty telephoneForm? '' : telephoneForm }">
                                 </div>
                                 <div class="input-group mb-3">
@@ -80,3 +75,5 @@
         </div>
 	</body>
 </html>
+
+
