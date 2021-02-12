@@ -5,9 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.projetEncheres.bean.Categorie;
+import fr.eni.projetEncheres.bean.Utilisateur;
 import fr.eni.projetEncheres.dal.ConnectionProvider;
 import fr.eni.projetEncheres.dal.DALException;
 import fr.eni.projetEncheres.dal.DAO;
@@ -22,6 +24,7 @@ public class CategorieDAOJdbcImpl implements DAO<Categorie> {
 		final String INSERT_NOM = "INSERT INTO CATEGORIE( libelle)" + " VALUES (?)";
 		PreparedStatement pstmt = null;
 		Connection con = null;
+		
 		try {
 			con = ConnectionProvider.getConnection();
 		    pstmt = con.prepareStatement(INSERT_NOM, Statement.RETURN_GENERATED_KEYS);
@@ -56,21 +59,54 @@ public class CategorieDAOJdbcImpl implements DAO<Categorie> {
 	}
 
 	@Override
-	public List<Categorie> selectAll() throws DALException {
+	public List<Categorie> selectAll() throws DALException  {
+		
+		List<Categorie> listcategorie = new ArrayList<>();
+		PreparedStatement stmt = null;
+		Connection con = null;
+		
+		try {
+			
+			con = ConnectionProvider.getConnection();
+			
+			String sql = "SELECT * FROM Categorie";
+			
+			stmt = con.prepareStatement(sql);
+			
+			ResultSet rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				listcategorie.add(new Categorie(
+						rs.getInt("no_categorie"), rs.getString("libelle")
+						));
+			}
+		} catch (SQLException e) {
+			throw new DALException("Echec method selectAll()");
+		} finally {
+		
+			try {
+				if(stmt != null) {
+					stmt.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+		}
+		return listcategorie;
 		
 		
-		
-		
-		
-		
-		
-		
-		return null;
 	}
 
 	@Override
 	public void update(Categorie t) throws DALException {
-		// TODO Auto-generated method stub
+		PreparedStatement stmt = null;
+		Connection con = null;
+		
+		try {
+			
+			con = ConnectionProvider.getConnection();
+		
 		
 	}
 
