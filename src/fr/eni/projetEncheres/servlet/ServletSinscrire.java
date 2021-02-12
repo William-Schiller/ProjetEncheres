@@ -47,14 +47,38 @@ public class ServletSinscrire extends HttpServlet {
 		List<String> listeErreurs = new ArrayList<>();
 		
 		String pseudo = request.getParameter("pseudo");
+		if (!request.getParameter(pseudo).isEmpty()) {
+			request.setAttribute("pseudoForm", pseudo);
+		}
 		String prenom = request.getParameter("prenom");
+		if (!request.getParameter(prenom).isEmpty()) {
+			request.setAttribute("prenomForm", prenom);
+		}
 		String telephone = request.getParameter("telephone");
+		if (!request.getParameter(telephone).isEmpty()) {
+			request.setAttribute("telephoneForm", telephone);
+		}
 		String postal = request.getParameter("postal");
+		if (!request.getParameter(postal).isEmpty()) {
+			request.setAttribute("postalForm", postal);
+		}
 		String mdp = request.getParameter("mdp");
 		String nom = request.getParameter("nom");
+		if (!request.getParameter(nom).isEmpty()) {
+			request.setAttribute("nomForm", nom);
+		}
 		String email = request.getParameter("email");
+		if (!request.getParameter(email).isEmpty()) {
+			request.setAttribute("emailForm", email);
+		}
 		String rue = request.getParameter("rue");
+		if (!request.getParameter(rue).isEmpty()) {
+			request.setAttribute("rueForm", rue);
+		}
 		String ville = request.getParameter("ville");
+		if (!request.getParameter(ville).isEmpty()) {
+			request.setAttribute("villeForm", ville);
+		}
 		String confirmation = request.getParameter("confirmation");
 		
 		
@@ -94,9 +118,9 @@ public class ServletSinscrire extends HttpServlet {
 //				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/sinscrire.jsp");
 //				dispatcher.forward(request, response);
 			} else {
-				
 				try {
 					utilisateurManager.inscriptionUser(u);
+					u = utilisateurManager.connexionUser(u.getPseudo(), u.getMot_de_passe());
 					HttpSession session = request.getSession();
 					session.setAttribute("myUser", u);
 				} catch (Exception e) {
@@ -104,7 +128,6 @@ public class ServletSinscrire extends HttpServlet {
 					request.setAttribute("listeDesErreurs", listeErreurs);
 					this.getServletContext().getRequestDispatcher("/WEB-INF/sinscrire.jsp").forward(request, response);
 				}
-				
 				this.getServletContext().getRequestDispatcher("/WEB-INF/accueil.jsp").forward(request, response);
 //				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/accueilConnecte.jsp");
 //				dispatcher.forward(request, response);

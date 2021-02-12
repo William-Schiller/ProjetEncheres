@@ -9,6 +9,7 @@
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 		<link rel="stylesheet" type="text/css" href="/public/css/style.css" media="screen">
 		<link rel="preconnect" href="https://fonts.gstatic.com">
+		<link rel="shortcut icon" type="image/x-icon" href="public/images/logo-onglet.png">
 		<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 		<style>body{font-family: 'Roboto', sans-serif}h1{font-weight: bold}h2{text-decoration: underline}</style>
 		<title>S'inscrire</title>
@@ -30,36 +31,46 @@
                         <form class="row" action="<%= request.getContextPath() %>/inscription" method="post">
                             <div class="col-md-6 p-3 mb-4">
                                 <div class="input-group mb-3">
-                                	<input type="text" class="form-control" name="pseudo" placeholder="Pseudo" aria-label="Pseudo" aria-describedby="basic-addon1">
+                                	<input type="text" class="form-control" name="pseudo" placeholder="Pseudo" 
+                                	aria-label="Pseudo" aria-describedby="basic-addon1" value="${​​ empty pseudoForm? '' : pseudoForm }​​">
                                 </div>
                                 <div class="input-group mb-3">
-                                	<input type="text" class="form-control" name="prenom" placeholder="Prénom" aria-label="Prenom" aria-describedby="basic-addon1">
+                                	<input type="text" class="form-control" name="prenom" placeholder="Prénom" 
+                                	aria-label="Prenom" aria-describedby="basic-addon1" value="${​​ empty prenomForm? '' : prenomForm }​​">
                                 </div>
                                 <div class="input-group mb-3">
-                                	<input type="text" class="form-control" name="telephone" placeholder="Téléphone" aria-label="Telephone" aria-describedby="basic-addon1">
+                                	<input type="text" class="form-control" name="telephone" placeholder="Téléphone" 
+                                	aria-label="Telephone" aria-describedby="basic-addon1" value="${​​ empty telephoneForm? '' : telephoneForm }​​">
                                 </div>
                                 <div class="input-group mb-3">
-                                	<input type="number" class="form-control" name="postal" placeholder="Code postal" aria-label="Code postal" aria-describedby="basic-addon1">
+                                	<input type="number" class="form-control" name="postal" placeholder="Code postal" 
+                                	aria-label="Code postal" aria-describedby="basic-addon1" value="${​​ empty code_postalForm? '' : code_postalForm }​​">
                                 </div>
                                 <div class="input-group mb-3">
-                                	<input type="password" class="form-control" name="mdp" placeholder="Mot de passe" aria-label="Mot de passe" aria-describedby="basic-addon1">
+                                	<input type="password" class="form-control" name="mdp" placeholder="Mot de passe" 
+                                	aria-label="Mot de passe" aria-describedby="basic-addon1">
                                 </div>
                             </div>
                             <div class="col-md-6 p-3 mb-4">
                                 <div class="input-group mb-3">
-                                	<input type="text" class="form-control" name="nom" placeholder="Nom" aria-label="Nom" aria-describedby="basic-addon1">
+                                	<input type="text" class="form-control" name="nom" placeholder="Nom" aria-label="Nom" 
+                                	aria-describedby="basic-addon1" value="${​​ empty nomForm? '' : nomForm }​​">
                                 </div>
                                 <div class="input-group mb-3">
-                                	<input type="email" class="form-control" name="email" placeholder="Email" aria-label="Email" aria-describedby="basic-addon1">
+                                	<input type="email" class="form-control" name="email" placeholder="Email" 
+                                	aria-label="Email" aria-describedby="basic-addon1" value="${​​ empty emailForm? '' : emailForm }​​">
                                 </div>
                                 <div class="input-group mb-3">
-                                	<input type="text" class="form-control" name="rue" placeholder="Rue" aria-label="Rue" aria-describedby="basic-addon1">
+                                	<input type="text" class="form-control" name="rue" placeholder="Rue" 
+                                	aria-label="Rue" aria-describedby="basic-addon1" value="${​​ empty rueForm? '' : rueForm }​​">
                                 </div>
                                 <div class="input-group mb-3">
-                                	<input type="text" class="form-control" name="ville" placeholder="Ville" aria-label="Ville" aria-describedby="basic-addon1">
+                                	<input type="text" class="form-control" name="ville" placeholder="Ville" 
+                                	aria-label="Ville" aria-describedby="basic-addon1" value="${​​ empty villeForm? '' : villeForm }​​">
                                 </div>
                                 <div class="input-group mb-3">
-                                	<input type="password" class="form-control" name="confirmation" placeholder="Confirmation" aria-label="Confirmation" aria-describedby="basic-addon1">
+                                	<input type="password" class="form-control" name="confirmation" 
+                                	placeholder="Confirmation" aria-label="Confirmation" aria-describedby="basic-addon1">
                                 </div>
                             </div>
                             <div class="text-center">
