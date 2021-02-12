@@ -32,7 +32,6 @@
 			</div>
 		</div>
 	</header>
-	
 	<h1>ACCUEIL</h1>
 	
 	<h2>${ sessionScope.myUser.pseudo } </h2>
