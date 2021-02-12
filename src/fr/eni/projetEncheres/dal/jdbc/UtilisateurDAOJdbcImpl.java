@@ -98,15 +98,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 		} catch (SQLException e) {
 			throw new DALException("Echec method selectAll()");
 		} finally {
-		
-			try {
-				if(stmt != null) {
-					stmt.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			
+			ConnectionProvider.connectionClosed(con, stmt);
 		}
 		return list;
 	}

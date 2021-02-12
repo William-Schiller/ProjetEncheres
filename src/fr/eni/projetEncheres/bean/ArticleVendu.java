@@ -13,6 +13,7 @@ public class ArticleVendu implements Serializable {
 	private LocalDateTime date_fin_encheres;
 	private int prix_initial;
 	private int prix_vente;
+	private String image;
 	private int no_utilisateur;
 	private int no_categorie;
 	private int no_retrait;
@@ -25,13 +26,14 @@ public class ArticleVendu implements Serializable {
 	 * 
 	 */
 	public ArticleVendu(String nom_article, String description, LocalDateTime date_debut_encheres,
-			LocalDateTime date_fin_encheres, int prix_initial, int no_utilisateur, int no_categorie,
+			LocalDateTime date_fin_encheres, int prix_initial, String image, int no_utilisateur, int no_categorie,
 			int no_retrait) {
 		this.nom_article = nom_article;
 		this.description = description;
 		this.date_debut_encheres = date_debut_encheres;
 		this.date_fin_encheres = date_fin_encheres;
 		this.prix_initial = prix_initial;
+		this.image = image;
 		this.no_utilisateur = no_utilisateur;
 		this.no_categorie = no_categorie;
 		this.no_retrait = no_retrait;
@@ -42,7 +44,7 @@ public class ArticleVendu implements Serializable {
 	 * 
 	 */
 	public ArticleVendu(int no_article, String nom_article, String description, LocalDateTime date_debut_encheres,
-			LocalDateTime date_fin_encheres, int prix_initial, int prix_vente, int no_utilisateur, int no_categorie,
+			LocalDateTime date_fin_encheres, int prix_initial, int prix_vente, String image, int no_utilisateur, int no_categorie,
 			int no_retrait) {
 		this.no_article = no_article;
 		this.nom_article = nom_article;
@@ -51,6 +53,7 @@ public class ArticleVendu implements Serializable {
 		this.date_fin_encheres = date_fin_encheres;
 		this.prix_initial = prix_initial;
 		this.prix_vente = prix_vente;
+		this.image = image;
 		this.no_utilisateur = no_utilisateur;
 		this.no_categorie = no_categorie;
 		this.no_retrait = no_retrait;
@@ -134,6 +137,14 @@ public class ArticleVendu implements Serializable {
 
 	public void setNo_retrait(int no_retrait) {
 		this.no_retrait = no_retrait;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 	@Override

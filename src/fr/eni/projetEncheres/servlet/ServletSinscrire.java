@@ -47,36 +47,41 @@ public class ServletSinscrire extends HttpServlet {
 		List<String> listeErreurs = new ArrayList<>();
 		
 		String pseudo = request.getParameter("pseudo");
-		if (!request.getParameter(pseudo).isEmpty()) {
-			request.setAttribute("pseudoForm", pseudo);
+		if (pseudo!=null || !request.getParameter(pseudo).isEmpty()) {
+			request.setAttribute("spseudo", pseudo);
 		}
 		String prenom = request.getParameter("prenom");
-		if (!request.getParameter(prenom).isEmpty()) {
+		if (prenom!=null || !request.getParameter(prenom).isEmpty()) {
 			request.setAttribute("prenomForm", prenom);
 		}
 		String telephone = request.getParameter("telephone");
-		if (!request.getParameter(telephone).isEmpty()) {
+		if (telephone!=null || !request.getParameter(telephone).isEmpty()) {
 			request.setAttribute("telephoneForm", telephone);
 		}
 		String postal = request.getParameter("postal");
-		if (!request.getParameter(postal).isEmpty()) {
-			request.setAttribute("postalForm", postal);
+		if (postal!=null || !request.getParameter(postal).isEmpty()) {
+			try {
+				int code_postal = Integer.parseInt(postal);
+				request.setAttribute("postalForm", code_postal);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
 		}
 		String mdp = request.getParameter("mdp");
 		String nom = request.getParameter("nom");
-		if (!request.getParameter(nom).isEmpty()) {
+		if (nom!=null || !request.getParameter(nom).isEmpty()) {
 			request.setAttribute("nomForm", nom);
 		}
 		String email = request.getParameter("email");
-		if (!request.getParameter(email).isEmpty()) {
+		if (email!=null || !request.getParameter(email).isEmpty()) {
 			request.setAttribute("emailForm", email);
 		}
 		String rue = request.getParameter("rue");
-		if (!request.getParameter(rue).isEmpty()) {
+		if (rue!=null || !request.getParameter(rue).isEmpty()) {
 			request.setAttribute("rueForm", rue);
 		}
 		String ville = request.getParameter("ville");
-		if (!request.getParameter(ville).isEmpty()) {
+		if (ville!=null || !request.getParameter(ville).isEmpty()) {
 			request.setAttribute("villeForm", ville);
 		}
 		String confirmation = request.getParameter("confirmation");
