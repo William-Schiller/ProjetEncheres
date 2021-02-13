@@ -24,8 +24,8 @@ public class DAOFactory {
 		return categorieDAO;
 	}
 	
-	public static DAO<ArticleVendu> getArticleVenduDAO() {
-		DAO<ArticleVendu> articleVenduDAO = new ArticleVenduJdbcImpl();
+	public static ArticleVenduDAO getArticleVenduDAO() {
+		ArticleVenduDAO articleVenduDAO = new ArticleVenduJdbcImpl();
 		return articleVenduDAO;
 	}
 	
