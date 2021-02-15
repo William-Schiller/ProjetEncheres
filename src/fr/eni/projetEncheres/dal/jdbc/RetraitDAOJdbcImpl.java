@@ -39,6 +39,10 @@ public class RetraitDAOJdbcImpl implements DAO<Retrait>{
 
 
 			ResultSet rs = pstmt.getGeneratedKeys();
+			
+			if(rs.next()) {
+				t.setNo_retrait(rs.getInt(1));
+			}
 
 		}
 		catch(SQLException e){
