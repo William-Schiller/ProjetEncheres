@@ -22,9 +22,11 @@ public class Retrait implements Serializable {
 		this.ville = ville;
 		}
 	
-	
-	
-	
+	public Retrait(String rue , int code_postale , String ville) {
+		this.rue = rue;
+		this.code_postale = code_postale;
+		this.ville = ville;
+		}
 
 	public int getNo_retrait() {
 		return no_retrait;
