@@ -1,0 +1,18 @@
+@charset "UTF-8";
+
+
+body {
+	font-family: 'Roboto', sans-serif;
+	}
+
+header {
+	background-color: #254d3e;
+	}
+
+h1 {
+	font-weight: bold;
+	}
+	
+#form-sinscrire {
+	justify-content: center;
+}
