@@ -13,7 +13,7 @@
 		<link rel="shortcut icon" type="image/x-icon" href="public/images/logo-onglet.png">
 		<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 		<style>body{font-family: 'Roboto', sans-serif}header{background-color:#254d3e}h1{font-weight: bold}</style>
-		<title>S'inscrire</title>
+		<title>${ title }</title>
 	</head>
 	<body>
 		<header class="container-fluid">
