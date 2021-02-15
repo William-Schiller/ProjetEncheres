@@ -22,14 +22,25 @@
 					<div class="row">
 						<div class="col-md-1">
 						</div>
-						<div class="col-md-2">
+						<div class="col-md-3">
 							<a href="./Accueil">
 								<img alt="logo" src='<c:url value="images/logo-EniEncheres-long.png"></c:url>'>
 							</a>
 						</div>
-						<div class="col-md-3">
+						<div class="col-md-2">
 						</div>
-						<div class="col-md-6">
+						<div class="col-md-6 pe-5">
+							<div class="row m-3">
+								<div class="col-md-4 my-5">
+									<p>${ sessionScope.myUser.pseudo }</p>
+								</div>
+								<div class="col-md-4 my-5">
+									<p>${ empty sessionScope.myUser ? '' : '<a href="./MonProfil">Mon profil</a>' }</p>
+								</div>
+								<div class="col-md-4 my-5">
+									<p>${ empty sessionScope.myUser ? '<a href="./Connexion">S\'inscrire -<br> Se Connecter</a>' : '<a href="./Deconnexion">Se Déconnecter</a>' }</p>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
