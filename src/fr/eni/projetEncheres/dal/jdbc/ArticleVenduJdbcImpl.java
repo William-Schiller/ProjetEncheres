@@ -10,11 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.projetEncheres.bean.ArticleVendu;
+import fr.eni.projetEncheres.dal.ArticleVenduDAO;
 import fr.eni.projetEncheres.dal.ConnectionProvider;
 import fr.eni.projetEncheres.dal.DALException;
 import fr.eni.projetEncheres.dal.DAO;
 
-public class ArticleVenduJdbcImpl implements DAO<ArticleVendu> {
+public class ArticleVenduJdbcImpl implements ArticleVenduDAO {
 
 	@Override
 	public void insert(ArticleVendu a) throws DALException {
@@ -185,6 +186,82 @@ public class ArticleVenduJdbcImpl implements DAO<ArticleVendu> {
 			ConnectionProvider.connectionClosed(con, stmt);
 		}
 		
+	}
+
+	@Override
+	public List<ArticleVendu> selectByNoCategorie(int idCategorie) throws DALException {
+		List<ArticleVendu> list = new ArrayList<>();
+		Connection con = null;
+		PreparedStatement stmt = null;
+		
+		try {
+			con = ConnectionProvider.getConnection();
+			
+			String sql = "SELECT (no_article, nom_article, description, date_debut_encheres, date_fin_encheres, "
+					+ "prix_initial, prix_vente, image_article, no_utilisateur, no_categorie, no_retrait) FROM ARTICLES_VENDUS "
+					+ "WHERE no_categorie=?";
+			
+			stmt = con.prepareStatement(sql);
+			
+			stmt.setInt(1, idCategorie);
+			
+			ResultSet rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				list.add(new ArticleVendu(
+						rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"), 
+						rs.getTimestamp("date_debut_encheres").toLocalDateTime(), rs.getTimestamp("date_fin_encheres").toLocalDateTime(), 
+						rs.getInt("prix_initial"), rs.getInt("prix_vente"), rs.getString("image_article"),
+						rs.getInt("no_utilisateur"), rs.getInt("no_categorie"), rs.getInt("no_retrait")
+						));
+			}
+			
+		} catch (SQLException e) {
+			throw new DALException("methode selectByNoCategorie");
+		} finally {
+			ConnectionProvider.connectionClosed(con, stmt);
+		}
+
+		return list;
+	}
+
+	@Override
+	public List<ArticleVendu> selectByKeyWordAndNoCategorie(String keyWord, int idCategorie) throws DALException {
+		List<ArticleVendu> list = new ArrayList<>();
+		Connection con = null;
+		PreparedStatement stmt = null;
+		
+		try {
+			con = ConnectionProvider.getConnection();
+			
+			String sql = "SELECT (no_article, nom_article, description, date_debut_encheres, date_fin_encheres, "
+					+ "prix_initial, prix_vente, image_article, no_utilisateur, no_categorie, no_retrait) FROM ARTICLES_VENDUS "
+					+ "WHERE no_categorie=? AND (nom_article LIKE '%' + ? + '%' OR description '%' + ? + '%')";
+			
+			stmt = con.prepareStatement(sql);
+			
+			stmt.setInt(1, idCategorie);
+			stmt.setString(2, keyWord);
+			stmt.setString(3, keyWord);
+			
+			ResultSet rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				list.add(new ArticleVendu(
+						rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"), 
+						rs.getTimestamp("date_debut_encheres").toLocalDateTime(), rs.getTimestamp("date_fin_encheres").toLocalDateTime(), 
+						rs.getInt("prix_initial"), rs.getInt("prix_vente"), rs.getString("image_article"),
+						rs.getInt("no_utilisateur"), rs.getInt("no_categorie"), rs.getInt("no_retrait")
+						));
+			}
+			
+		} catch (SQLException e) {
+			throw new DALException("methode selectByKeyWordAndNoCategorie");
+		} finally {
+			ConnectionProvider.connectionClosed(con, stmt);
+		}
+
+		return list;
 	}
 
 }

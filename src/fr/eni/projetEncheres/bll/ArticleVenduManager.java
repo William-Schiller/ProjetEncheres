@@ -1,14 +1,16 @@
 package fr.eni.projetEncheres.bll;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.projetEncheres.bean.ArticleVendu;
-import fr.eni.projetEncheres.dal.DAO;
+import fr.eni.projetEncheres.dal.ArticleVenduDAO;
+import fr.eni.projetEncheres.dal.DALException;
 import fr.eni.projetEncheres.dal.DAOFactory;
 
 public class ArticleVenduManager {
 	private static ArticleVenduManager articleVenduManager;
-	private DAO<ArticleVendu> articleVenduDAO;
+	private ArticleVenduDAO articleVenduDAO;
 	
 	private static List<String> listError;
 	
@@ -29,9 +31,75 @@ public class ArticleVenduManager {
 	
 	
 	//***************METHODE********************
+	public List<ArticleVendu> selectByCategorie(int idCategorie) throws BLLException {
+		listError = new ArrayList<>();
+		List<ArticleVendu> list = new ArrayList<ArticleVendu>();
+		
+		try {
+			list = articleVenduDAO.selectByNoCategorie(idCategorie);
+		} catch (DALException e) {
+			throw new BLLException("echec method selectByCategorie");
+		}
+		
+		if(list.isEmpty()) {
+			listError.add("Aucun élément trouvé pour cette recherche");
+		}
+		
+		return list;
+	}
 	
+	/**
+	 * @author :ws 
+	 * Recherche par no_categori 
+	 * + par mots clé : mot1 ou mot2 ... (dans nom_article ou description)
+	 */
+	public List<ArticleVendu> selectByArticleAndCategorie(String keyWords, int idCategorie) throws BLLException {
+		listError = new ArrayList<>();
+		List<ArticleVendu> list = new ArrayList<>();
+		List<ArticleVendu> listTemp = new ArrayList<>();
+		
+		List<String> listKeyWord = returnListString(keyWords);
+		
+		for (String keyWord : listKeyWord) {
+			try {
+				listTemp = articleVenduDAO.selectByKeyWordAndNoCategorie(keyWord, idCategorie);
+			} catch (DALException e) {
+				throw new BLLException("echec method selectByArticleAndCategorie");
+			}
+			for (ArticleVendu article : listTemp) {
+				list.add(article);
+			}
+		}
+		
+		if(list.isEmpty()) {
+			listError.add("Aucun élément trouvé pour cette recherche");
+		}
+	
+		return list;
+	}
+	
+	protected List<String> returnListString(String keyWords) {
+		List<String> list = new ArrayList<>();
+		String keyWord;
+		int y = 0;
+		
+		for(int i =1; i< keyWords.length(); i++) {
+			if(keyWords.charAt(i)==' ' && keyWords.charAt(i-1)!=' ') {
+				keyWord = keyWords.substring(y, i).trim();
+				y=i+1;
+				i++;
+				list.add(keyWord);
+			}else if (i == keyWords.length()-1) {
+				keyWord = keyWords.substring(y, i+1).trim();
+				list.add(keyWord);
+			}
+		}
+
+		return list;
+	}
 	
 	//***************VERIFICATION******************
+	
 	
 	
 }
