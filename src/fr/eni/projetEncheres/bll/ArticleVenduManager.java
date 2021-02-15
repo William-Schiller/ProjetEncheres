@@ -31,6 +31,27 @@ public class ArticleVenduManager {
 	
 	
 	//***************METHODE********************
+	/**
+	 * @author :ws 
+	 * Recherche par no_categori 
+	 * 
+	 */
+	public void insertArticleVendu(ArticleVendu av) throws BLLException {
+		listError = new ArrayList<>();
+		
+		try {
+			articleVenduDAO.insert(av);
+		} catch (DALException e) {
+			listError.add("impossible d'enregistrer cette article");
+			throw new BLLException("echec method insertArticleVendu");
+		}
+	}
+	
+	/**
+	 * @author :ws 
+	 * Recherche par no_categori 
+	 * 
+	 */
 	public List<ArticleVendu> selectByCategorie(int idCategorie) throws BLLException {
 		listError = new ArrayList<>();
 		List<ArticleVendu> list = new ArrayList<ArticleVendu>();

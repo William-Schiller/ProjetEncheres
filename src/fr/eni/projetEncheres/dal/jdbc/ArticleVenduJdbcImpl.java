@@ -6,8 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
+
 
 import fr.eni.projetEncheres.bean.ArticleVendu;
 import fr.eni.projetEncheres.dal.ArticleVenduDAO;
@@ -35,7 +37,11 @@ public class ArticleVenduJdbcImpl implements ArticleVenduDAO {
 			stmt.setTimestamp(3, Timestamp.valueOf(a.getDate_debut_encheres())); // TODO Vérif
 			stmt.setTimestamp(4, Timestamp.valueOf(a.getDate_fin_encheres())); // TODO Vérif
 			stmt.setInt(5, a.getPrix_initial());
-			stmt.setString(6, a.getImage());
+			if(a.getImage()==null) {
+				stmt.setNull(6, Types.VARCHAR);
+			} else {
+				stmt.setString(6, a.getImage());
+			}
 			stmt.setInt(7, a.getNo_utilisateur());
 			stmt.setInt(8, a.getNo_categorie());
 			stmt.setInt(9, a.getNo_retrait());

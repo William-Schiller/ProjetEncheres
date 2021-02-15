@@ -38,6 +38,23 @@ public class ArticleVendu implements Serializable {
 		this.no_categorie = no_categorie;
 		this.no_retrait = no_retrait;
 	}
+	
+	/**
+	 * Sans id , prix de vente et photo
+	 * 
+	 */
+	public ArticleVendu(String nom_article, String description, LocalDateTime date_debut_encheres,
+			LocalDateTime date_fin_encheres, int prix_initial, int no_utilisateur, int no_categorie,
+			int no_retrait) {
+		this.nom_article = nom_article;
+		this.description = description;
+		this.date_debut_encheres = date_debut_encheres;
+		this.date_fin_encheres = date_fin_encheres;
+		this.prix_initial = prix_initial;
+		this.no_utilisateur = no_utilisateur;
+		this.no_categorie = no_categorie;
+		this.no_retrait = no_retrait;
+	}
 
 	/**
 	 * All 

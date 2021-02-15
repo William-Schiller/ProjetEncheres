@@ -1,6 +1,7 @@
 package fr.eni.projetEncheres.servlet;
 
 import java.io.IOException;
+import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -13,11 +14,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 import fr.eni.projetEncheres.bean.ArticleVendu;
 import fr.eni.projetEncheres.bean.Retrait;
 import fr.eni.projetEncheres.bean.Utilisateur;
 import fr.eni.projetEncheres.bll.ArticleVenduManager;
+import fr.eni.projetEncheres.bll.BLLException;
+import fr.eni.projetEncheres.bll.RetraitManager;
 import fr.eni.projetEncheres.bll.UtilisateurManager;
 
 /**
@@ -29,14 +33,18 @@ import fr.eni.projetEncheres.bll.UtilisateurManager;
 					maxRequestSize=1024*1024*100)  	// 100 MB
 public class ServletVendreUnArticle extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	//private RetraitManager retraitManager;
+	
+	private static final String UPLOAD_DIR = "imageArticle";
+	 
+	private RetraitManager retraitManager;
 	private ArticleVenduManager articleVenduManager;
 	//private UtilisateurManager utilisateurManager;
        
 	
 	public void init() throws ServletException {
-		//utilisateurManager = UtilisateurManager.getInstance();
+//		utilisateurManager = UtilisateurManager.getInstance();
 		articleVenduManager = ArticleVenduManager.getInstance();
+		retraitManager = RetraitManager.getInstance();
     	super.init();
     }
 
@@ -72,7 +80,7 @@ public class ServletVendreUnArticle extends HttpServlet {
 		LocalDateTime date_fin_enchere = null;
 		
 		String sarticle = null; String sdecscription = null; String scategorie = null;
-		String sphoto = null; // TODO
+		String sphoto = null; String fileName = null;
 		String sprix = null;
 		String srue = null; String scode_postal = null; String sville = null;
 		String sdate_debut = null; String sheure_debut = null; String sdate_fin = null; String sheure_fin = null;
@@ -81,7 +89,28 @@ public class ServletVendreUnArticle extends HttpServlet {
 		getParameterAndSetAttribute(request, response, listError, sarticle, sdecscription, scategorie, sprix, srue, 
 				scode_postal, sville, sdate_debut, sheure_debut, sdate_fin, sheure_fin, intsprix, intscode_postal, intscategorie);
 			
-		// If listError not empty --> dispatch à la jsp
+		// TODO If listError not empty --> dispatch à la jsp
+
+			// --> Telecharger photo dans dossier imageArticle
+			// construit le chemin du répertoire pour enregistrer le fichier téléchargé
+			String uploadFilePath = request.getServletContext().getRealPath("") + "public" + File.separator + UPLOAD_DIR;
+			
+			// crée le répertoire de sauvegarde s'il n'existe pas
+	        File fileSaveDir = new File(uploadFilePath);
+	        if (!fileSaveDir.exists()) {
+	            fileSaveDir.mkdirs();
+	        }
+	        
+	        System.out.println("Upload File Directory="+fileSaveDir.getAbsolutePath()); 
+			System.out.println(uploadFilePath);
+	
+			// Récupère toutes les parties de la requête et les écrit dans le fichier sur le serveur
+			Part part = request.getPart("sphoto");
+			fileName = getFileName(part);
+			
+			if(fileName != null && !fileName.isEmpty()) {
+				part.write(uploadFilePath + File.separator + fileName);		
+			}
 		
 		if(!request.getParameter("sarticle").isEmpty() && !request.getParameter("sdecscription").isEmpty() && 
 				!request.getParameter("scategorie").isEmpty() && !request.getParameter("sprix").isEmpty() && 
@@ -90,7 +119,6 @@ public class ServletVendreUnArticle extends HttpServlet {
 				!request.getParameter("sheure_debut").isEmpty() && !request.getParameter("sdate_fin").isEmpty() &&
 				!request.getParameter("sheure_fin").isEmpty()
 		) {
-			
 			
 			System.out.println(request.getParameter("sarticle"));
 			System.out.println(request.getParameter("sdecscription"));
@@ -104,21 +132,31 @@ public class ServletVendreUnArticle extends HttpServlet {
 			System.out.println(request.getParameter("sdate_fin"));
 			System.out.println(request.getParameter("sheure_fin"));
 			
-		
-			
 			//Recuperer les dates 
 			date_debut_enchere = parseStringToLocalDate(request, response, request.getParameter("sdate_debut"), request.getParameter("sheure_debut"));
 			date_fin_enchere = parseStringToLocalDate(request, response, request.getParameter("sdate_fin"), request.getParameter("sheure_fin"));
-
 			
 			Utilisateur user = (Utilisateur) request.getSession().getAttribute("myUser");
 			Retrait retrait = new Retrait(srue, intscode_postal, sville);
 			
-			// Inserer le retrait si il n'existe pas et recuperer l'id;
+			try {
+				retraitManager.insertRetrait(retrait);
+			} catch (BLLException e) {
+				e.printStackTrace();
+				System.out.println("ENORME ERREUR A L INSERTION DU RETRAIT !!!");
+			}
+			System.out.println(retrait.getNo_retrait());
 			
-			ArticleVendu articleVendu = new ArticleVendu(sarticle, scategorie, date_debut_enchere, date_fin_enchere, 
-					intsprix, "null", user.getNo_utlisateur(), /*intscategorie*/2, 666); 
+			ArticleVendu articleVendu = null;
+			if(fileName == null || fileName.isEmpty()) {
+				articleVendu = new ArticleVendu(sarticle, scategorie, date_debut_enchere, date_fin_enchere, 
+						intsprix, user.getNo_utlisateur(), /*intscategorie*/2, retrait.getNo_retrait()); 
+			} else {
+				articleVendu = new ArticleVendu(sarticle, scategorie, date_debut_enchere, date_fin_enchere, 
+						intsprix, fileName, user.getNo_utlisateur(), /*intscategorie*/2, retrait.getNo_retrait()); 
+			}
 			
+			articleVenduManager.insertArticleVendu(articleVendu);
 			// Inserer l'articleVendu;
 		
 			
@@ -145,15 +183,15 @@ public class ServletVendreUnArticle extends HttpServlet {
 		}
 		if(!request.getParameter("sdecscription").isEmpty()) {
 			sdecscription = request.getParameter("sdecscription");
-//			try {
-//				intscategorie = Integer.parseInt(sprix);
-//			} catch(Exception e){
-//				listError.add("Erreur catégorie");
-//			}
 			request.setAttribute("sdecscription", sdecscription);
 		}
 		if(!request.getParameter("scategorie").isEmpty()) {
 			scategorie = request.getParameter("scategorie");
+//			try {
+//			intscategorie = Integer.parseInt(scategorie);
+//		} catch(Exception e){
+//			listError.add("Erreur catégorie");
+//		}
 			request.setAttribute("scategorie", scategorie);
 		}
 		//TODO Photo?
@@ -255,6 +293,22 @@ public class ServletVendreUnArticle extends HttpServlet {
 		
 		return date;
 	}
+	
+	 /**
+	 * source : journaldev.com - servlet 3 file - upload - multipartconfig-part 
+     * Méthode utilitaire pour obtenir le nom de fichier à partir de la disposition du contenu de l'en-tête HTTP
+     */
+    private String getFileName(Part part) {
+        String contentDisp = part.getHeader("content-disposition");
+//      System.out.println("content-disposition header= "+contentDisp);
+        String[] tokens = contentDisp.split(";");
+        for (String token : tokens) {
+            if (token.trim().startsWith("filename")) {
+                return token.substring(token.indexOf("=") + 2, token.length()-1);
+            }
+        }
+        return "";
+    }
 	
 	/**
 	 * @author : ws
