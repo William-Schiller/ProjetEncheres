@@ -7,7 +7,6 @@
 				<div class="row text-center">
 				
 				
-				
 
 					<h1>Vendre un article</h1>
 					<br>
