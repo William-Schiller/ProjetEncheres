@@ -85,20 +85,6 @@ public class ServletVendreUnArticle extends HttpServlet {
 				!request.getParameter("sheure_fin").isEmpty()
 		) {
 			
-			//Recuperer les dates 
-			date_debut_enchere = parseStringToLocalDate(request, response, request.getParameter("sdate_debut"), request.getParameter("sheure_debut"));
-			date_fin_enchere = parseStringToLocalDate(request, response, request.getParameter("sdate_fin"), request.getParameter("sheure_fin"));
-
-			
-			Utilisateur user = (Utilisateur) request.getSession().getAttribute("myUser");
-			Retrait retrait = new Retrait(srue, Integer.parseInt(scode_postal), sville); // <== Bean retrait à complèter manque un attribut
-			
-			// Inserer le retrait si il n'existe pas et recuperer l'id;
-			
-			ArticleVendu articleVendu = new ArticleVendu(sarticle, scategorie, date_debut_enchere, date_fin_enchere, 
-					Integer.parseInt(sprix), "null", user.getNo_utlisateur(), Integer.parseInt(scategorie), 666); 
-			
-			// Inserer l'articleVendu;
 			
 			System.out.println(request.getParameter("sarticle"));
 			System.out.println(request.getParameter("sdecscription"));
@@ -111,6 +97,23 @@ public class ServletVendreUnArticle extends HttpServlet {
 			System.out.println(request.getParameter("sheure_debut"));
 			System.out.println(request.getParameter("sdate_fin"));
 			System.out.println(request.getParameter("sheure_fin"));
+			
+			
+			//Recuperer les dates 
+			date_debut_enchere = parseStringToLocalDate(request, response, request.getParameter("sdate_debut"), request.getParameter("sheure_debut"));
+			date_fin_enchere = parseStringToLocalDate(request, response, request.getParameter("sdate_fin"), request.getParameter("sheure_fin"));
+
+			
+			Utilisateur user = (Utilisateur) request.getSession().getAttribute("myUser");
+			Retrait retrait = new Retrait(srue, Integer.parseInt(scode_postal), sville); // <== Bean retrait à complèter manque un attribut
+			
+			// Inserer le retrait si il n'existe pas et recuperer l'id;
+			
+			ArticleVendu articleVendu = new ArticleVendu(sarticle, scategorie, date_debut_enchere, date_fin_enchere, 
+					Integer.parseInt(sprix), "null", user.getNo_utlisateur(), /*Integer.parseInt(scategorie)*/2, 666); 
+			
+			// Inserer l'articleVendu;
+		
 			
 			
 		}
