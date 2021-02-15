@@ -4,7 +4,7 @@
   <welcome-file-list>
     <welcome-file>Accueil</welcome-file>
   </welcome-file-list>
-  
+
   <session-config>
     <session-timeout>5</session-timeout>
   </session-config>

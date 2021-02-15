@@ -3,6 +3,7 @@ package fr.eni.projetEncheres.bll;
 import java.util.List;
 
 import fr.eni.projetEncheres.bean.Enchere;
+import fr.eni.projetEncheres.dal.DALException;
 import fr.eni.projetEncheres.dal.DAO;
 import fr.eni.projetEncheres.dal.DAOFactory;
 
@@ -29,6 +30,22 @@ public class EnchereManager {
 	
 	
 	//***************METHODE********************
+	
+	
+//	public static Enchere ajoutEnchere (Enchere enchere) throws BLLException {
+//
+//
+//		if (!listError.isEmpty()) {
+//			throw new BLLException("Echec ajoutEnchere : verification");
+//		}
+//		try {
+//			enchereDAO.insert(enchere);
+//		} catch (DALException e) {
+//			throw new BLLException("Echec ajoutEnchere");
+//		}
+//		return enchere;
+//		
+//	}
 	
 	
 	//***************VERIFICATION******************
