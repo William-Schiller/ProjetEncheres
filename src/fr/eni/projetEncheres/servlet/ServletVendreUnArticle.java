@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +24,9 @@ import fr.eni.projetEncheres.bll.UtilisateurManager;
  * Servlet implementation class ServletVendreUnArticle
  */
 @WebServlet("/VendreArticle")
+@MultipartConfig(fileSizeThreshold=1024*1024*10, 	// 10 MB 
+					maxFileSize=1024*1024*50,      	// 50 MB
+					maxRequestSize=1024*1024*100)  	// 100 MB
 public class ServletVendreUnArticle extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	//private RetraitManager retraitManager;
@@ -72,8 +76,10 @@ public class ServletVendreUnArticle extends HttpServlet {
 		String sprix = null;
 		String srue = null; String scode_postal = null; String sville = null;
 		String sdate_debut = null; String sheure_debut = null; String sdate_fin = null; String sheure_fin = null;
+		int intsprix = 0; int intscode_postal = 0; int intscategorie = 0;
 		
-		getParameterAndSetAttribute(request, response, listError, sarticle, sdecscription, scategorie, sprix, srue, scode_postal, sville, sdate_debut, sheure_debut, sdate_fin, sheure_fin);
+		getParameterAndSetAttribute(request, response, listError, sarticle, sdecscription, scategorie, sprix, srue, 
+				scode_postal, sville, sdate_debut, sheure_debut, sdate_fin, sheure_fin, intsprix, intscode_postal, intscategorie);
 			
 		// If listError not empty --> dispatch à la jsp
 		
@@ -98,6 +104,7 @@ public class ServletVendreUnArticle extends HttpServlet {
 			System.out.println(request.getParameter("sdate_fin"));
 			System.out.println(request.getParameter("sheure_fin"));
 			
+		
 			
 			//Recuperer les dates 
 			date_debut_enchere = parseStringToLocalDate(request, response, request.getParameter("sdate_debut"), request.getParameter("sheure_debut"));
@@ -105,12 +112,12 @@ public class ServletVendreUnArticle extends HttpServlet {
 
 			
 			Utilisateur user = (Utilisateur) request.getSession().getAttribute("myUser");
-			Retrait retrait = new Retrait(srue, Integer.parseInt(scode_postal), sville); // <== Bean retrait à complèter manque un attribut
+			Retrait retrait = new Retrait(srue, intscode_postal, sville);
 			
 			// Inserer le retrait si il n'existe pas et recuperer l'id;
 			
 			ArticleVendu articleVendu = new ArticleVendu(sarticle, scategorie, date_debut_enchere, date_fin_enchere, 
-					Integer.parseInt(sprix), "null", user.getNo_utlisateur(), /*Integer.parseInt(scategorie)*/2, 666); 
+					intsprix, "null", user.getNo_utlisateur(), /*intscategorie*/2, 666); 
 			
 			// Inserer l'articleVendu;
 		
@@ -130,13 +137,19 @@ public class ServletVendreUnArticle extends HttpServlet {
 	 */
 	protected void getParameterAndSetAttribute(HttpServletRequest request, HttpServletResponse response, List<String> listError,
 			String sarticle, String sdecscription, String scategorie, String sprix, String srue, String scode_postal, String sville,
-			String sdate_debut, String sheure_debut, String sdate_fin, String sheure_fin) {
+			String sdate_debut, String sheure_debut, String sdate_fin, String sheure_fin, int intsprix, int intscode_postal, int intscategorie) {
+		
 		if(!request.getParameter("sarticle").isEmpty()) {
 			sarticle = request.getParameter("sarticle");
 			request.setAttribute("sarticle", sarticle);
 		}
 		if(!request.getParameter("sdecscription").isEmpty()) {
 			sdecscription = request.getParameter("sdecscription");
+//			try {
+//				intscategorie = Integer.parseInt(sprix);
+//			} catch(Exception e){
+//				listError.add("Erreur catégorie");
+//			}
 			request.setAttribute("sdecscription", sdecscription);
 		}
 		if(!request.getParameter("scategorie").isEmpty()) {
@@ -147,7 +160,7 @@ public class ServletVendreUnArticle extends HttpServlet {
 		if(!request.getParameter("sprix").isEmpty()) {
 			sprix = request.getParameter("sprix");
 			try {
-				Integer.parseInt(sprix);
+				intsprix = Integer.parseInt(sprix);
 			} catch(Exception e){
 				listError.add("Le prix saisi est incorrect");
 			}
@@ -160,7 +173,7 @@ public class ServletVendreUnArticle extends HttpServlet {
 		if(!request.getParameter("scode_postal").isEmpty()) {
 			scode_postal = request.getParameter("scode_postal");
 			try {
-				Integer.parseInt(scode_postal);
+				intscode_postal = Integer.parseInt(scode_postal);
 			} catch(Exception e){
 				listError.add("Le Code postal saisi est incorrect");
 			}
