@@ -1,17 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib  prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib  prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<!DOCTYPE html>
-<html lang="fr">
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link rel="stylesheet" href="public/css/style.css">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> <!-- biblio icone ?? -->
-		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
-		<title>${ title }</title>
-	</head>
+<%@ include file="/WEB-INF/fragments/header.jsp" %>
 	
 	<body>
 		<div class="text-danger row text-center">
@@ -45,14 +32,14 @@
 					<input id="idSSDM" type="checkbox" name="sSeSouvenirDeMoi" value="true">
 					<label for="idSSDM">Se souvenir de moi : </label>
 					<br>
-					<a href="#">Mot de passe oubliÃ©</a>
+					<a href="#">Mot de passe oublié</a>
 				</div>
 			</div>
 		</form>
 		
 		<div class="row col-6 offset-3">
 			<form action="./inscription" method="get">
-				<button type="submit">CrÃ©er un compte</button>
+				<button type="submit">Créer un compte</button>
 			</form>
 		</div>
 	</body>
