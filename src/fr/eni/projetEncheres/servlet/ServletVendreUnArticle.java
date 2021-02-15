@@ -13,7 +13,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fr.eni.projetEncheres.bean.ArticleVendu;
+import fr.eni.projetEncheres.bean.Retrait;
 import fr.eni.projetEncheres.bean.Utilisateur;
+import fr.eni.projetEncheres.bll.ArticleVenduManager;
+import fr.eni.projetEncheres.bll.UtilisateurManager;
 
 /**
  * Servlet implementation class ServletVendreUnArticle
@@ -21,6 +25,16 @@ import fr.eni.projetEncheres.bean.Utilisateur;
 @WebServlet("/VendreArticle")
 public class ServletVendreUnArticle extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	//private RetraitManager retraitManager;
+	private ArticleVenduManager articleVenduManager;
+	//private UtilisateurManager utilisateurManager;
+       
+	
+	public void init() throws ServletException {
+		//utilisateurManager = UtilisateurManager.getInstance();
+		articleVenduManager = ArticleVenduManager.getInstance();
+    	super.init();
+    }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -60,7 +74,9 @@ public class ServletVendreUnArticle extends HttpServlet {
 		String sdate_debut = null; String sheure_debut = null; String sdate_fin = null; String sheure_fin = null;
 		
 		getParameterAndSetAttribute(request, response, listError, sarticle, sdecscription, scategorie, sprix, srue, scode_postal, sville, sdate_debut, sheure_debut, sdate_fin, sheure_fin);
-				
+			
+		// If listError not empty --> dispatch à la jsp
+		
 		if(!request.getParameter("sarticle").isEmpty() && !request.getParameter("sdecscription").isEmpty() && 
 				!request.getParameter("scategorie").isEmpty() && !request.getParameter("sprix").isEmpty() && 
 				!request.getParameter("srue").isEmpty() && !request.getParameter("scode_postal").isEmpty() &&
@@ -68,6 +84,21 @@ public class ServletVendreUnArticle extends HttpServlet {
 				!request.getParameter("sheure_debut").isEmpty() && !request.getParameter("sdate_fin").isEmpty() &&
 				!request.getParameter("sheure_fin").isEmpty()
 		) {
+			
+			//Recuperer les dates 
+			date_debut_enchere = parseStringToLocalDate(request, response, request.getParameter("sdate_debut"), request.getParameter("sheure_debut"));
+			date_fin_enchere = parseStringToLocalDate(request, response, request.getParameter("sdate_fin"), request.getParameter("sheure_fin"));
+
+			
+			Utilisateur user = (Utilisateur) request.getSession().getAttribute("myUser");
+			Retrait retrait = new Retrait(srue, Integer.parseInt(scode_postal), sville); // <== Bean retrait à complèter manque un attribut
+			
+			// Inserer le retrait si il n'existe pas et recuperer l'id;
+			
+			ArticleVendu articleVendu = new ArticleVendu(sarticle, scategorie, date_debut_enchere, date_fin_enchere, 
+					Integer.parseInt(sprix), "null", user.getNo_utlisateur(), Integer.parseInt(scategorie), 666); 
+			
+			// Inserer l'articleVendu;
 			
 			System.out.println(request.getParameter("sarticle"));
 			System.out.println(request.getParameter("sdecscription"));
@@ -82,18 +113,6 @@ public class ServletVendreUnArticle extends HttpServlet {
 			System.out.println(request.getParameter("sheure_fin"));
 			
 			
-		}
-			
-		//Recuperer les dates 
-		if(request.getParameter("sdate_debut") != null && !request.getParameter("sdate_debut").isEmpty() &&
-				request.getParameter("sheure_debut") != null && !request.getParameter("sheure_debut").isEmpty()) {
-			date_debut_enchere = parseStringToLocalDate(request, response, request.getParameter("sdate_debut"), request.getParameter("sheure_debut"));
-			System.out.println(date_debut_enchere);
-		}
-		if(request.getParameter("sdate_fin") != null && !request.getParameter("sdate_fin").isEmpty() &&
-				request.getParameter("sheure_fin") != null && !request.getParameter("sheure_fin").isEmpty()) {
-			date_fin_enchere = parseStringToLocalDate(request, response, request.getParameter("sdate_fin"), request.getParameter("sheure_fin"));
-			System.out.println(date_fin_enchere);
 		}
 		
 		
