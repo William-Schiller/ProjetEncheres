@@ -8,7 +8,7 @@ public class Retrait implements Serializable {
 	
 	private int no_retrait;
 	private String rue;
-	private int  code_postale;
+	private int code_postale;
 	private String ville;
 	
 	

@@ -8,11 +8,7 @@
 				
 				
 				
-				
-				
-				
-				
-				
+
 					<h1>Vendre un article</h1>
 					<br>
 					<h2>Mon Article</h2>
@@ -21,7 +17,7 @@
 						</c:forEach>
 				</div>
 				<div class="row mb-4" style="justify-content: center">
-					<form class="row" action="<%= request.getContextPath() %>/VendreArticle" method="post">
+					<form class="row" action="<%= request.getContextPath() %>/VendreArticle" method="post" enctype="multipart/form-data" >
 						<div class="col-md-3 p-1 mb-1">
 							<div class="input-group mb-3">
 								<label for="idarticle">Article </label>
@@ -69,8 +65,8 @@
 						</div>
 						<div class="col-md-7 p-1 mb-1">
 							<div class="input-group mb-3">
-								<input type="text" class="form-control" id="idphoto" placeholder="a-tranformer-en-boutton-upload"
-								name="sphoto" >
+								<input type="file" class="form-control" id="idphoto" placeholder="a-tranformer-en-boutton-upload"
+								name="sphoto" accept="image/png, image/jpeg">
 							</div>
 						</div>
 						
