@@ -1,6 +1,8 @@
 package fr.eni.projetEncheres.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,11 +25,24 @@ public class ServletEncherir extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/WEB-INF/jsp/detailsVente.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/detailsVente.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/WEB-INF/jsp/accueil.jsp").forward(request, response);
+		
+		List<String> listeErreurs = new ArrayList<>();
+		
+		String no_enchere = request.getParameter("no_enchere");
+		if (no_enchere!=null || !request.getParameter(no_enchere).isEmpty()) {
+			try {
+				Integer.parseInt(no_enchere);
+			} catch (Exception e) {
+				listeErreurs.add("erreur");
+			}
+			request.getRequestDispatcher("/WEB-INF/jsp/accueil.jsp").forward(request, response);
+		}
+		
+		
 		
 	}
 

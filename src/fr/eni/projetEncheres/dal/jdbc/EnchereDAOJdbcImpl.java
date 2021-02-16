@@ -171,19 +171,17 @@ public class EnchereDAOJdbcImpl implements enchereDAO {
 	}
 	
 	@Override
-	public void recupEnchereMax(int id) throws DALException, SQLException {
+	public void recupEnchereMax(int id_article) throws DALException, SQLException {
 		PreparedStatement stmt = null;
 		Connection con = null;
-		
+
 		try {
 			con = ConnectionProvider.getConnection();
 			
-			String sql = "SELECT * FROM ENCHERES WHERE no_enchere = ?";
+			String sql = "SELECT * FROM ENCHERES WHERE no_article = ? ORDER BY id DESC LIMIT 1";
 			
 			stmt = con.prepareStatement(sql);
-			
-			stmt.setInt(1, id);
-			
+			stmt.setInt(1, id_article);
 			stmt.executeUpdate();
 			
 		} finally {

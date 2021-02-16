@@ -6,6 +6,6 @@ import fr.eni.projetEncheres.bean.Enchere;
 
 public interface enchereDAO extends DAO<Enchere> {
 	
-	public void recupEnchereMax(int id) throws DALException, SQLException;
+	public void recupEnchereMax(int id_article) throws DALException, SQLException;
 	
 }
