@@ -73,7 +73,7 @@ public class CategorieDAOJdbcImpl implements DAO<Categorie> {
 			
 			con = ConnectionProvider.getConnection();
 			
-			String sql = "SELECT * FROM Categorie";
+			String sql = "SELECT * FROM CATEGORIES";
 			
 			stmt = con.prepareStatement(sql);
 			
