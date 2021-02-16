@@ -64,7 +64,6 @@ public class ServletSinscrire extends HttpServlet {
 				int code_postal = Integer.parseInt(postal);
 				request.setAttribute("postalForm", code_postal);
 			} catch (Exception e) {
-				// TODO: handle exception
 			}
 		}
 		String mdp = request.getParameter("mdp");
