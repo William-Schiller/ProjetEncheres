@@ -7,7 +7,7 @@
 				</div>
 				<div class="col-md-8 p-4 border mb-4">
 					<div class="row text-center">
-					
+
 						<div class="row">
 							<h2>PC Gamer pour travailler</h2>
 						</div>
@@ -69,7 +69,7 @@
 							</div>
 						</div>
 						
-						<form action="#" method="post">
+						<form action="./DetailEnchere" method="post">
 							<div class="row">
 								<div class="col-4">
 									<label for="idMaProposition">Ma proposition : </label>
@@ -78,7 +78,7 @@
 									<input class="form-control" type="number" id="idMaProposition" name="smonEnchere">
 								</div>
 								<div class="col-4">
-									<button class="btn btn-primary me-2" type="submit">Enchérir</button>
+									<button class="btn btn-primary me-2" name="idNo_article" value="666 ! les 35 h on s'en fout, on veut plus bosser du tout" type="submit">Enchérir</button>
 								</div>
 							</div>
 						</form>
