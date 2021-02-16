@@ -23,7 +23,7 @@ public class RetraitDAOJdbcImpl implements DAO<Retrait>{
 	@Override
 	public void insert(Retrait t) throws DALException {
 
-		final String INSERER = "insert into RETRAITS(rue, code_postal, ville,) VALUES (?, ?, ?);";
+		final String INSERER = "insert into RETRAITS(rue, code_postal, ville) VALUES (?, ?, ?);";
 		PreparedStatement pstmt = null;
 		Connection con = null;
 		try {	
@@ -33,7 +33,7 @@ public class RetraitDAOJdbcImpl implements DAO<Retrait>{
 
 			pstmt.setString(1, t.getRue());
 			pstmt.setInt(2, t.getCode_postale());
-			pstmt.setString(8, t.getVille());
+			pstmt.setString(3, t.getVille());
 
 			pstmt.executeUpdate();
 
@@ -65,26 +65,23 @@ public class RetraitDAOJdbcImpl implements DAO<Retrait>{
 		Connection con = null;
 
 		try {
-
 			con = ConnectionProvider.getConnection();
 
-			String sql = "SELECT * FROM RETRAIT";
+			String sql = "SELECT * FROM RETRAITS";
 
 			stmt = con.prepareStatement(sql);
 
 			ResultSet rs = stmt.executeQuery();
+			
 			while (rs.next()) {
 				retrait.add(new Retrait(
-						rs.getInt("no_retrait")	,rs.getString("rue"),rs.getInt("code_postale"), rs.getString("ville")));
-
+						rs.getInt("no_retrait")	,rs.getString("rue"),rs.getInt("code_postal"), rs.getString("ville"))
+						);
 			}		
 
 		} catch (SQLException e) {
 			throw new DALException("Echec method selectAll()");
-
-
 		} finally {
-
 			try {
 				if(stmt != null) {
 					stmt.close();
@@ -92,11 +89,9 @@ public class RetraitDAOJdbcImpl implements DAO<Retrait>{
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-
 		}
+		
 		return retrait;
-
-
 	}
     
 	/**
@@ -147,7 +142,7 @@ public class RetraitDAOJdbcImpl implements DAO<Retrait>{
 		try {
 
 			con = ConnectionProvider.getConnection();
-			String sql = "UPDATE Retrait SET (rue, code_postal, ville,) VALUES (?, ?, ?);";
+			String sql = "UPDATE Retrait SET (rue, code_postal, ville) VALUES (?, ?, ?);";
 
 			stmt.setString(1, t.getRue());
 			stmt.setInt(2, t.getCode_postale());

@@ -29,15 +29,18 @@
 						<div class="col-md-2">
 						</div>
 						<div class="col-md-6 pe-5">
-							<div class="row m-3">
-								<div class="col-md-4 my-5">
-									<p>${ sessionScope.myUser.pseudo }</p>
+							<div class="row m-3 text-white">
+								<div class="col-md-2 my-5">
+									<p>${ empty sessionScope.myUser ? '' : '<a class="nav-link active" href="#">Encheres</a>' }</p>
+								</div>
+								<div class="col-md-3 my-5">
+									<p>${ empty sessionScope.myUser ? '' : '<a class="nav-link active" href="./VendreArticle">Vendre un article</a>' }</p>
+								</div>
+								<div class="col-md-3 my-5">
+									<p>${ empty sessionScope.myUser ? '' : '<a class="nav-link active" href="./MonProfil">Mon profil</a>' }</p>
 								</div>
 								<div class="col-md-4 my-5">
-									<p>${ empty sessionScope.myUser ? '' : '<a href="./MonProfil">Mon profil</a>' }</p>
-								</div>
-								<div class="col-md-4 my-5">
-									<p>${ empty sessionScope.myUser ? '<a href="./Connexion">S\'inscrire -<br> Se Connecter</a>' : '<a href="./Deconnexion">Se Déconnecter</a>' }</p>
+									<p>${ empty sessionScope.myUser ? '<a class="nav-link active" href="./Connexion">S\'inscrire -<br> Se Connecter</a>' : '<a class="nav-link active"  href="./Deconnexion">Se Déconnecter</a>' }</p>
 								</div>
 							</div>
 						</div>

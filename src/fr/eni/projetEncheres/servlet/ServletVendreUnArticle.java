@@ -17,10 +17,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import fr.eni.projetEncheres.bean.ArticleVendu;
+import fr.eni.projetEncheres.bean.Categorie;
 import fr.eni.projetEncheres.bean.Retrait;
 import fr.eni.projetEncheres.bean.Utilisateur;
 import fr.eni.projetEncheres.bll.ArticleVenduManager;
 import fr.eni.projetEncheres.bll.BLLException;
+import fr.eni.projetEncheres.bll.CategorieManager;
 import fr.eni.projetEncheres.bll.RetraitManager;
 import fr.eni.projetEncheres.bll.UtilisateurManager;
 
@@ -35,16 +37,26 @@ public class ServletVendreUnArticle extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	private static final String UPLOAD_DIR = "imageArticle";
+	
+	LocalDateTime date_debut_enchere = null;
+	LocalDateTime date_fin_enchere = null;
+	
+	String sarticle = null; String sdecscription = null; String scategorie = null;
+	String sphoto = null; String fileName = null;
+	String sprix = null;
+	String srue = null; String scode_postal = null; String sville = null;
+	String sdate_debut = null; String sheure_debut = null; String sdate_fin = null; String sheure_fin = null;
+	int intsprix = 0; int intscode_postal = 0; int intscategorie = 0;
 	 
 	private RetraitManager retraitManager;
 	private ArticleVenduManager articleVenduManager;
-	//private UtilisateurManager utilisateurManager;
+	private CategorieManager categorieManager;
        
 	
 	public void init() throws ServletException {
-//		utilisateurManager = UtilisateurManager.getInstance();
 		articleVenduManager = ArticleVenduManager.getInstance();
 		retraitManager = RetraitManager.getInstance();
+		categorieManager = CategorieManager.getInstance();
     	super.init();
     }
 
@@ -53,7 +65,9 @@ public class ServletVendreUnArticle extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		request.setAttribute("title", getPageName(request, response)); 
+		request.setAttribute("title", getPageName(request, response));
+		
+		List<Categorie> listCategorie = new ArrayList<>();
 		
 		String sdate_debut = null; String sheure_debut = null; String sdate_fin = null; String sheure_fin = null;
 		
@@ -61,6 +75,15 @@ public class ServletVendreUnArticle extends HttpServlet {
 		
 		if(user != null && !user.getPseudo().isEmpty()) {
 			setAutomaticDate(request, response, sdate_debut, sheure_debut, sdate_fin, sheure_fin);
+			
+			try {
+				listCategorie = categorieManager.selectall();
+			} catch (BLLException e) {
+				e.printStackTrace(); //TODO
+			}
+			
+			request.setAttribute("categories", listCategorie);
+			
 			this.getServletContext().getRequestDispatcher("/WEB-INF/vendreUnArticle.jsp").forward(request, response);
 		}
 			
@@ -76,18 +99,7 @@ public class ServletVendreUnArticle extends HttpServlet {
 		
 		List<String> listError = new ArrayList<>();
 		
-		LocalDateTime date_debut_enchere = null;
-		LocalDateTime date_fin_enchere = null;
-		
-		String sarticle = null; String sdecscription = null; String scategorie = null;
-		String sphoto = null; String fileName = null;
-		String sprix = null;
-		String srue = null; String scode_postal = null; String sville = null;
-		String sdate_debut = null; String sheure_debut = null; String sdate_fin = null; String sheure_fin = null;
-		int intsprix = 0; int intscode_postal = 0; int intscategorie = 0;
-		
-		getParameterAndSetAttribute(request, response, listError, sarticle, sdecscription, scategorie, sprix, srue, 
-				scode_postal, sville, sdate_debut, sheure_debut, sdate_fin, sheure_fin, intsprix, intscode_postal, intscategorie);
+		getParameterAndSetAttribute(request, response, listError);
 			
 		// TODO If listError not empty --> dispatch à la jsp
 
@@ -137,29 +149,36 @@ public class ServletVendreUnArticle extends HttpServlet {
 			date_fin_enchere = parseStringToLocalDate(request, response, request.getParameter("sdate_fin"), request.getParameter("sheure_fin"));
 			
 			Utilisateur user = (Utilisateur) request.getSession().getAttribute("myUser");
+
 			Retrait retrait = new Retrait(srue, intscode_postal, sville);
-			
+
 			try {
 				retraitManager.insertRetrait(retrait);
 			} catch (BLLException e) {
 				e.printStackTrace();
-				System.out.println("ENORME ERREUR A L INSERTION DU RETRAIT !!!");
+				//TODO
 			}
-			System.out.println(retrait.getNo_retrait());
-			
+		
 			ArticleVendu articleVendu = null;
 			if(fileName == null || fileName.isEmpty()) {
-				articleVendu = new ArticleVendu(sarticle, scategorie, date_debut_enchere, date_fin_enchere, 
-						intsprix, user.getNo_utlisateur(), /*intscategorie*/2, retrait.getNo_retrait()); 
+				articleVendu = new ArticleVendu(sarticle, sdecscription, date_debut_enchere, date_fin_enchere, 
+						intsprix, user.getNo_utlisateur(), intscategorie, retrait.getNo_retrait()); 
 			} else {
-				articleVendu = new ArticleVendu(sarticle, scategorie, date_debut_enchere, date_fin_enchere, 
-						intsprix, fileName, user.getNo_utlisateur(), /*intscategorie*/2, retrait.getNo_retrait()); 
+				articleVendu = new ArticleVendu(sarticle, sdecscription, date_debut_enchere, date_fin_enchere, 
+						intsprix, fileName, user.getNo_utlisateur(), intscategorie, retrait.getNo_retrait()); 
 			}
 			
-			articleVenduManager.insertArticleVendu(articleVendu);
-			// Inserer l'articleVendu;
-		
+			try {
+				articleVenduManager.insertArticleVendu(articleVendu);
+			} catch (BLLException e) {
+				e.printStackTrace();
+			}
 			
+			listError.addAll(articleVenduManager.getListError());
+			
+			if(listError.isEmpty()) {
+				this.getServletContext().getRequestDispatcher("/Accueil").forward(request, response);
+			}
 			
 		}
 		
@@ -173,9 +192,7 @@ public class ServletVendreUnArticle extends HttpServlet {
 	 * @author : ws
 	 * recuperer les parametre et transmetre les attributs 
 	 */
-	protected void getParameterAndSetAttribute(HttpServletRequest request, HttpServletResponse response, List<String> listError,
-			String sarticle, String sdecscription, String scategorie, String sprix, String srue, String scode_postal, String sville,
-			String sdate_debut, String sheure_debut, String sdate_fin, String sheure_fin, int intsprix, int intscode_postal, int intscategorie) {
+	protected void getParameterAndSetAttribute(HttpServletRequest request, HttpServletResponse response, List<String> listError) {
 		
 		if(!request.getParameter("sarticle").isEmpty()) {
 			sarticle = request.getParameter("sarticle");
@@ -187,14 +204,13 @@ public class ServletVendreUnArticle extends HttpServlet {
 		}
 		if(!request.getParameter("scategorie").isEmpty()) {
 			scategorie = request.getParameter("scategorie");
-//			try {
-//			intscategorie = Integer.parseInt(scategorie);
-//		} catch(Exception e){
-//			listError.add("Erreur catégorie");
-//		}
+			try {
+			intscategorie = Integer.parseInt(scategorie);
+		} catch(Exception e){
+			listError.add("Erreur catégorie");
+		}
 			request.setAttribute("scategorie", scategorie);
 		}
-		//TODO Photo?
 		if(!request.getParameter("sprix").isEmpty()) {
 			sprix = request.getParameter("sprix");
 			try {

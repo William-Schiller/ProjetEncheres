@@ -16,3 +16,7 @@ h1 {
 #form-sinscrire {
 	justify-content: center;
 }
+
+.nav-link {color: #dbf8ff;}
+
+.nav-link:hover {color: #fff;}

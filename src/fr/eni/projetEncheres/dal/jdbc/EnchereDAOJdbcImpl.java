@@ -13,10 +13,10 @@ import fr.eni.projetEncheres.bean.Enchere;
 import fr.eni.projetEncheres.dal.ConnectionProvider;
 import fr.eni.projetEncheres.dal.DALException;
 import fr.eni.projetEncheres.dal.DAO;
+import fr.eni.projetEncheres.dal.enchereDAO;
 
-public class EnchereDAOJdbcImpl implements DAO<Enchere> {
+public class EnchereDAOJdbcImpl implements enchereDAO {
 
-	@Override
 	public void insert(Enchere e) throws DALException {
 		Connection con = null;
 		PreparedStatement stmt = null;
@@ -164,6 +164,28 @@ public class EnchereDAOJdbcImpl implements DAO<Enchere> {
 		
 		} catch (SQLException e) {
 			throw new DALException("Echec method delete()");
+		} finally {
+			ConnectionProvider.connectionClosed(con, stmt);
+		}
+		
+	}
+	
+	@Override
+	public void recupEnchereMax(int id) throws DALException, SQLException {
+		PreparedStatement stmt = null;
+		Connection con = null;
+		
+		try {
+			con = ConnectionProvider.getConnection();
+			
+			String sql = "SELECT * FROM ENCHERES WHERE no_enchere = ?";
+			
+			stmt = con.prepareStatement(sql);
+			
+			stmt.setInt(1, id);
+			
+			stmt.executeUpdate();
+			
 		} finally {
 			ConnectionProvider.connectionClosed(con, stmt);
 		}

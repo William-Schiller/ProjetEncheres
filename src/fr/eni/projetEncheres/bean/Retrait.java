@@ -26,7 +26,7 @@ public class Retrait implements Serializable {
 		this.rue = rue;
 		this.code_postale = code_postale;
 		this.ville = ville;
-		}
+	}
 
 	public int getNo_retrait() {
 		return no_retrait;
