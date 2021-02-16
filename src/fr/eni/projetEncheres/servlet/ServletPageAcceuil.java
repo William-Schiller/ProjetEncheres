@@ -44,42 +44,58 @@ public class ServletPageAcceuil extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		request.setAttribute("title", getPageName(request, response));
+	
+		List<ArticleVendu> listeArticle = new ArrayList<>() ;
+		List<Categorie> listeCategorie = new ArrayList<>() ;
+
+		try {
+			
+			listeCategorie = categorieManager.selectall();
+			for (Categorie categorie : listeCategorie) {
+				System.out.println(categorie.toString());
+			}
+			request.setAttribute("listeCategorie", listeCategorie);
+
+		}catch (BLLException e) {
+			System.out.println("beug categorie");
+		}
+		
+		try {
+			
+			listeArticle = articleVenduManager.selectAllArticle();
+			
+			if(!listeArticle.isEmpty()) {
+				request.setAttribute("listeArticle", listeArticle);
+			}
+		}catch (BLLException e) {
+			System.out.println("bugArticle");
+		}
 
 		this.getServletContext().getRequestDispatcher("/WEB-INF/accueil.jsp").forward(request, response);
 	}
+
+	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-
-		List<ArticleVendu> listeArticle = new ArrayList<>() ;
-		List<Categorie> listeCategorie = new ArrayList<>() ;
-
-		try {
-			listeCategorie = categorieManager.selectall();
-			request.setAttribute("listeCategorie", listeCategorie);
-
-		}catch (BLLException e) {
-			e.printStackTrace();
-			request.setAttribute("erreurcategorie", e);
-			
-		}	
-		try {
-			listeArticle = articleVenduManager.selectAllArticle();
-			if(!listeArticle.isEmpty()) {
-				if(listeCategorie.isEmpty()) {
-			request.setAttribute("listeArticle", listeArticle);
-				}
-			}
-		}catch (BLLException e) {
-			request.setAttribute("erreurlistearticle", e);
-			
-
-		}
+		String keyword = null;
+		int no_categorie = 0;
 		
-
+		if(!request.getParameter("skeyword").isEmpty()) {
+			keyword = request.getParameter("skeyword");
+			request.setAttribute("keyword", keyword);
+		}
+		if(!request.getParameter("scategorie").isEmpty()) {
+			no_categorie = Integer.parseInt(request.getParameter("scategorie"));
+			request.setAttribute("no_categorie", no_categorie);
+		}
+		doGet(request, response);
+		
+		
+		
+		
 	}
 
 	/**
