@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fr.eni.projetEncheres.bean.ArticleVendu;
 import fr.eni.projetEncheres.bean.Categorie;
 import fr.eni.projetEncheres.bll.ArticleVenduManager;
 import fr.eni.projetEncheres.bll.BLLException;
@@ -52,7 +53,7 @@ public class ServletPageAcceuil extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 	
-		List<ArticleVenduManager> listeArticle = null;
+		List<ArticleVendu> listeArticle = null ;
 		List<Categorie> listeCategorie = null;
 		
 		try {
@@ -60,9 +61,16 @@ public class ServletPageAcceuil extends HttpServlet {
 			request.setAttribute("listeCategorie", listeCategorie);
 		
 		}catch (BLLException e) {
+			e.printStackTrace();
+			this.getServletContext().getRequestDispatcher("/WEB-INF/accueil.jsp").forward(request, response);
+		}	
+		try {
+			listeArticle = articleVenduManager.selectall();
 			
-		}
+			
+		}catch (BLLException e) {
 		
+		}
 		
 		
 		
