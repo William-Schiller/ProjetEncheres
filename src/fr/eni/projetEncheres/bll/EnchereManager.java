@@ -45,9 +45,6 @@ public class EnchereManager {
 		// recup toutes les encheres de l'article avec une method dans daojdbc lister encheres d'un article avec un id
 		// selectbyid mais demander de ranger par ordre decroissant de montant et de limiter a 1 resultat
 		// faire method dans encheredaojdbcimpl
-		// creer interface encheredao qui extends dao<enchere>
-		// modifier jdbc enchere pour dire qu'elle implemente la nouvelle interface
-		// changer dans la daofactory getencheredao retourne une encheredao et pas une daoenchere
 		
 //		checkEnchere(enchere.getMontant_enchere(), listError);
 //		checkPoints(enchere.getMontant_enchere(), listError);

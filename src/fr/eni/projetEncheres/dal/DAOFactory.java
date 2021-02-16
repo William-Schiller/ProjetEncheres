@@ -1,7 +1,6 @@
 package fr.eni.projetEncheres.dal;
 
 
-import fr.eni.projetEncheres.bean.ArticleVendu;
 import fr.eni.projetEncheres.bean.Categorie;
 import fr.eni.projetEncheres.bean.Enchere;
 import fr.eni.projetEncheres.bean.Retrait;
@@ -29,8 +28,8 @@ public class DAOFactory {
 		return articleVenduDAO;
 	}
 	
-	public static DAO<Enchere> getEnchereDAO() {
-		DAO<Enchere> enchereDAO = new EnchereDAOJdbcImpl();
+	public static enchereDAO getEnchereDAO() {
+		enchereDAO enchereDAO = new EnchereDAOJdbcImpl();
 		return enchereDAO;
 	}
 	
