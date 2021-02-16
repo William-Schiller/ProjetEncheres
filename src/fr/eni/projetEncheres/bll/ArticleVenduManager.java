@@ -49,6 +49,28 @@ public class ArticleVenduManager {
 	
 	/**
 	 * @author :ws 
+	 * Recherche par no_article
+	 * 
+	 */
+	public ArticleVendu selectArticleById(int idArticle) throws BLLException {
+		listError = new ArrayList<>();
+		ArticleVendu article = null;
+		
+		try {
+			article = articleVenduDAO.selectByID(idArticle);
+		} catch (DALException e) {
+			throw new BLLException("echec method selectArticleById");
+		}
+		
+		if(article==null) {
+			listError.add("Aucun article trouvé");
+		}
+		
+		return article;
+	}
+	
+	/**
+	 * @author :ws 
 	 * Recherche par no_categori 
 	 * 
 	 */

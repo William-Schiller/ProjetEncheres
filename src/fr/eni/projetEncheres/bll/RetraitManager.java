@@ -43,7 +43,7 @@ public class RetraitManager {
 		try {
 			listeRetrait = retraitDAO.selectAll();
 		} catch (DALException e1) {
-			throw new BLLException("Echec method insertRetrait()");
+			throw new BLLException("Echec method insertRetrait() a l'appel du DAO selectaLL");
 
 		}
 
@@ -52,11 +52,11 @@ public class RetraitManager {
 			if(t.getVille().equals(retrait.getVille()) && t.getCode_postale() == retrait.getCode_postale() && t.getRue().equals(retrait.getRue())) {
 				//Vérifier si les parametre de t (test le retrait passé en parametre de la methode) sont egaux aux parametre de retrait ( retrait est un element retrait de la liste complete des retrait)
 				//si le retrait existe recuperer le retrait dans une variable
-				t=retrait;
+				t.setNo_retrait(retrait.getNo_retrait());
 				verifRetraitExist = true;
 				break;
 			}
-
+		
 		}
 
 		if (!verifRetraitExist) {

@@ -16,7 +16,7 @@ public class BLLException extends Exception{
 	//Méthodes
 	@Override
 	public String getMessage() {
-		StringBuffer sb = new StringBuffer("Couche DAL - ");
+		StringBuffer sb = new StringBuffer("Couche BLL - ");
 		sb.append(super.getMessage());
 		
 		return sb.toString() ;
