@@ -1,11 +1,20 @@
 package fr.eni.projetEncheres.servlet;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import fr.eni.projetEncheres.bean.Categorie;
+import fr.eni.projetEncheres.bll.ArticleVenduManager;
+import fr.eni.projetEncheres.bll.BLLException;
+import fr.eni.projetEncheres.bll.CategorieManager;
+
+
 
 /**
  * Servlet implementation class ServletPageAcceuil
@@ -13,6 +22,19 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/Accueil")
 public class ServletPageAcceuil extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	
+	private ArticleVenduManager articleVenduManager;
+	private CategorieManager categorieManager;
+	
+	public void init() throws ServletException {
+		articleVenduManager = ArticleVenduManager.getInstance();
+		categorieManager = CategorieManager.getInstance();
+		super.init();
+	}
+	
+	
+	
        
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -28,7 +50,23 @@ public class ServletPageAcceuil extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		
+	
+		List<ArticleVenduManager> listeArticle = null;
+		List<Categorie> listeCategorie = null;
+		
+		try {
+			listeCategorie = categorieManager.selectall();
+			request.setAttribute("listeCategorie", listeCategorie);
+		
+		}catch (BLLException e) {
+			
+		}
+		
+		
+		
+		
+		
 	}
 	
 	/**
@@ -53,5 +91,8 @@ public class ServletPageAcceuil extends HttpServlet {
 		
 		return pageName;
 	}
+	
+	
+	
 
 }

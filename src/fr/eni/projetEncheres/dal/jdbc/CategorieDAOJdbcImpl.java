@@ -22,7 +22,7 @@ public class CategorieDAOJdbcImpl implements DAO<Categorie> {
 	@Override
 	public void insert(Categorie t) throws DALException {
 	
-		final String INSERT_NOM = "INSERT INTO CATEGORIE( libelle)" + " VALUES (?)";
+		final String INSERT_NOM = "INSERT INTO CATEGORIE(libelle)" + " VALUES (?)";
 		PreparedStatement pstmt = null;
 		Connection con = null;
 		
