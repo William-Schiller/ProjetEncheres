@@ -72,7 +72,8 @@ public class ArticleVenduJdbcImpl implements ArticleVenduDAO {
 			con = ConnectionProvider.getConnection();
 			
 			String sql = "SELECT (no_article, nom_article, description, date_debut_encheres, date_fin_encheres, "
-					+ "prix_initial, prix_vente, image_article, no_utilisateur, no_categorie, no_retrait) FROM ARTICLES_VENDUS";
+					+ "prix_initial, prix_vente, image_article, no_utilisateur, no_categorie, no_retrait) FROM ARTICLES_VENDUS "
+					+ "WHERE prix_vente IS NULL AND date_debut_encheres < CURRENT_TIMESTAMP";
 			
 			stmt = con.prepareStatement(sql);
 			
@@ -209,7 +210,7 @@ public class ArticleVenduJdbcImpl implements ArticleVenduDAO {
 			
 			String sql = "SELECT (no_article, nom_article, description, date_debut_encheres, date_fin_encheres, "
 					+ "prix_initial, prix_vente, image_article, no_utilisateur, no_categorie, no_retrait) FROM ARTICLES_VENDUS "
-					+ "WHERE no_categorie=? AND prix_vente IS NULL";
+					+ "WHERE no_categorie=? AND prix_vente IS NULL AND date_debut_encheres < CURRENT_TIMESTAMP";
 			
 			stmt = con.prepareStatement(sql);
 			
@@ -250,7 +251,8 @@ public class ArticleVenduJdbcImpl implements ArticleVenduDAO {
 			
 			String sql = "SELECT (no_article, nom_article, description, date_debut_encheres, date_fin_encheres, "
 					+ "prix_initial, prix_vente, image_article, no_utilisateur, no_categorie, no_retrait) FROM ARTICLES_VENDUS "
-					+ "WHERE no_categorie=? AND (nom_article LIKE '%' + ? + '%' OR description '%' + ? + '%') AND prix_vente IS NULL";
+					+ "WHERE no_categorie=? AND (nom_article LIKE '%' + ? + '%' OR description '%' + ? + '%') AND prix_vente IS NULL "
+					+ "AND date_debut_encheres < CURRENT_TIMESTAMP";
 			
 			stmt = con.prepareStatement(sql);
 			
