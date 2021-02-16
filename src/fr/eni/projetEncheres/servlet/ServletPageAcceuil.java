@@ -1,6 +1,7 @@
 package fr.eni.projetEncheres.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -23,20 +24,20 @@ import fr.eni.projetEncheres.bll.CategorieManager;
 @WebServlet("/Accueil")
 public class ServletPageAcceuil extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
-	
+
+
 	private ArticleVenduManager articleVenduManager;
 	private CategorieManager categorieManager;
-	
+
 	public void init() throws ServletException {
 		articleVenduManager = ArticleVenduManager.getInstance();
 		categorieManager = CategorieManager.getInstance();
 		super.init();
 	}
-	
-	
-	
-       
+
+
+
+
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -51,32 +52,36 @@ public class ServletPageAcceuil extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-	
-		List<ArticleVendu> listeArticle = null ;
-		List<Categorie> listeCategorie = null;
-		
+
+
+		List<ArticleVendu> listeArticle = new ArrayList<>() ;
+		List<Categorie> listeCategorie = new ArrayList<>() ;
+
 		try {
 			listeCategorie = categorieManager.selectall();
 			request.setAttribute("listeCategorie", listeCategorie);
-		
+
 		}catch (BLLException e) {
 			e.printStackTrace();
-			this.getServletContext().getRequestDispatcher("/WEB-INF/accueil.jsp").forward(request, response);
+			request.setAttribute("erreurcategorie", e);
+			
 		}	
 		try {
-			listeArticle = articleVenduManager.selectall();
-			
-			
+			listeArticle = articleVenduManager.selectAllArticle();
+			if(!listeArticle.isEmpty()) {
+				if(listeCategorie.isEmpty()) {
+			request.setAttribute("listeArticle", listeArticle);
+				}
+			}
 		}catch (BLLException e) {
-		
+			request.setAttribute("erreurlistearticle", e);
+			
+
 		}
 		
-		
-		
-		
+
 	}
-	
+
 	/**
 	 * @author : ws
 	 * Recuperer le nom de la page sur un format classique
@@ -84,23 +89,23 @@ public class ServletPageAcceuil extends HttpServlet {
 	protected String getPageName(HttpServletRequest request, HttpServletResponse response) {
 		String pageName = request.getServletPath().replaceAll("/.", String.valueOf(request.getServletPath().charAt(1)).toUpperCase());
 		boolean check = false;
-		
+
 		while(!check) {
 			for(int i=1; i<= pageName.length()-1; i++) {
 				if( (pageName.charAt(i-1) >= 'a' && pageName.charAt(i-1) <= 'z') && (pageName.charAt(i) >= 'A' && pageName.charAt(i) <= 'Z') ) {
 					pageName = pageName.substring(0, i) + " " + pageName.substring(i, pageName.length());
-				break;
+					break;
 				}
 				if(i == pageName.length()-1) {
 					check =true;
 				}
 			}
 		}
-		
+
 		return pageName;
 	}
-	
-	
-	
+
+
+
 
 }
