@@ -93,9 +93,6 @@ public class ServletPageAcceuil extends HttpServlet {
 		}
 		doGet(request, response);
 		
-		
-		
-		
 	}
 
 	/**
