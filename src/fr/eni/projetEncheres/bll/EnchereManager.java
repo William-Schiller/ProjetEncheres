@@ -94,7 +94,9 @@ public class EnchereManager {
 			
 			if (enchereMax != null) {
 				dernierEncherisseur = utilisateurDAO.selectByID(enchereMax.getNo_utilisateur());
+				System.out.println(dernierEncherisseur.toString());
 				dernierEncherisseur.setCredit(dernierEncherisseur.getCredit() + enchereMax.getMontant_enchere());
+				System.out.println(dernierEncherisseur.toString());
 				System.out.println("credit2");
 				utilisateurDAO.update(dernierEncherisseur);
 				
