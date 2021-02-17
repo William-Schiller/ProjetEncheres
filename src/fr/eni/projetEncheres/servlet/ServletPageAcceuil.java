@@ -82,10 +82,12 @@ public class ServletPageAcceuil extends HttpServlet {
 				listeArticle = articleVenduManager.selectAllArticle();
 			}else if(keyword == null && no_categorie != 0){
 				listeArticle = articleVenduManager.selectByCategorie(no_categorie);
+			}else if(keyword != null && no_categorie ==0) {
+				listeArticle = articleVenduManager.selectByArticle(keyword);
+			}else if(keyword !=null && no_categorie !=0) {
+				listeArticle = articleVenduManager.selectByArticleAndCategorie(keyword, no_categorie);
 			}
-			
-			
-				
+			request.setAttribute("listeArticle", listeArticle);
 		}catch (BLLException e) {
 			System.out.println("bugArticle");
 		}
