@@ -89,6 +89,7 @@ public class EnchereManager {
 				dernierEncherisseur.setCredit(dernierEncherisseur.getCredit() + enchereMax.getMontant_enchere());
 				System.out.println(dernierEncherisseur.toString());
 				utilisateurDAO.update(dernierEncherisseur);
+				System.out.println("update echec");
 				
 			}
 		} catch (DALException e) {
