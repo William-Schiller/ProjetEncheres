@@ -116,7 +116,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 			con = ConnectionProvider.getConnection();
 					
 			String sql = "UPDATE Utilisateurs SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ?, "
-					+ "rue = ?, code_postal = ?, ville = ?, mot_de_passe = ? WHERE no_utilisateur=?";	
+					+ "rue = ?, code_postal = ?, ville = ?, mot_de_passe = ?, credit = ? WHERE no_utilisateur=?";	
 			
 			stmt = con.prepareStatement(sql);
 			
@@ -129,8 +129,9 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 			stmt.setInt(7, u.getCode_postal());
 			stmt.setString(8, u.getVille());
 			stmt.setString(9, u.getMot_de_passe());
+			stmt.setInt(10, u.getCredit());
 			
-			stmt.setInt(10, u.getNo_utlisateur());
+			stmt.setInt(11, u.getNo_utlisateur());
 			
 			stmt.executeUpdate();
 			
