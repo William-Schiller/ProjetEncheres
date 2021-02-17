@@ -280,4 +280,43 @@ public class ArticleVenduJdbcImpl implements ArticleVenduDAO {
 		return list;
 	}
 
+	@Override
+	public List<ArticleVendu> selectByKeyWord(String keyWord) throws DALException {
+		List<ArticleVendu> list = new ArrayList<>();
+		Connection con = null;
+		PreparedStatement stmt = null;
+		
+		try {
+			con = ConnectionProvider.getConnection();
+			
+			String sql = "SELECT (no_article, nom_article, description, date_debut_encheres, date_fin_encheres, "
+					+ "prix_initial, prix_vente, image_article, no_utilisateur, no_categorie, no_retrait) FROM ARTICLES_VENDUS "
+					+ "WHERE (nom_article LIKE '%' + ? + '%' OR description '%' + ? + '%') AND prix_vente IS NULL "
+					+ "AND date_debut_encheres < CURRENT_TIMESTAMP";
+			
+			stmt = con.prepareStatement(sql);
+			
+			stmt.setString(1, keyWord);
+			stmt.setString(2, keyWord);
+			
+			ResultSet rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				list.add(new ArticleVendu(
+						rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"), 
+						rs.getTimestamp("date_debut_encheres").toLocalDateTime(), rs.getTimestamp("date_fin_encheres").toLocalDateTime(), 
+						rs.getInt("prix_initial"), rs.getInt("prix_vente"), rs.getString("image_article"),
+						rs.getInt("no_utilisateur"), rs.getInt("no_categorie"), rs.getInt("no_retrait")
+						));
+			}
+			
+		} catch (SQLException e) {
+			throw new DALException("methode selectByKeyWord");
+		} finally {
+			ConnectionProvider.connectionClosed(con, stmt);
+		}
+
+		return list;
+	}
+
 }

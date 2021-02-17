@@ -9,5 +9,7 @@ public interface ArticleVenduDAO extends DAO<ArticleVendu> {
 	public List<ArticleVendu> selectByNoCategorie(int idCategorie) throws DALException;
 	
 	public List<ArticleVendu> selectByKeyWordAndNoCategorie(String keyWord, int idCategorie) throws DALException;
+	
+	public List<ArticleVendu> selectByKeyWord(String keyWord) throws DALException;
 
 }
