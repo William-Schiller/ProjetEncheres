@@ -36,3 +36,12 @@ h1 {
     width: 400px;
     margin: 2%;
 }
+
+.displayFlexRow{
+	display: flex;
+	flex-direction: row;
+}
+
+.justifyContentCenter {
+	justify-content: center;
+}
