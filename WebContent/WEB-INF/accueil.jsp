@@ -45,7 +45,7 @@
 		<c:if test="${!empty listeArticle}">
 			<c:forEach var="art" items="${listeArticle}">
 			
-				<form action="./DetailEnchere" method="post">
+				<form action="${empty sessionScope.myUser ? '' : './DetailEnchere' }" method="post"> 
 					<button type="submit" name="sno_article" value="${ art.no_article}">
 						<div class="row">
 							<div class="col-6">
