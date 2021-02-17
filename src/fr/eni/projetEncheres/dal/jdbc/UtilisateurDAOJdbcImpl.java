@@ -184,7 +184,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 	    try {
 			cnx = ConnectionProvider.getConnection();
 			
-			String sql = "select pseudo,nom,prenom,email,telephone,rue,code_postal,ville from UTILISATEURS where no_utilisateur = ?;";
+			String sql = "select pseudo,nom,prenom,email,telephone,rue,code_postal,ville,credit from UTILISATEURS where no_utilisateur = ?;";
 			stmt=cnx.prepareStatement(sql);
 			stmt.setInt(1, id);
 			rs=stmt.executeQuery();
@@ -193,6 +193,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 			
 				utilisateur = new Utilisateur();
 				
+				utilisateur.setNo_utlisateur(id);
 				utilisateur.setPseudo(rs.getString("pseudo"));
 				utilisateur.setNom(rs.getString("nom"));
 				utilisateur.setPrenom(rs.getString("prenom"));
@@ -201,6 +202,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 				utilisateur.setRue(rs.getString("rue"));
 				utilisateur.setCode_postal(Integer.parseInt(rs.getString("code_postal")));
 				utilisateur.setVille(rs.getString("ville"));
+				utilisateur.setCredit(rs.getInt("credit"));
 
 			}
 		}catch (SQLException e){
