@@ -5,19 +5,27 @@ import java.util.List;
 
 import fr.eni.projetEncheres.bean.ArticleVendu;
 import fr.eni.projetEncheres.bean.Enchere;
+import fr.eni.projetEncheres.bean.Utilisateur;
+import fr.eni.projetEncheres.dal.ArticleVenduDAO;
 import fr.eni.projetEncheres.dal.DALException;
 import fr.eni.projetEncheres.dal.DAO;
 import fr.eni.projetEncheres.dal.DAOFactory;
+import fr.eni.projetEncheres.dal.EnchereDAO;
+import fr.eni.projetEncheres.dal.UtilisateurDAO;
 import fr.eni.projetEncheres.dal.jdbc.EnchereDAOJdbcImpl;
 
 public class EnchereManager {
 	private static EnchereManager enchereManager;
-	private DAO<Enchere> enchereDAO;
+	private EnchereDAO enchereDAO;
+	private ArticleVenduDAO articleVenduDAO;
+	private UtilisateurDAO utilisateurDAO;
 	
 	private static List<String> listError;
 	
 	private EnchereManager() {
 		this.enchereDAO = DAOFactory.getEnchereDAO();
+		this.articleVenduDAO = DAOFactory.getArticleVenduDAO();
+		this.utilisateurDAO = DAOFactory.getUtilisateurDAO();
 	}
 	
 	public static EnchereManager getInstance() {
@@ -38,27 +46,51 @@ public class EnchereManager {
 	/**
 	 * @author : DR
 	 */
-//	public static Enchere ajoutEnchere (Enchere enchere) throws BLLException {
-//		listError = new ArrayList<>();
-//		
-		// recup article vendu grace a l'id d'article de l'enchere avec method selectbyid d'articlevendudao
-		// recup toutes les encheres de l'article avec une method dans daojdbc lister encheres d'un article avec un id
-		// selectbyid mais demander de ranger par ordre decroissant de montant et de limiter a 1 resultat
-		// faire method dans encheredaojdbcimpl
-	
+	public void ajoutEnchere (Enchere enchere, Utilisateur utilisateur) throws BLLException {
+		listError = new ArrayList<>();
+
+		Enchere enchereMax = null;
+		ArticleVendu article = null;
+		int prixMin = 0;
+		Utilisateur dernierEncherisseur = null;
 		
-//		checkEnchere(enchere.getMontant_enchere(), listError);
-//		checkPoints(enchere.getMontant_enchere(), listError);
-//		
-//		if (!listError.isEmpty()) {
-//			throw new BLLException("Echec ajoutEnchere : verification points et prix");
-//		}
-//		try {
-//			EnchereDAOJdbcImpl.insert(enchere);
-//		} catch (DALException e) {
-//			throw new BLLException("Echec ajoutEnchere");
-//		}
-//	}
+		try {
+			enchereMax = enchereDAO.recupEnchereMax(enchere.getNo_article());
+		} catch (DALException e1) {
+			System.out.println("help dans enchereM recupEM");
+		}
+		
+		if (enchereMax == null) {
+			try {
+				article = articleVenduDAO.selectByID(enchere.getNo_article());
+				prixMin = article.getPrix_initial();
+			} catch (DALException e) {
+				System.out.println("help dans enchereM acticleVendu");
+			}
+		} else {
+			prixMin = enchereMax.getMontant_enchere();
+		}
+		
+		checkEnchere(enchere.getMontant_enchere(), prixMin, listError);
+		checkPoints(enchere.getMontant_enchere(), utilisateur.getCredit(), listError);
+
+		if (!listError.isEmpty()) {
+			throw new BLLException("Echec ajoutEnchere : verification points et prix");
+		}
+		try {
+			enchereDAO.insert(enchere);
+			utilisateur.setCredit(utilisateur.getCredit() - enchere.getMontant_enchere());
+			utilisateurDAO.update(utilisateur);
+			if (enchereMax != null) {
+				dernierEncherisseur = utilisateurDAO.selectByID(enchereMax.getNo_utilisateur());
+				dernierEncherisseur.setCredit(dernierEncherisseur.getCredit() + enchereMax.getMontant_enchere());
+				utilisateurDAO.update(dernierEncherisseur);
+			}
+		} catch (DALException e) {
+			throw new BLLException("Echec ajoutEnchere");
+		}
+		
+	}
 	
 	
 	//***************VERIFICATION******************
