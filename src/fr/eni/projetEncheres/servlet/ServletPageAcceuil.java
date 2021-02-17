@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.projetEncheres.bean.ArticleVendu;
 import fr.eni.projetEncheres.bean.Categorie;
+import fr.eni.projetEncheres.bean.Utilisateur;
 import fr.eni.projetEncheres.bll.ArticleVenduManager;
 import fr.eni.projetEncheres.bll.BLLException;
 import fr.eni.projetEncheres.bll.CategorieManager;
@@ -47,7 +48,22 @@ public class ServletPageAcceuil extends HttpServlet {
 	
 		List<ArticleVendu> listeArticle = new ArrayList<>() ;
 		List<Categorie> listeCategorie = new ArrayList<>() ;
-
+		String keyword = null;
+		int no_categorie = 0;
+		
+		
+				if(request.getParameter("scategorie") != null && !request.getParameter("scategorie").isEmpty()) {
+				no_categorie = Integer.parseInt(request.getParameter("scategorie"));
+				request.setAttribute("no_categorie", no_categorie);
+				
+				}
+		
+				if(request.getParameter("skeyword") != null && !request.getParameter("skeyword").isEmpty()) {
+					keyword = request.getParameter("skeyword");
+					request.setAttribute("keyword", keyword);
+				
+				}
+					
 		try {
 			
 			listeCategorie = categorieManager.selectall();
@@ -55,18 +71,21 @@ public class ServletPageAcceuil extends HttpServlet {
 				System.out.println(categorie.toString());
 			}
 			request.setAttribute("listeCategorie", listeCategorie);
-
+			
+			
 		}catch (BLLException e) {
 			System.out.println("beug categorie");
 		}
 		
 		try {
-			
-			listeArticle = articleVenduManager.selectAllArticle();
-			
-			if(!listeArticle.isEmpty()) {
-				request.setAttribute("listeArticle", listeArticle);
+			if(keyword == null && no_categorie == 0) {
+				listeArticle = articleVenduManager.selectAllArticle();
+			}else if(keyword == null && no_categorie != 0){
+				listeArticle = articleVenduManager.selectByCategorie(no_categorie);
 			}
+			
+			
+				
 		}catch (BLLException e) {
 			System.out.println("bugArticle");
 		}
@@ -80,17 +99,7 @@ public class ServletPageAcceuil extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String keyword = null;
-		int no_categorie = 0;
 		
-		if(request.getParameter("skeyword") != null && !request.getParameter("skeyword").isEmpty()) {
-			keyword = request.getParameter("skeyword");
-			request.setAttribute("keyword", keyword);
-		}
-		if(request.getParameter("scategorie") != null && !request.getParameter("scategorie").isEmpty()) {
-			no_categorie = Integer.parseInt(request.getParameter("scategorie"));
-			request.setAttribute("no_categorie", no_categorie);
-		}
 		doGet(request, response);
 		
 	}
