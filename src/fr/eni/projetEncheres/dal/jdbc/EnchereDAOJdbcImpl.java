@@ -151,15 +151,12 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 		Connection con = null;
 		
 		try {
-			
 			con = ConnectionProvider.getConnection();
 			
 			String sql = "DELETE FROM ENCHERES WHERE no_enchere = ?";
 			
 			stmt = con.prepareStatement(sql);
-			
 			stmt.setInt(1, id);
-			
 			stmt.executeUpdate();
 		
 		} catch (SQLException e) {
@@ -181,28 +178,20 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 			
 			String sql = "SELECT TOP 1 * FROM ENCHERES WHERE no_article = ? ORDER BY montant_enchere DESC";
 			
-			System.out.println("2");
-			System.out.println("id :" + id_article);
-			
 			stmt = con.prepareStatement(sql);
 			stmt.setInt(1, id_article);
 			ResultSet rs = stmt.executeQuery();
 			
-			System.out.println("3");
-			
 			if (rs.next()) {
 				enchere = new Enchere(rs.getInt("no_enchere"), rs.getTimestamp("date_enchere").toLocalDateTime(), 
 						rs.getInt("montant_enchere"), rs.getInt("no_article"), rs.getInt("no_utilisateur"));
-				System.out.println("4");
 			}
-			System.out.println("5");
 
 		} catch (SQLException e) {
 			throw new DALException("echec methode recupEnchereMax");
 		} finally {
 			ConnectionProvider.connectionClosed(con, stmt);
 		} 
-		System.out.println("6 :" + enchere);
 		return enchere;
 		
 	}
