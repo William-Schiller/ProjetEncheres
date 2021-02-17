@@ -48,7 +48,7 @@ public class ServletEncherir extends HttpServlet {
 		
 		if (!request.getParameter("idNo_article").isEmpty()) {
 			idNo_article = Integer.parseInt(request.getParameter("idNo_article"));
-		}
+		} 
 		request.setAttribute("idNo_article", idNo_article);
 		
 		if (!request.getParameter("smonEnchere").isEmpty()) {
