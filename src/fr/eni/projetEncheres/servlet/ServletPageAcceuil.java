@@ -83,18 +83,15 @@ public class ServletPageAcceuil extends HttpServlet {
 		String keyword = null;
 		int no_categorie = 0;
 		
-		if(!request.getParameter("skeyword").isEmpty()) {
+		if(request.getParameter("skeyword") != null && !request.getParameter("skeyword").isEmpty()) {
 			keyword = request.getParameter("skeyword");
 			request.setAttribute("keyword", keyword);
 		}
-		if(!request.getParameter("scategorie").isEmpty()) {
+		if(request.getParameter("scategorie") != null && !request.getParameter("scategorie").isEmpty()) {
 			no_categorie = Integer.parseInt(request.getParameter("scategorie"));
 			request.setAttribute("no_categorie", no_categorie);
 		}
 		doGet(request, response);
-		
-		
-		
 		
 	}
 
