@@ -40,36 +40,30 @@
 		</div>
 	</div>
 		
-	<div class="container">
-		<div class="row">
-			<div class="col-md-1"></div>
-			<div class="col-md-10 p-4">
+	<div class="displayFlexRow justifyContentCenter">
 
-					<c:if test="${!empty listeArticle}">
-						<c:forEach var="art" items="${listeArticle}">
-							<form action="${empty sessionScope.myUser ? '' : './DetailEnchere' }" method="post"> 
-								<div class="row col-md-6 m-3">
-									<button type="submit" name="sno_article" value="${ art.no_article}">
-										<div class="row col-md-12 m-3">
-											<div class="col-md-6">
-												<img width="200" height="200" src="<c:url value="public/imageArticle/${empty art.image ? 'logoPROMO.png' : art.image}"></c:url>" alt="image de l'article" class="img-thumbnail">
-											</div>
-											<div class="col-md-6">
-												<p>${art.nom_article}</p>
-												<p>${art.date_fin_encheres}</p>
-												<p>${art.prix_initial}</p>
-												<p>${art.no_utilisateur}</p>
-											</div>
-										</div>
-									</button>
+			<c:if test="${!empty listeArticle}">
+				<div class="row justifyContentCenter">
+					<c:forEach var="art" items="${listeArticle}">
+						<form class="col-md-5 m-3" action="${empty sessionScope.myUser ? '' : './DetailEnchere' }" method="post"> 
+							<button type="submit" name="sno_article" value="${ art.no_article}">
+								<div class="row m-3">
+									<div class="col-md-6">
+										<img width="200" height="200" src="<c:url value="public/imageArticle/${empty art.image ? 'logoPROMO.png' : art.image}"></c:url>" alt="image de l'article" class="img-thumbnail">
+									</div>
+									<div class="col-md-6">
+										<p>${art.nom_article}</p>
+										<p>${art.date_fin_encheres}</p>
+										<p>${art.prix_initial}</p>
+										<p>${art.no_utilisateur}</p>
+									</div>
 								</div>
-							</form>
-						</c:forEach>
-						
-					</c:if>
-					
-			</div>
-		</div>
+							</button>
+						</form>
+					</c:forEach>
+				</div>
+			</c:if>	
+
 	</div>
 
 

@@ -20,3 +20,12 @@ h1 {
 .nav-link {color: #dbf8ff;}
 
 .nav-link:hover {color: #fff;}
+
+.displayFlexRow{
+	display: flex;
+	flex-direction: row;
+}
+
+.justifyContentCenter {
+	justify-content: center;
+}
