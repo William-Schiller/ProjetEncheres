@@ -48,7 +48,9 @@ public class EnchereManager {
 	 */
 	public void ajoutEnchere (Enchere enchere, Utilisateur utilisateur) throws BLLException {
 		listError = new ArrayList<>();
-
+		
+		System.out.println("1");
+		
 		Enchere enchereMax = null;
 		ArticleVendu article = null;
 		int prixMin = 0;
@@ -57,7 +59,7 @@ public class EnchereManager {
 		try {
 			enchereMax = enchereDAO.recupEnchereMax(enchere.getNo_article());
 		} catch (DALException e1) {
-			System.out.println("help dans enchereM recupEM");
+			System.out.println("pas de dernier encherisseur : enchere sur prix initial");
 		}
 		
 		if (enchereMax == null) {
@@ -65,29 +67,40 @@ public class EnchereManager {
 				article = articleVenduDAO.selectByID(enchere.getNo_article());
 				prixMin = article.getPrix_initial();
 			} catch (DALException e) {
-				System.out.println("help dans enchereM acticleVendu");
+				System.out.println("enchere sur dernier encherisseur : prix actualisé");
 			}
 		} else {
 			prixMin = enchereMax.getMontant_enchere();
+			System.out.println("prixMin :" + prixMin);
 		}
 		
 		checkEnchere(enchere.getMontant_enchere(), prixMin, listError);
 		checkPoints(enchere.getMontant_enchere(), utilisateur.getCredit(), listError);
-
+		
+		System.out.println("7");
+		
 		if (!listError.isEmpty()) {
-			throw new BLLException("Echec ajoutEnchere : verification points et prix");
+			throw new BLLException("Echec ajoutEnchere1");
 		}
+		
 		try {
 			enchereDAO.insert(enchere);
+			System.out.println(utilisateur.toString());
+			System.out.println(enchere.getMontant_enchere());
 			utilisateur.setCredit(utilisateur.getCredit() - enchere.getMontant_enchere());
+			System.out.println("credit1");
+			System.out.println(utilisateur.toString());
 			utilisateurDAO.update(utilisateur);
+			
 			if (enchereMax != null) {
 				dernierEncherisseur = utilisateurDAO.selectByID(enchereMax.getNo_utilisateur());
 				dernierEncherisseur.setCredit(dernierEncherisseur.getCredit() + enchereMax.getMontant_enchere());
+				System.out.println("credit2");
 				utilisateurDAO.update(dernierEncherisseur);
+				
 			}
 		} catch (DALException e) {
-			throw new BLLException("Echec ajoutEnchere");
+			throw new BLLException("Echec ajoutEnchere2");
 		}
 		
 	}
