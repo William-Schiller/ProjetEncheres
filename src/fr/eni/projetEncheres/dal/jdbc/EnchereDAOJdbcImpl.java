@@ -13,9 +13,9 @@ import fr.eni.projetEncheres.bean.Enchere;
 import fr.eni.projetEncheres.dal.ConnectionProvider;
 import fr.eni.projetEncheres.dal.DALException;
 import fr.eni.projetEncheres.dal.DAO;
-import fr.eni.projetEncheres.dal.enchereDAO;
+import fr.eni.projetEncheres.dal.EnchereDAO;
 
-public class EnchereDAOJdbcImpl implements enchereDAO {
+public class EnchereDAOJdbcImpl implements EnchereDAO {
 
 	public void insert(Enchere e) throws DALException {
 		Connection con = null;
@@ -171,22 +171,30 @@ public class EnchereDAOJdbcImpl implements enchereDAO {
 	}
 	
 	@Override
-	public void recupEnchereMax(int id_article) throws DALException, SQLException {
+	public Enchere recupEnchereMax(int id_article) throws DALException {
 		PreparedStatement stmt = null;
 		Connection con = null;
+		Enchere enchere = null;
 
 		try {
 			con = ConnectionProvider.getConnection();
 			
-			String sql = "SELECT * FROM ENCHERES WHERE no_article = ? ORDER BY id DESC LIMIT 1";
+			String sql = "SELECT * FROM ENCHERES WHERE no_article = ? ORDER BY montant_enchere DESC LIMIT 1";
 			
 			stmt = con.prepareStatement(sql);
 			stmt.setInt(1, id_article);
-			stmt.executeUpdate();
-			
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				enchere = new Enchere(rs.getInt("no_enchere"), rs.getTimestamp("date_enchere").toLocalDateTime(), 
+						rs.getInt("montant_enchere"), rs.getInt("no_article"), rs.getInt("no_utilisateur"));
+			}
+
+		} catch (SQLException e) {
+			throw new DALException("echec methode recupEnchereMax");
 		} finally {
 			ConnectionProvider.connectionClosed(con, stmt);
-		}
+		} 
+		return enchere;
 		
 	}
 

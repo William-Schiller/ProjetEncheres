@@ -41,7 +41,6 @@ public class UtilisateurManager {
 	public Utilisateur postUser(int id ) throws BLLException{
 		Utilisateur user = null;
 		try {
-			
 			user = utilisateurDAO.selectByID(id);
 			
 		}catch (DALException e) {
