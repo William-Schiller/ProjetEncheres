@@ -20,3 +20,19 @@ h1 {
 .nav-link {color: #dbf8ff;}
 
 .nav-link:hover {color: #fff;}
+
+
+.flex {
+	 width: 60%;
+     margin: auto;
+     display: flex;
+     justify-content: space-around;
+     flex-wrap: wrap;
+     align-items: center;
+}
+
+.flex-box {
+	height: 300px;
+    width: 400px;
+    margin: 2%;
+}
