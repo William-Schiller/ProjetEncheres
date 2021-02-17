@@ -80,6 +80,9 @@
 								<div class="col-4">
 									<button class="btn btn-primary me-2" name="idNo_article" value="${sno_article}" type="submit">Enchérir</button>
 								</div>
+								<c:forEach var="item" items="${listeDesErreurs}">
+		                            <p class="my-3" style="color:red">${item}</p>
+		                        </c:forEach>
 							</div>
 						</form>
 					

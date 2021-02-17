@@ -49,8 +49,6 @@ public class EnchereManager {
 	public void ajoutEnchere (Enchere enchere, Utilisateur utilisateur) throws BLLException {
 		listError = new ArrayList<>();
 		
-		System.out.println("1");
-		
 		Enchere enchereMax = null;
 		ArticleVendu article = null;
 		int prixMin = 0;
@@ -71,25 +69,18 @@ public class EnchereManager {
 			}
 		} else {
 			prixMin = enchereMax.getMontant_enchere();
-			System.out.println("prixMin :" + prixMin);
 		}
 		
 		checkEnchere(enchere.getMontant_enchere(), prixMin, listError);
 		checkPoints(enchere.getMontant_enchere(), utilisateur.getCredit(), listError);
-		
-		System.out.println("7");
-		
+
 		if (!listError.isEmpty()) {
 			throw new BLLException("Echec ajoutEnchere1");
 		}
 		
 		try {
 			enchereDAO.insert(enchere);
-			System.out.println(utilisateur.toString());
-			System.out.println(enchere.getMontant_enchere());
 			utilisateur.setCredit(utilisateur.getCredit() - enchere.getMontant_enchere());
-			System.out.println("credit1");
-			System.out.println(utilisateur.toString());
 			utilisateurDAO.update(utilisateur);
 			
 			if (enchereMax != null) {
@@ -97,7 +88,6 @@ public class EnchereManager {
 				System.out.println(dernierEncherisseur.toString());
 				dernierEncherisseur.setCredit(dernierEncherisseur.getCredit() + enchereMax.getMontant_enchere());
 				System.out.println(dernierEncherisseur.toString());
-				System.out.println("credit2");
 				utilisateurDAO.update(dernierEncherisseur);
 				
 			}
