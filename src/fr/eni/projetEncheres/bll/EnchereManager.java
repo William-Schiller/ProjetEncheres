@@ -89,8 +89,12 @@ public class EnchereManager {
 				dernierEncherisseur.setCredit(dernierEncherisseur.getCredit() + enchereMax.getMontant_enchere());
 				System.out.println(dernierEncherisseur.toString());
 				utilisateurDAO.update(dernierEncherisseur);
+<<<<<<< HEAD
 				System.out.println("update echec");
 				
+=======
+
+>>>>>>> branch 'main' of https://github.com/William-Schiller/ProjetEncheres
 			}
 		} catch (DALException e) {
 			throw new BLLException("Echec ajoutEnchere2");

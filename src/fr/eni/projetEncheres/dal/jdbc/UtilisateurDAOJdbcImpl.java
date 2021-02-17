@@ -112,12 +112,11 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 		Connection con = null;
 		
 		try {
-			
 			con = ConnectionProvider.getConnection();
 					
 			String sql = "UPDATE Utilisateurs SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ?, "
 					+ "rue = ?, code_postal = ?, ville = ?, mot_de_passe = ?, credit = ? WHERE no_utilisateur=?";	
-			
+
 			stmt = con.prepareStatement(sql);
 			
 			stmt.setString(1, u.getPseudo());
@@ -132,10 +131,11 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 			stmt.setInt(10, u.getCredit());
 			
 			stmt.setInt(11, u.getNo_utlisateur());
-			
+
 			stmt.executeUpdate();
 			
 		} catch (SQLException e) {
+			e.printStackTrace();
 			throw new DALException("Echec method update()");
 		} finally {
 			ConnectionProvider.connectionClosed(con, stmt);
@@ -184,7 +184,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 	    try {
 			cnx = ConnectionProvider.getConnection();
 			
-			String sql = "select pseudo,nom,prenom,email,telephone,rue,code_postal,ville,credit from UTILISATEURS where no_utilisateur = ?;";
+			String sql = "select pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit from UTILISATEURS where no_utilisateur = ?;";
 			stmt=cnx.prepareStatement(sql);
 			stmt.setInt(1, id);
 			rs=stmt.executeQuery();
@@ -202,6 +202,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO{
 				utilisateur.setRue(rs.getString("rue"));
 				utilisateur.setCode_postal(Integer.parseInt(rs.getString("code_postal")));
 				utilisateur.setVille(rs.getString("ville"));
+				utilisateur.setMot_de_passe(rs.getString("mot_de_passe"));
 				utilisateur.setCredit(rs.getInt("credit"));
 
 			}
