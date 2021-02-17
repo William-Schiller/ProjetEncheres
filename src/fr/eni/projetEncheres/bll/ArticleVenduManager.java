@@ -103,6 +103,7 @@ public class ArticleVenduManager {
 		try {
 			list = articleVenduDAO.selectByNoCategorie(idCategorie);
 		} catch (DALException e) {
+			e.printStackTrace();
 			throw new BLLException("echec method selectByCategorie");
 		}
 		
@@ -158,6 +159,7 @@ public class ArticleVenduManager {
 			try {
 				listTemp = articleVenduDAO.selectByKeyWordAndNoCategorie(keyWord, idCategorie);
 			} catch (DALException e) {
+				e.printStackTrace();
 				throw new BLLException("echec method selectByArticleAndCategorie");
 			}
 			for (ArticleVendu article : listTemp) {
