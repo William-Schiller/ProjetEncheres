@@ -47,7 +47,10 @@ public class ServletAfficherDetailEnchere extends HttpServlet {
 		ArticleVendu article = null;
 		Enchere derniereEnchere = null;
 		
-//		no_article = Integer.parseInt(request.getParameter("******")); // definir le parametre :: "sno_article"
+		if(!request.getParameter("sno_article").isEmpty()) {
+			no_article = Integer.parseInt(request.getParameter("sno_article"));
+			request.setAttribute("sno_article", no_article);
+		}
 		
 		try {
 			articleVenduManager.selectArticleById(no_article);
