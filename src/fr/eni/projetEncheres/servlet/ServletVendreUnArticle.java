@@ -142,22 +142,9 @@ public class ServletVendreUnArticle extends HttpServlet {
 				!request.getParameter("sheure_fin").isEmpty()
 		) {
 			
-			System.out.println(request.getParameter("sarticle"));
-			System.out.println(request.getParameter("sdecscription"));
-			System.out.println(request.getParameter("scategorie"));
-			System.out.println(request.getParameter("sprix"));
-			System.out.println(request.getParameter("srue"));
-			System.out.println(request.getParameter("scode_postal"));
-			System.out.println(request.getParameter("sville"));
-			System.out.println(request.getParameter("sdate_debut"));
-			System.out.println(request.getParameter("sheure_debut"));
-			System.out.println(request.getParameter("sdate_fin"));
-			System.out.println(request.getParameter("sheure_fin"));
-			
 			// verifier format date envoyer et en fonction envoyer une erreur si 9:00 au lieu de 09:00
 			// heure "hh:mm" : 5 car, 2 chiffres : 2 chiffres , pas sup à 23
 			// date "yyyy/mm/dd"
-			
 		    if (request.getParameter("sheure_debut").length() != 5 
 		    		&& request.getParameter("sheure_fin").length() != 5) {
 				listError.add("L'heure doit être au format '00:00'");
@@ -193,10 +180,14 @@ public class ServletVendreUnArticle extends HttpServlet {
 						intsprix, fileName, user.getNo_utlisateur(), intscategorie, retrait.getNo_retrait()); 
 			}
 			
-			try {
-				articleVenduManager.insertArticleVendu(articleVendu);
-			} catch (BLLException e) {
-				e.printStackTrace();
+			if(date_debut_enchere.isBefore(LocalDateTime.now())) {
+				listError.add("Date de début incorrect");
+			} else {
+				try {
+					articleVenduManager.insertArticleVendu(articleVendu);
+				} catch (BLLException e) {
+					e.printStackTrace();
+				}
 			}
 			
 			listError.addAll(articleVenduManager.getListError());
