@@ -33,7 +33,7 @@ public class EnchereManager {
 		return enchereManager;
 	}
 	
-	public List<String> getListError() {
+	public static List<String> getListError() {
 		return listError;
 	}
 	
@@ -127,8 +127,8 @@ public class EnchereManager {
 	
 	public void checkPoints(int enchere, int pointsPerso, List<String> listError){
 		if(enchere > pointsPerso) {
-			listError.add("Vous ne disposez pas d'assez de crédit pour effectuer cette enchère. "
-					+ "Votre crédit est de " + pointsPerso);
+			listError.add("Vous ne disposez pas d'assez de crédit pour effectuer cette enchère.");
+			listError.add("Votre crédit est de " + pointsPerso + " points");
 		}	
 	}
 	
