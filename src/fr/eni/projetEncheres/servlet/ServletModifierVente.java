@@ -108,6 +108,10 @@ public class ServletModifierVente extends HttpServlet {
 		
 		List<String> listError = new ArrayList<>();
 		
+		if (request.getParameter(sarticle) == null || request.getParameter(sarticle).isEmpty()) {
+			doGet(request, response);
+		}
+		
 		getParameterAndSetAttribute(request, response, listError);
 			
 		// TODO If listError not empty --> dispatch à la jsp
@@ -192,7 +196,7 @@ public class ServletModifierVente extends HttpServlet {
 			}
 			
 			try {
-				articleVenduManager.insertArticleVendu(articleVendu);
+				articleVenduManager.updateArticleVendu(articleVendu);
 			} catch (BLLException e) {
 				e.printStackTrace();
 			}
