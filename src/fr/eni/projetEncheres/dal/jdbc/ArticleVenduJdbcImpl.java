@@ -357,4 +357,113 @@ public class ArticleVenduJdbcImpl implements ArticleVenduDAO {
 		return list;
 	}
 
+	@Override
+	public List<ArticleVendu> selectAllBetweenDate(int idUtilisateur) throws DALException {
+		List<ArticleVendu> list = new ArrayList<>();
+		Connection con = null;
+		PreparedStatement stmt = null;
+		
+		try {
+			con = ConnectionProvider.getConnection();
+			
+			String sql = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, "
+					+ "prix_initial, prix_vente, image_article, no_utilisateur, no_categorie, no_retrait FROM ARTICLES_VENDUS "
+					+ "WHERE date_debut_encheres < CURRENT_TIMESTAMP AND prix_vente IS NULL AND no_utilisateur=?";
+			
+			stmt = con.prepareStatement(sql);
+			
+			stmt.setInt(1, idUtilisateur);
+			
+			ResultSet rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				list.add(new ArticleVendu(
+						rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"), 
+						rs.getTimestamp("date_debut_encheres").toLocalDateTime(), rs.getTimestamp("date_fin_encheres").toLocalDateTime(), 
+						rs.getInt("prix_initial"), rs.getInt("prix_vente"), rs.getString("image_article"),
+						rs.getInt("no_utilisateur"), rs.getInt("no_categorie"), rs.getInt("no_retrait")
+						));
+			}
+			
+		} catch (SQLException e) {
+			throw new DALException("methode selectAllBetweenDate");
+		} finally {
+			ConnectionProvider.connectionClosed(con, stmt);
+		}
+
+		return list;
+	}
+
+	@Override
+	public List<ArticleVendu> selectAllSoldOut(int idUtilisateur) throws DALException {
+		List<ArticleVendu> list = new ArrayList<>();
+		Connection con = null;
+		PreparedStatement stmt = null;
+		
+		try {
+			con = ConnectionProvider.getConnection();
+			
+			String sql = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, "
+					+ "prix_initial, prix_vente, image_article, no_utilisateur, no_categorie, no_retrait FROM ARTICLES_VENDUS "
+					+ "WHERE prix_vente IS NOT NULL AND no_utilisateur=?";
+			
+			stmt = con.prepareStatement(sql);
+			
+			stmt.setInt(1, idUtilisateur);
+			
+			ResultSet rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				list.add(new ArticleVendu(
+						rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"), 
+						rs.getTimestamp("date_debut_encheres").toLocalDateTime(), rs.getTimestamp("date_fin_encheres").toLocalDateTime(), 
+						rs.getInt("prix_initial"), rs.getInt("prix_vente"), rs.getString("image_article"),
+						rs.getInt("no_utilisateur"), rs.getInt("no_categorie"), rs.getInt("no_retrait")
+						));
+			}
+			
+		} catch (SQLException e) {
+			throw new DALException("methode selectAllSoldOut");
+		} finally {
+			ConnectionProvider.connectionClosed(con, stmt);
+		}
+
+		return list;
+	}
+	
+	@Override
+	public List<ArticleVendu> selectAllSoldOut() throws DALException {
+		List<ArticleVendu> list = new ArrayList<>();
+		Connection con = null;
+		PreparedStatement stmt = null;
+		
+		try {
+			con = ConnectionProvider.getConnection();
+			
+			String sql = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, "
+					+ "prix_initial, prix_vente, image_article, no_utilisateur, no_categorie, no_retrait FROM ARTICLES_VENDUS "
+					+ "WHERE prix_vente IS NOT NULL";
+			
+			stmt = con.prepareStatement(sql);
+			
+			ResultSet rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				list.add(new ArticleVendu(
+						rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"), 
+						rs.getTimestamp("date_debut_encheres").toLocalDateTime(), rs.getTimestamp("date_fin_encheres").toLocalDateTime(), 
+						rs.getInt("prix_initial"), rs.getInt("prix_vente"), rs.getString("image_article"),
+						rs.getInt("no_utilisateur"), rs.getInt("no_categorie"), rs.getInt("no_retrait")
+						));
+			}
+			
+		} catch (SQLException e) {
+			throw new DALException("methode selectAllSoldOut");
+		} finally {
+			ConnectionProvider.connectionClosed(con, stmt);
+		}
+
+		return list;
+	}
+
 }
