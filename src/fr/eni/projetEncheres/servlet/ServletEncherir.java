@@ -57,7 +57,7 @@ public class ServletEncherir extends HttpServlet {
 		}
 		if (montant_enchere == 0) {
 			request.getRequestDispatcher("/DetailEnchere").forward(request, response);
-		}
+		} 
 
 		enchere = new Enchere(LocalDateTime.now(), montant_enchere, idNo_article, user.getNo_utlisateur());
 		try {
