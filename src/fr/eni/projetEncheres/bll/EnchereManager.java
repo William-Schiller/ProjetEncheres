@@ -1,5 +1,6 @@
 package fr.eni.projetEncheres.bll;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -84,6 +85,10 @@ public class EnchereManager {
 			prixMin = enchereMax.getMontant_enchere();
 		}
 		
+		if(article.getDate_fin_encheres().isAfter(LocalDateTime.now())) {
+			listError.add("L'enchere est clôturé");
+		}
+		
 		checkEnchere(enchere.getMontant_enchere(), prixMin, listError);
 		checkPoints(enchere.getMontant_enchere(), utilisateur.getCredit(), listError);
 
@@ -102,8 +107,6 @@ public class EnchereManager {
 				dernierEncherisseur.setCredit(dernierEncherisseur.getCredit() + enchereMax.getMontant_enchere());
 				System.out.println(dernierEncherisseur.toString());
 				utilisateurDAO.update(dernierEncherisseur);
-				System.out.println("update echec");
-				
 				
 			}
 		} catch (DALException e) {

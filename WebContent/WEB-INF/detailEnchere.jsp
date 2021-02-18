@@ -70,34 +70,36 @@
 						</div>
 						
 						<c:if test="${sessionScope.myUser.pseudo != article.user.pseudo}">
-							<form action="./Encherir" method="post">
-								<div class="row">
-									<div class="col-4">
-										<label for="idMaProposition">Ma proposition : </label>
-									</div>
-									<div class="col-4">
-										<input class="form-control" type="number" id="idMaProposition" name="smonEnchere"
-										min="${empty article.meilleurEnchere ? article.article.prix_initial : article.meilleurEnchere.montant_enchere}"
-										max="${sessionScope.myUser.credit}">
-									</div>
-									<div class="col-4">
-										<button class="btn btn-primary me-2" name="idNo_article" value="${sno_article}" type="submit">Enchérir</button>
-									</div>
-								</div>
-							</form>
-						</c:if>
-						
-						<c:if test="${sessionScope.myUser.pseudo == article.user.pseudo}">
-							<c:if test="${checkDateDebut}">
-								<c:if test="${checkDateFin}">
-									<form action="./ModifierVente" method="post">
+							<c:if test="${!checkDateDebut}">
+								<c:if test="${!checkDateFin}">
+									<form action="./Encherir" method="post">
 										<div class="row">
-											<div class="col-8 offset-4">
-												<button class="btn btn-primary me-2" name="idNo_article" value="${sno_article}" type="submit">Modifier Vente</button>
+											<div class="col-4">
+												<label for="idMaProposition">Ma proposition : </label>
+											</div>
+											<div class="col-4">
+												<input class="form-control" type="number" id="idMaProposition" name="smonEnchere"
+												min="${empty article.meilleurEnchere ? article.article.prix_initial : article.meilleurEnchere.montant_enchere}"
+												max="${sessionScope.myUser.credit}">
+											</div>
+											<div class="col-4">
+												<button class="btn btn-primary me-2" name="idNo_article" value="${sno_article}" type="submit">Enchérir</button>
 											</div>
 										</div>
 									</form>
 								</c:if>
+							</c:if>
+						</c:if>
+						
+						<c:if test="${sessionScope.myUser.pseudo == article.user.pseudo}">
+							<c:if test="${checkDateDebut}">
+								<form action="./ModifierVente" method="post">
+									<div class="row">
+										<div class="col-8 offset-4">
+											<button class="btn btn-primary me-2" name="idNo_article" value="${sno_article}" type="submit">Modifier Vente</button>
+										</div>
+									</div>
+								</form>
 							</c:if>
 						</c:if>
 						
