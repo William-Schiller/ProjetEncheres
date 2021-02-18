@@ -8,11 +8,9 @@ import fr.eni.projetEncheres.bean.Enchere;
 import fr.eni.projetEncheres.bean.Utilisateur;
 import fr.eni.projetEncheres.dal.ArticleVenduDAO;
 import fr.eni.projetEncheres.dal.DALException;
-import fr.eni.projetEncheres.dal.DAO;
 import fr.eni.projetEncheres.dal.DAOFactory;
 import fr.eni.projetEncheres.dal.EnchereDAO;
 import fr.eni.projetEncheres.dal.UtilisateurDAO;
-import fr.eni.projetEncheres.dal.jdbc.EnchereDAOJdbcImpl;
 
 public class EnchereManager {
 	private static EnchereManager enchereManager;
@@ -89,7 +87,6 @@ public class EnchereManager {
 				dernierEncherisseur.setCredit(dernierEncherisseur.getCredit() + enchereMax.getMontant_enchere());
 				System.out.println(dernierEncherisseur.toString());
 				utilisateurDAO.update(dernierEncherisseur);
-
 				System.out.println("update echec");
 				
 				
