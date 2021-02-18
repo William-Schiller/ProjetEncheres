@@ -32,7 +32,7 @@
 								<p>Meilleur offre :</p>
 							</div>
 							<div class="col-8">
-								<p>${empty article.meilleurEnchere ? article.article.prix_initial : article.meilleurEnchere.montant_enchere} points</p>
+								<p>${empty article.meilleurEnchere ? '0' : article.meilleurEnchere.montant_enchere} points</p>
 							</div>
 						</div>
 						<div class="row">
