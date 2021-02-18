@@ -1,61 +1,55 @@
 <%@ include file="/WEB-INF/fragments/header.jsp" %>
 
-		<div class="container pt-4">
-			<div class="row">
-				<div class="col-md-1"></div>
-				<div class="col-md-10 p-4 border">
-					<div class="row text-center">
+	<main>
+		<div class="container-fluid" id="bg" style="padding: 10% 20%;">
+                <div class="row" id="box-form">
+                    <div class="p-4 justify-content" id="form">
+                        <div class="row mb-4">
+                            <h1 class="text-center">Connexion</h1>
+                            <div class="container pt-4">
+                                <div class="row" id="connexion-comp">
+                                    <div class="col-md-7">
+                                        <div class="text-danger row"></div>
+                                        <div class="row justify-mobile">
+                                            <form class="row" action="<%= request.getContextPath() %>/Connexion" method="post">
+                                                <div class="col-md-7">
+                                                    <div class="row" style="margin: 2%;">
+                                                        <input class="form-control" style="margin-bottom: 10px;" type="text" id="idIdentifiant" name="spseudo" placeholder="Pseudo">
+                                                        <input class="form-control" type="password" id="idPassword" name="spassword" placeholder="Mot de passe" >
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-5 textcenter-mobile">
+                                                    <div style="margin-bottom: 5%;">
+                                                        <input class="form-check-input" id="idSSDM" type="checkbox" name="sSeSouvenirDeMoi" value="true">
+                                                        <label class="form-check-label label-connexion" for="idSSDM">
+                                                            Se souvenir de moi 
+                                                        </label>
+                                                        <br>
+                                                        <a href="#">
+                                                            Mot de passe oublié
+                                                        </a>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <button class="btn btn-success" id="btn-vert" type="submit">Connexion</button>
+                                                    </div>
+                                                </div>   
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div style="width: 1px;padding: 0;background-color: #fff;"></div>
+                                    <div class="col-md-4 text-center" style="margin: auto 0;">
+                                        <p>Ou alors</p>
+                                        <form action="./inscription" method="get">
+                                            <button class="btn btn-primary" id="btn-vert" type="submit">Créer un compte</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+	</main>
 	
-				
-						<div class="text-danger row text-center">
-							<c:forEach var="item" items="${ listError }">
-								<p>${ item }</p>	
-							</c:forEach>
-						</div>
-						
-						<div class="row mb-4" style="justify-content: center">
-						
-							<form class="row" action="<%= request.getContextPath() %>/Connexion" method="post">
-								<div class="row">
-									<div class="col-4 offset-2">
-										<label for="idIdentifiant">Identifiant : </label>
-									</div>
-									<div class="row col-4">
-										<input class="form-control" type="text" id="idIdentifiant" name="spseudo" value="${ empty pseudo? (empty pseudoError? '' : pseudoError ) : pseudo }">
-									</div>
-								</div>
-								<div class="row mt-2">
-									<div class="col-4 offset-2">
-										<label for="idPassword">Mot de passe : </label>
-									</div>
-									<div class="row col-4">
-										<input class="form-control" type="password" id="idPassword" name="spassword" placeholder="${ empty passwordError? '' : passwordError }" >
-									</div>
-								</div>
-								<div class="row mt-3">
-									<div class="col-4 offset-2">
-										<button class="btn btn-success me-2" type="submit">Connexion</button>
-									</div>
-									<div class="col-4">
-										<input class="form-check-input" id="idSSDM" type="checkbox" name="sSeSouvenirDeMoi" value="true">
-										<label class="form-check-label" for="idSSDM">Se souvenir de moi : </label>
-										<br>
-										<a href="#">Mot de passe oublié</a>
-									</div>
-								</div>
-							</form>
-						
-							<div class="row col-6 mt-3 offset-3">
-								<form action="./inscription" method="get">
-									<button class="btn btn-primary me-2" type="submit">Créer un compte</button>
-								</form>
-							</div>
-						
-						</div>
-						
-					</div>
-				</div>
-			</div>
-		</div>
-	</body>
-</html>
+	
+<%@ include file="/WEB-INF/fragments/footer.jsp" %>

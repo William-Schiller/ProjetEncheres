@@ -1,18 +1,19 @@
 <%@ include file="/WEB-INF/fragments/header.jsp" %>
 	
-	<div class="container pt-4">
+<main>
+	<div class="container-fluid" id="bg">
 		<div class="row">
 			<div class="col-md-2"></div>
-				<div class="col-md-8 p-4 border mb-4">
+				<div class="col-md-8 p-4 mb-4" id="form">
 					<div class="row text-center">
 						<h1>Vendre un article</h1>
 						<br>
 						<h2>Mon Article</h2>
-							<c:forEach var="item" items="${listError}">
-								<p class="my-3" style="color:red">${item}</p>
-							</c:forEach>
+						<c:forEach var="item" items="${listError}">
+							<p class="my-3" style="color:red">${item}</p>
+						</c:forEach>
 					</div>
-					<div class="row mb-4" style="justify-content: center">
+					<div class="row mb-4 ps-5 justify-content-center">
 						<form class="row" action="<%= request.getContextPath() %>/VendreArticle" method="post" enctype="multipart/form-data" >
 							<div class="col-md-3 p-1 mb-1">
 								<div class="input-group mb-3">
@@ -25,7 +26,6 @@
 									name="sarticle" value="${empty sarticle? '':sarticle}">
 								</div>
 							</div>
-							
 							<div class="col-md-3 p-1 mb-1">
 								<div class="input-group mb-3">
 									<label for="iddescription">Description </label>
@@ -37,7 +37,6 @@
 									name="sdecscription">${empty sdecscription? '':sdecscription}</textarea>
 								</div>
 							</div>
-							
 							<div class="col-md-3 p-1 mb-1">
 								<div class="input-group mb-3">
 									<label for="idcategorie">Catégorie </label>
@@ -52,7 +51,6 @@
 									</select>
 								</div>
 							</div>
-							
 							<div class="col-md-3 p-1 mb-1">
 								<div class="input-group mb-3">
 									<label for="idphoto">Photo de l'article </label>
@@ -64,7 +62,6 @@
 									name="sphoto" accept="image/png, image/jpeg">
 								</div>
 							</div>
-							
 							<div class="col-md-3 p-1 mb-1">
 								<div class="input-group mb-3">
 									<label for="idprix">Mise à prix </label>
@@ -76,7 +73,6 @@
 									name="sprix" value="${empty sprix? '':sprix}">
 								</div>
 							</div>
-							
 							<div class="col-md-3 p-1 mb-1">
 								<div class="input-group mb-3">
 									<label for="iddebutenchere">Début de l'enchere </label>
@@ -90,7 +86,6 @@
 									name="sheure_debut" value="${empty sheure_debut? '':sheure_debut}">
 								</div>
 							</div>
-							
 							<div class="col-md-3 p-1 mb-1">
 								<div class="input-group mb-3">
 									<label for="idfinenchere">Fin de l'enchere </label>
@@ -104,8 +99,7 @@
 									name="sheure_fin" value="${empty sheure_fin? '':sheure_fin}">
 								</div>
 							</div>
-							
-							<div class="col-md-12 p-4 border">
+							<div class="col-md-12 p-4">
 								<div class="row text-center">
 									<h3>Adresse retrait</h3>
 									<div class="col-md-3 p-1 mb-1">
@@ -125,7 +119,6 @@
 											</c:if>
 										</div>
 									</div>
-									
 									<div class="col-md-3 p-1 mb-1">
 										<div class="input-group mb-3">
 											<label for="idcodepostal">Code Postal </label>
@@ -143,7 +136,6 @@
 											</c:if>
 										</div>
 									</div>
-									
 									<div class="col-md-3 p-1 mb-1">
 										<div class="input-group mb-3">
 											<label for="idville">Ville </label>
@@ -164,15 +156,11 @@
 									
 								</div>
 							</div>
-				
-							
-							<div class="col-md-12 p-4 mb-2">
-								<div class="row text-center">	
-									<input class="btn btn-success me-2" type="submit" value="Creer">
+							<div class="row p-4 mb-2 justify-content-center">
+								<div class="col-md-2 text-center">	
+									<input class="btn btn-success me-2" type="submit" value="Créer">
 								</div>
-							</div>
-							<div class="col-md-12 p-4 mb-2">
-								<div class="row text-center">	
+								<div class="col-md-2 text-center">	
 									<a href="<%=request.getContextPath()%>">
 										<input class="btn btn-danger ms-2" type="button" value="Annuler">
 									</a>
@@ -183,5 +171,6 @@
 				</div>
 			</div>
 		</div>
-	</body>
-</html>
+	</main>
+
+<%@ include file="/WEB-INF/fragments/footer.jsp" %>

@@ -1,9 +1,9 @@
 <%@ include file="/WEB-INF/fragments/header.jsp" %>
 
-	<div class="container pt-4">
-		<div class="row">
-			<div class="col-md-1"></div>
-			<div class="col-md-10 p-4 border mb-4">
+<main>
+	<div class="container-fluid" id="bg" style="padding: 4% 12%;">
+		<div class="row justify-content-center">
+			<div class="col-md-10 p-4 mb-4" id="form">
 				<div class="row text-center">
 	
 				<h1>Mon Profil</h1>
@@ -15,7 +15,7 @@
 					</div>
 				
 					<form action="<%= request.getContextPath() %>/MonProfil" method="post">
-						<div class="row my-1">
+						<div class="row my-2">
 							<div class="col-2">
 								<label for="idPseudo">Pseudo : </label>
 							</div>
@@ -30,7 +30,7 @@
 							</div>
 						</div>
 						
-						<div class="row my-1">
+						<div class="row my-2">
 							<div class="col-2">
 								<label for="idPrenom">Prenom : </label>
 							</div>
@@ -45,7 +45,7 @@
 							</div>
 						</div>
 						
-						<div class="row my-1">
+						<div class="row my-2">
 							<div class="col-2">
 								<label for="idtelephone">Telephone : </label>
 							</div>
@@ -60,7 +60,7 @@
 							</div>
 						</div>
 						
-						<div class="row my-1">
+						<div class="row my-2">
 							<div class="col-2">
 								<label for="idcodepostal">Code Postal : </label>
 							</div>
@@ -75,7 +75,7 @@
 							</div>
 						</div>
 						
-						<div class="row my-1">
+						<div class="row my-2">
 							<div class="col-2">
 								<label for="idmdpact">Mot de passe actuel : </label>
 							</div>
@@ -84,7 +84,7 @@
 							</div>
 						</div>
 						
-						<div class="row my-1">
+						<div class="row my-2">
 							<div class="col-2">
 								<label for="idmdpnouv">Nouveau mot de passe : </label>
 							</div>
@@ -99,9 +99,9 @@
 							</div>
 						</div>
 						
-						<div class="row my-1">
+						<div class="row my-3">
 							<div class="col-2">
-								<p>Crédit</p>
+								<p>Crédit :</p>
 							</div>
 							<div class="col-4">
 								<p>${ myUser.credit }</p>
@@ -122,5 +122,6 @@
 				</div>	
 			</div>
 		</div>
-	</body>
-</html>
+	</main>
+
+<%@ include file="/WEB-INF/fragments/footer.jsp" %>

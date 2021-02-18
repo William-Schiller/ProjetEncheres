@@ -12,7 +12,7 @@
 						</div>
 						<div class="row">
 							<div class="row">
-								<div class="inner-addon left-addon mb-4">
+								<div class="col-6 inner-addon left-addon mb-4">
 									<i class="glyphicon glyphicon-search"></i>
 									<input class="form-control" type="text" name="skeyword" placeholder="Le nom de l'article contient">
 								</div>
@@ -53,20 +53,20 @@
 							</div>
 							
 						</div>
-						<div >
-								<button class="btn btn-success me-2" type="submit">Rechercher</button>
-							</div>
+						<div class="mt-5">
+							<button class="btn btn-success me-2" type="submit">Rechercher</button>
+						</div>
 					</form>	
 						
 					</div>
 				</div>
 			</div>
-			<div class="displayFlexRow">
+			<div class="displayFlexRow mt-3">
 				<c:if test="${!empty listeArticle}">
 					<div class="row" style="justify-content: center">
 						<c:forEach var="art" items="${listeArticle}">
 							<form class="m-3 box-vente" action="${empty sessionScope.myUser ? '' : './DetailEnchere' }" method="post"> 
-								<button class="btn btn-outline-success btn-vente" type="submit" name="sno_article" value="${ art.article.no_article}">
+								<button class="btn btn-outline-success btn-vente" style="border: none" type="submit" name="sno_article" value="${ art.article.no_article}">
 									<div class="row m-3">
 										<div class="col-md-6">
 											<img width="300" height="300" src="

@@ -1,11 +1,11 @@
 
 <%@ include file="/WEB-INF/fragments/header.jsp" %>
 
-
-        <div class="container pt-4">
+	<main>
+        <div class="container-fluid" id="bg">
             <div class="row">
                 <div class="col-md-2"></div>
-                <div class="col-md-8 p-4 border">
+                <div class="col-md-8 p-4" id="form">
                     <div class="row text-center">
                         <h1>Créer un compte</h1>
                         <br>
@@ -73,7 +73,6 @@
                 <div class="col-md-2"></div>
             </div>
         </div>
-	</body>
-</html>
+    </main>
 
-
+<%@ include file="/WEB-INF/fragments/footer.jsp" %>
