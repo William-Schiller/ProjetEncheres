@@ -61,7 +61,6 @@ public class ServletPageAcceuil extends HttpServlet {
 		String keyword = null;
 		int no_categorie = 0;
 		
-		
 		if(request.getParameter("scategorie") != null && !request.getParameter("scategorie").isEmpty()) {
 		no_categorie = Integer.parseInt(request.getParameter("scategorie"));
 		request.setAttribute("no_categorie", no_categorie);
@@ -81,9 +80,9 @@ public class ServletPageAcceuil extends HttpServlet {
 			request.setAttribute("listeCategorie", listeCategorie);
 			
 			
-		}catch (BLLException e) {
-			System.out.println("beug categorie");
-		}
+				}catch (BLLException e) {
+					System.out.println("beug categorie");
+				}
 		
 		try {
 			if(keyword == null && no_categorie == 0) {

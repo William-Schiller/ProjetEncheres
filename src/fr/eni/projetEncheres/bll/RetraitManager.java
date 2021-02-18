@@ -95,7 +95,6 @@ public class RetraitManager {
 	public void deleteRetrait(Retrait t) throws BLLException {
 
 		try {
-
 			retraitDAO.delete(t.getNo_retrait());
 
 		} catch (DALException e) {
