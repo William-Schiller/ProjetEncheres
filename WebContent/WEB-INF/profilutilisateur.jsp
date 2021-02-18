@@ -12,7 +12,7 @@
 		 
 		  
 		   <h1 class="mb-2">Profil</h1>
-		       <div class="col-md-4 p-2 mb-4">
+		       
 		   
 		        <label class="m-2" for="pseudo"><b>Pseudo : </b>${ utilisateur.pseudo } gskjhjksjngjs </label> <br>
 		        </div>
@@ -62,12 +62,7 @@
 
 <br>
 
-     <div class=>
      
-			
-	
-		
-	</div>
 
 
 
