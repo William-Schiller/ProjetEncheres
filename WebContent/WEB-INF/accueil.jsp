@@ -26,6 +26,17 @@
 									</c:forEach>
 								</select>
 							</div>
+							
+							<c:if test="${!empty sessionScope.myUser}">
+								<div>
+									<input type="radio" name="sachatsVentes" value="achat" id="radioAchat">
+									<label for="radioAchat">Achats</label>
+									<input type="radio" name="sachatsVentes" value="vente" id="radioVente">
+									<label for="radioVente">Mes Ventes</label>
+								</div>
+							</c:if>
+							
+							
 						</div>
 						<div class="row col-6">
 							<button class="btn btn-success me-2" type="submit">Rechercher</button>
@@ -46,7 +57,7 @@
 				<div class="row justifyContentCenter">
 					<c:forEach var="art" items="${listeArticle}">
 						<form class="col-md-5 m-3" action="${empty sessionScope.myUser ? '' : './DetailEnchere' }" method="post"> 
-							<button type="submit" name="sno_article" value="${ art.article.no_article}">
+							<button class="btn btn-outline-success" type="submit" name="sno_article" value="${ art.article.no_article}">
 								<div class="row m-3">
 									<div class="col-md-6">
 										<img width="200" height="200" src="<c:url value="public/imageArticle/${empty art.article.image ? 'image-not-found.png' : art.article.image}"></c:url>" alt="image de l'article" class="img-thumbnail">
@@ -63,6 +74,7 @@
 					</c:forEach>
 				</div>
 			</c:if>	
+			
 
 	</div>
 
