@@ -100,7 +100,7 @@
 						</c:if>
 						
 						<c:forEach var="item" items="${listeDesErreurs}">
-                            <p class="my-3" style="color:red">${item}</p>
+                            <p class="my-1" style="color:red">${item}</p>
                         </c:forEach>
 					</div>
 				</div>

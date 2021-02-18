@@ -44,19 +44,20 @@ public class ServletEncherir extends HttpServlet {
 		int montant_enchere = 0;
 		Enchere enchere = null;
 
-		List<String> listeErreurs = new ArrayList<>();
+		List<String> listeDesErreurs = new ArrayList<>();
 		
 		if (!request.getParameter("idNo_article").isEmpty()) {
 			idNo_article = Integer.parseInt(request.getParameter("idNo_article"));
 		} 
 		request.setAttribute("idNo_article", idNo_article);
+		request.setAttribute("sno_article", idNo_article);
 		
 		if (!request.getParameter("smonEnchere").isEmpty()) {
 			montant_enchere = Integer.parseInt(request.getParameter("smonEnchere"));
 		}
 		if (montant_enchere == 0) {
 			request.getRequestDispatcher("/DetailEnchere").forward(request, response);
-		}
+		} 
 
 		enchere = new Enchere(LocalDateTime.now(), montant_enchere, idNo_article, user.getNo_utlisateur());
 		try {
@@ -65,10 +66,13 @@ public class ServletEncherir extends HttpServlet {
 			System.out.println("help ajoutEnchere servlet");
 		}
 		
-		listeErreurs = enchereManager.getListError();
-		if (!listeErreurs.isEmpty()) {
-			request.getRequestDispatcher("/WEB-INF/detailsEnchere.jsp").forward(request, response);
+		listeDesErreurs.addAll(EnchereManager.getListError());
+
+		if (!listeDesErreurs.isEmpty()) {
+			request.setAttribute("listeDesErreurs", listeDesErreurs);
+			request.getRequestDispatcher("/DetailEnchere").forward(request, response);
 		}
+
 		request.getRequestDispatcher("/Accueil").forward(request, response);
 		
 	}
