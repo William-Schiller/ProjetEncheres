@@ -59,8 +59,11 @@ public class ServletAfficherDetailEnchere extends HttpServlet {
 		Retrait retrait = null;
 		boolean checkDateDebut = true;
 		
-		if(!request.getParameter("sno_article").isEmpty()) {
+		if(request.getParameter("sno_article") != null && !request.getParameter("sno_article").isEmpty()) {
 			no_article = Integer.parseInt(request.getParameter("sno_article"));
+			request.setAttribute("sno_article", no_article);
+		} else if(request.getAttribute("sno_article") != null) {
+			no_article = (int) request.getAttribute("sno_article");
 			request.setAttribute("sno_article", no_article);
 		}
 		
