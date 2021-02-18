@@ -55,16 +55,13 @@ public class ServletPageAcceuil extends HttpServlet {
 				if(request.getParameter("scategorie") != null && !request.getParameter("scategorie").isEmpty()) {
 				no_categorie = Integer.parseInt(request.getParameter("scategorie"));
 				request.setAttribute("no_categorie", no_categorie);
-				
 				}
 		
 				if(request.getParameter("skeyword") != null && !request.getParameter("skeyword").isEmpty()) {
 					keyword = request.getParameter("skeyword");
 					request.setAttribute("keyword", keyword);
-				
-				}
-					
-		try {
+					}
+			try {
 			
 			listeCategorie = categorieManager.selectall();
 			for (Categorie categorie : listeCategorie) {
@@ -73,9 +70,9 @@ public class ServletPageAcceuil extends HttpServlet {
 			request.setAttribute("listeCategorie", listeCategorie);
 			
 			
-		}catch (BLLException e) {
-			System.out.println("beug categorie");
-		}
+				}catch (BLLException e) {
+					System.out.println("beug categorie");
+				}
 		
 		try {
 			if(keyword == null && no_categorie == 0) {
