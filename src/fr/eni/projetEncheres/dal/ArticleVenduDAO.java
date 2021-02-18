@@ -11,5 +11,13 @@ public interface ArticleVenduDAO extends DAO<ArticleVendu> {
 	public List<ArticleVendu> selectByKeyWordAndNoCategorie(String keyWord, int idCategorie) throws DALException;
 	
 	public List<ArticleVendu> selectByKeyWord(String keyWord) throws DALException;
+	
+	public List<ArticleVendu> selectAllBeforeDate(int idUtilisateur) throws DALException;
+	
+	public List<ArticleVendu> selectAllBetweenDate(int idUtilisateur) throws DALException;
+	
+	public List<ArticleVendu> selectAllSoldOut(int idUtilisateur) throws DALException;
+	
+	public List<ArticleVendu> selectAllSoldOut() throws DALException;
 
 }
