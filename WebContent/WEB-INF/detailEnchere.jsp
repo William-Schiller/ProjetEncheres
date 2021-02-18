@@ -13,9 +13,16 @@
 						</div>
 						<c:if test="${checkDateFin}">
 							<c:if test="${!empty article.userEncher}">
-								<div class="row">
-									<h3>Article acheté par ${article.userEncher.pseudo}</h3>
-								</div>
+								<c:if test="${article.userEncher.pseudo == sessionScope.myUser.pseudo}">
+									<div class="row">
+										<h3>Vous avez remporté la vente !</h3>
+									</div>
+								</c:if>
+								<c:if test="${article.userEncher.pseudo != sessionScope.myUser.pseudo}">
+									<div class="row">
+										<h3>Article acheté par ${article.userEncher.pseudo}</h3>
+									</div>
+								</c:if>
 							</c:if>
 							<c:if test="${empty article.userEncher}">
 								<h3>Article non vendu</h3>

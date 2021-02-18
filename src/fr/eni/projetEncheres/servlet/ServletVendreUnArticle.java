@@ -122,9 +122,6 @@ public class ServletVendreUnArticle extends HttpServlet {
 	        if (!fileSaveDir.exists()) {
 	            fileSaveDir.mkdirs();
 	        }
-	        
-	        System.out.println("Upload File Directory="+fileSaveDir.getAbsolutePath()); 
-			System.out.println(uploadFilePath);
 	
 			// Récupère toutes les parties de la requête et les écrit dans le fichier sur le serveur
 			Part part = request.getPart("sphoto");
@@ -276,7 +273,7 @@ public class ServletVendreUnArticle extends HttpServlet {
 	 * Parse String - LocalDate
 	 */
 	protected void setAutomaticDate(HttpServletRequest request, HttpServletResponse response,
-			String sdate_debut, String sheure_debut, String sdate_fin, String sheure_fin) {
+		String sdate_debut, String sheure_debut, String sdate_fin, String sheure_fin) {
 		LocalDate date_debut = LocalDate.now();
 		LocalDate date_fin = LocalDate.now().plusDays(7);
 		LocalTime heure = LocalTime.now().plusHours(1);

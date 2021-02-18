@@ -83,12 +83,9 @@ public class ServletPageAcceuil extends HttpServlet {
 		try {
 			
 			listeCategorie = categorieManager.selectall();
-			for (Categorie categorie : listeCategorie) {
-				System.out.println(categorie.toString());
-			}
 			request.setAttribute("listeCategorie", listeCategorie);
 		}catch (BLLException e) {
-			System.out.println("beug categorie");
+			e.printStackTrace();
 		}
 		
 		//affichage article sans recherche achats/mesventes
