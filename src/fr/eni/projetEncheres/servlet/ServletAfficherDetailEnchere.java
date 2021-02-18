@@ -55,6 +55,7 @@ public class ServletAfficherDetailEnchere extends HttpServlet {
 		Enchere derniereEnchere = null;
 		ArticleEnVente article = null;
 		Utilisateur user = null;
+		Utilisateur userEnchere = null;
 		String libelleCategorie = null;
 		Retrait retrait = null;
 		boolean checkDateDebut = true;
@@ -74,8 +75,13 @@ public class ServletAfficherDetailEnchere extends HttpServlet {
 			derniereEnchere = enchereManager.derniereEnchere(articleVendu);
 			StringBuffer date = new StringBuffer();
 			date.append(articleVendu.getDate_fin_encheres().toLocalDate().toString()).append(" ").append(articleVendu.getDate_fin_encheres().toLocalTime().toString());
-			
+
 			article = new ArticleEnVente(articleVendu, derniereEnchere, user, date.toString());
+			
+			if(derniereEnchere != null) {
+				userEnchere = utilisateurManager.postUser(derniereEnchere.getNo_utilisateur());
+				article.setUserEncher(userEnchere);
+			}
 			
 			request.setAttribute("article", article);
 			

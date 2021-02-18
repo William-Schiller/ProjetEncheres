@@ -9,18 +9,26 @@ public class ArticleEnVente implements Serializable{
 	private Enchere meilleurEnchere;
 	private Utilisateur user;
 	private String date_fin;
+	private Utilisateur userEncher;
 	
 	public ArticleEnVente() {
 	}
 	
-	
-
 	public ArticleEnVente(ArticleVendu article, Enchere meilleurEnchere, Utilisateur user, String date_fin) {
 		super();
 		this.article = article;
 		this.meilleurEnchere = meilleurEnchere;
 		this.user = user;
 		this.date_fin = date_fin;
+	}
+
+	public ArticleEnVente(ArticleVendu article, Enchere meilleurEnchere, Utilisateur user, String date_fin, Utilisateur userEnchere) {
+		super();
+		this.article = article;
+		this.meilleurEnchere = meilleurEnchere;
+		this.user = user;
+		this.date_fin = date_fin;
+		this.userEncher = userEnchere;
 	}
 
 	
@@ -56,6 +64,16 @@ public class ArticleEnVente implements Serializable{
 	public void setDate_fin(String date_fin) {
 		this.date_fin = date_fin;
 	}
+
+	public Utilisateur getUserEncher() {
+		return userEncher;
+	}
+
+	public void setUserEncher(Utilisateur userEncher) {
+		this.userEncher = userEncher;
+	}
+
+
 
 	@Override
 	public String toString() {
