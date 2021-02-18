@@ -11,6 +11,16 @@
 						<div class="row">
 							<h2>${article.article.nom_article}</h2>
 						</div>
+						<c:if test="${checkDateFin}">
+							<c:if test="${!empty article.userEncher}">
+								<div class="row">
+									<h3>Article acheté par ${article.userEncher.pseudo}</h3>
+								</div>
+							</c:if>
+							<c:if test="${empty article.userEncher}">
+								<h3>Article non vendu</h3>
+							</c:if>
+						</c:if>
 						<div class="row">
 							<div class="col-4">
 								<p>Description :</p>
@@ -32,7 +42,7 @@
 								<p>Meilleur offre :</p>
 							</div>
 							<div class="col-8">
-								<p>${empty article.meilleurEnchere ? article.article.prix_initial : article.meilleurEnchere.montant_enchere} points</p>
+								<p>${empty article.meilleurEnchere ? '0' : article.meilleurEnchere.montant_enchere} points ${!empty article.userEncher ? article.userEncher.pseudo : ''}</p>
 							</div>
 						</div>
 						<div class="row">

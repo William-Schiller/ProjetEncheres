@@ -85,7 +85,7 @@ public class EnchereManager {
 			prixMin = enchereMax.getMontant_enchere();
 		}
 		
-		if(article.getDate_fin_encheres().isAfter(LocalDateTime.now())) {
+		if(article.getDate_fin_encheres().isBefore(LocalDateTime.now())) {
 			listError.add("L'enchere est clôturé");
 		}
 		
