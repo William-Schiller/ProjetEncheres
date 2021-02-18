@@ -69,7 +69,7 @@ public class ServletEncherir extends HttpServlet {
 		if (!listeErreurs.isEmpty()) {
 			request.getRequestDispatcher("/WEB-INF/detailsEnchere.jsp").forward(request, response);
 		}
-		request.getRequestDispatcher("./Accueil").forward(request, response);
+		request.getRequestDispatcher("/Accueil").forward(request, response);
 		
 	}
 

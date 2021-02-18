@@ -1,6 +1,7 @@
 package fr.eni.projetEncheres.servlet;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -56,6 +57,7 @@ public class ServletAfficherDetailEnchere extends HttpServlet {
 		Utilisateur user = null;
 		String libelleCategorie = null;
 		Retrait retrait = null;
+		boolean checkDateDebut = true;
 		
 		if(!request.getParameter("sno_article").isEmpty()) {
 			no_article = Integer.parseInt(request.getParameter("sno_article"));
@@ -80,6 +82,12 @@ public class ServletAfficherDetailEnchere extends HttpServlet {
 			retrait = retraitManager.selectById(articleVendu.getNo_retrait());
 			
 			request.setAttribute("retrait", retrait);
+			
+			if(articleVendu.getDate_debut_encheres().isBefore(LocalDateTime.now())) {
+				checkDateDebut = false;
+			}
+			
+			request.setAttribute("checkDateDebut", checkDateDebut);
 		
 			this.getServletContext().getRequestDispatcher("/WEB-INF/detailEnchere.jsp").forward(request, response);
 			

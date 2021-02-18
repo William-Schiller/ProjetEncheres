@@ -75,7 +75,7 @@ public class ArticleVenduManager {
 			listError.add("Aucun article trouvé");
 		}
 		
-		return list;
+		return validerVente(list);
 	}
 	
 	/**
@@ -120,7 +120,7 @@ public class ArticleVenduManager {
 			listError.add("Aucun élément trouvé pour cette recherche");
 		}
 		
-		return list;
+		return validerVente(list);
 	}
 	
 	/**
@@ -149,7 +149,7 @@ public class ArticleVenduManager {
 			listError.add("Aucun élément trouvé pour cette recherche");
 		}
 	
-		return list;
+		return validerVente(list);
 	}
 	
 	/**
@@ -180,7 +180,7 @@ public class ArticleVenduManager {
 			listError.add("Aucun élément trouvé pour cette recherche");
 		}
 	
-		return list;
+		return validerVente(list);
 	}
 	
 	protected List<String> returnListString(String keyWords) {
@@ -209,7 +209,8 @@ public class ArticleVenduManager {
 	 * @author ws
 	 */
 	protected List<ArticleVendu> validerVente(List<ArticleVendu> listAValider) {
-		
+		List<ArticleVendu> listValider = new ArrayList<>();
+			
 		for (ArticleVendu a : listAValider) {
 			if(a.getDate_fin_encheres().isBefore(LocalDateTime.now())) {
 				Enchere enchere = null;
@@ -220,6 +221,13 @@ public class ArticleVenduManager {
 				}
 				if(enchere != null) {
 					a.setPrix_vente(enchere.getMontant_enchere());
+					try {
+						Utilisateur vendeur = utilisateurDAO.selectByID(a.getNo_utilisateur());
+						vendeur.setCredit(vendeur.getCredit() + enchere.getMontant_enchere());
+						utilisateurDAO.update(vendeur);
+					} catch (DALException e) {
+						e.printStackTrace();
+					}
 				} else {
 					a.setPrix_vente(0);
 				}
@@ -228,11 +236,12 @@ public class ArticleVenduManager {
 				} catch (DALException e) {
 					e.printStackTrace();
 				}
-				//TODO modifier liste
+			} else {
+				listValider.add(a);
 			}
 		}
 		
-		return listAValider;
+		return listValider;
 	}
 	
 }

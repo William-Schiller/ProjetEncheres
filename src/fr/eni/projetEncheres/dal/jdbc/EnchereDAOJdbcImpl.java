@@ -12,7 +12,6 @@ import java.util.List;
 import fr.eni.projetEncheres.bean.Enchere;
 import fr.eni.projetEncheres.dal.ConnectionProvider;
 import fr.eni.projetEncheres.dal.DALException;
-import fr.eni.projetEncheres.dal.DAO;
 import fr.eni.projetEncheres.dal.EnchereDAO;
 
 public class EnchereDAOJdbcImpl implements EnchereDAO {
