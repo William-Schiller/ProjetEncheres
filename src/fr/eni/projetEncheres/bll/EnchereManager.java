@@ -74,13 +74,14 @@ public class EnchereManager {
 			System.out.println("pas de dernier encherisseur : enchere sur prix initial");
 		}
 		
+		try {
+			article = articleVenduDAO.selectByID(enchere.getNo_article());
+		} catch (DALException e1) {
+			e1.printStackTrace();
+		}
+		
 		if (enchereMax == null) {
-			try {
-				article = articleVenduDAO.selectByID(enchere.getNo_article());
-				prixMin = article.getPrix_initial();
-			} catch (DALException e) {
-				System.out.println("enchere sur dernier encherisseur : prix actualisé");
-			}
+			prixMin = article.getPrix_initial();
 		} else {
 			prixMin = enchereMax.getMontant_enchere();
 		}
