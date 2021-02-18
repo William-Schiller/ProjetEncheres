@@ -71,7 +71,7 @@ public class EnchereManager {
 		try {
 			enchereMax = enchereDAO.recupEnchereMax(enchere.getNo_article());
 		} catch (DALException e1) {
-			System.out.println("pas de dernier encherisseur : enchere sur prix initial");
+			e1.printStackTrace();
 		}
 		
 		try {
@@ -104,9 +104,7 @@ public class EnchereManager {
 			
 			if (enchereMax != null) {
 				dernierEncherisseur = utilisateurDAO.selectByID(enchereMax.getNo_utilisateur());
-				System.out.println(dernierEncherisseur.toString());
 				dernierEncherisseur.setCredit(dernierEncherisseur.getCredit() + enchereMax.getMontant_enchere());
-				System.out.println(dernierEncherisseur.toString());
 				utilisateurDAO.update(dernierEncherisseur);
 				
 			}

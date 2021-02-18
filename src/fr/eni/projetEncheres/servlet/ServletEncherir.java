@@ -63,7 +63,7 @@ public class ServletEncherir extends HttpServlet {
 		try {
 			enchereManager.ajoutEnchere(enchere, user);
 		} catch (BLLException e) {
-			System.out.println("help ajoutEnchere servlet");
+			e.printStackTrace();
 		}
 		
 		listeDesErreurs.addAll(EnchereManager.getListError());
