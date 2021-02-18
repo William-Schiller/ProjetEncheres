@@ -67,9 +67,9 @@ public class ServletEncherir extends HttpServlet {
 		
 		listeErreurs = enchereManager.getListError();
 		if (!listeErreurs.isEmpty()) {
-			request.getRequestDispatcher("/DetailEnchere").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/detailsEnchere.jsp").forward(request, response);
 		}
-		request.getRequestDispatcher("/WEB-INF/accueil.jsp").forward(request, response);
+		request.getRequestDispatcher("./Accueil").forward(request, response);
 		
 	}
 
