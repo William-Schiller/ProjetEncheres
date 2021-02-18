@@ -99,6 +99,15 @@ public class ServletVendreUnArticle extends HttpServlet {
 		request.setAttribute("title", getPageName(request, response)); 
 		
 		List<String> listError = new ArrayList<>();
+		List<Categorie> listCategorie = new ArrayList<>();
+		
+		try {
+			listCategorie = categorieManager.selectall();
+		} catch (BLLException e) {
+			e.printStackTrace(); //TODO
+		}
+		
+		request.setAttribute("categories", listCategorie);
 		
 		getParameterAndSetAttribute(request, response, listError);
 			
