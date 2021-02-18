@@ -12,7 +12,7 @@
     }
 
     #bg {
-        background-image: url("laptop.jpg");
+        background-image: url("../images/laptop.jpg");
         background-size: cover;
         background-repeat: no-repeat;
         background-attachment: fixed;
