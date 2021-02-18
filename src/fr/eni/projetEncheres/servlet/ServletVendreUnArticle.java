@@ -1,6 +1,7 @@
 package fr.eni.projetEncheres.servlet;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -143,6 +144,21 @@ public class ServletVendreUnArticle extends HttpServlet {
 			System.out.println(request.getParameter("sheure_debut"));
 			System.out.println(request.getParameter("sdate_fin"));
 			System.out.println(request.getParameter("sheure_fin"));
+			
+			// verifier format date envoyer et en fonction envoyer une erreur si 9:00 au lieu de 09:00
+			// heure "hh:mm" : 5 car, 2 chiffres : 2 chiffres , pas sup à 23
+			// date "yyyy/mm/dd"
+			
+		    if (request.getParameter("sheure_debut").length() != 5 
+		    		&& request.getParameter("sheure_fin").length() != 5) {
+				listError.add("L'heure doit être au format '00:00'");
+			}
+		    
+			if (request.getParameter("sdate_debut").length() != 10 
+					&& request.getParameter("sdate_debut").length() != 10) {
+				listError.add("La date doit être au format 'AAAA/MM/JJ'");
+			}
+
 			
 			//Recuperer les dates 
 			date_debut_enchere = parseStringToLocalDate(request, response, request.getParameter("sdate_debut"), request.getParameter("sheure_debut"));
