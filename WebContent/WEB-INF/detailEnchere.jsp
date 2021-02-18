@@ -89,13 +89,15 @@
 						
 						<c:if test="${sessionScope.myUser.pseudo == article.user.pseudo}">
 							<c:if test="${checkDateDebut}">
-								<form action="./ModifierVente" method="post">
-									<div class="row">
-										<div class="col-8 offset-4">
-											<button class="btn btn-primary me-2" name="idNo_article" value="${sno_article}" type="submit">Modifier Vente</button>
+								<c:if test="${checkDateFin}">
+									<form action="./ModifierVente" method="post">
+										<div class="row">
+											<div class="col-8 offset-4">
+												<button class="btn btn-primary me-2" name="idNo_article" value="${sno_article}" type="submit">Modifier Vente</button>
+											</div>
 										</div>
-									</div>
-								</form>
+									</form>
+								</c:if>
 							</c:if>
 						</c:if>
 						

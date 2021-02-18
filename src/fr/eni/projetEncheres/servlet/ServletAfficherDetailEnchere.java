@@ -58,6 +58,7 @@ public class ServletAfficherDetailEnchere extends HttpServlet {
 		String libelleCategorie = null;
 		Retrait retrait = null;
 		boolean checkDateDebut = true;
+		boolean checkDateFin = true;
 		
 		if(request.getParameter("sno_article") != null && !request.getParameter("sno_article").isEmpty()) {
 			no_article = Integer.parseInt(request.getParameter("sno_article"));
@@ -89,8 +90,12 @@ public class ServletAfficherDetailEnchere extends HttpServlet {
 			if(articleVendu.getDate_debut_encheres().isBefore(LocalDateTime.now())) {
 				checkDateDebut = false;
 			}
+			if(articleVendu.getDate_fin_encheres().isAfter(LocalDateTime.now())) {
+				checkDateFin = false;
+			}
 			
 			request.setAttribute("checkDateDebut", checkDateDebut);
+			request.setAttribute("checkDateFin", checkDateFin);
 		
 			this.getServletContext().getRequestDispatcher("/WEB-INF/detailEnchere.jsp").forward(request, response);
 			
