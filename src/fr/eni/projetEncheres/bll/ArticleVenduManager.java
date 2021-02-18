@@ -58,6 +58,21 @@ public class ArticleVenduManager {
 	
 	/**
 	 * @author :ws 
+	 * 
+	 */
+	public void updateArticleVendu(ArticleVendu av) throws BLLException {
+		listError = new ArrayList<>();
+		
+		try {
+			articleVenduDAO.update(av);
+		} catch (DALException e) {
+			listError.add("impossible de modifier cette article");
+			throw new BLLException("echec method updateArticleVendu");
+		}
+	}
+	
+	/**
+	 * @author :ws 
 	 * Recherche par no_article
 	 * 
 	 */
@@ -80,7 +95,6 @@ public class ArticleVenduManager {
 	
 	/**
 	 * @author :ws 
-	 * Recherche par no_article
 	 * 
 	 */
 	public List<ArticleVendu> selectAllArticleVenteNonDebutee(int idUtilisateur) throws BLLException {
@@ -91,6 +105,115 @@ public class ArticleVenduManager {
 			list = articleVenduDAO.selectAllBeforeDate(idUtilisateur);
 		} catch (DALException e) {
 			throw new BLLException("echec method selectAllArticleVenteNonDebutee");
+		}
+		
+		if(list.isEmpty()) {
+			listError.add("Aucun article trouvé");
+		}
+		
+		return list;
+	}
+	
+	/**
+	 * @author :ws 
+	 * 
+	 */
+	public List<ArticleVendu> selectAllArticleVenteEnCours(int idUtilisateur) throws BLLException {
+		listError = new ArrayList<>();
+		List<ArticleVendu> list = new ArrayList<>();
+		
+		try {
+			list = articleVenduDAO.selectAllBetweenDate(idUtilisateur);
+		} catch (DALException e) {
+			throw new BLLException("echec method selectAllArticleVenteEnCours");
+		}
+		
+		if(list.isEmpty()) {
+			listError.add("Aucun article trouvé");
+		}
+		
+		return list;
+	}
+	
+	/**
+	 * @author :ws 
+	 * 
+	 */
+	public List<ArticleVendu> selectAllArticleVenteFini(int idUtilisateur) throws BLLException {
+		listError = new ArrayList<>();
+		List<ArticleVendu> list = new ArrayList<>();
+		
+		try {
+			list = articleVenduDAO.selectAllSoldOut(idUtilisateur);
+		} catch (DALException e) {
+			throw new BLLException("echec method selectAllArticleVenteFini");
+		}
+		
+		if(list.isEmpty()) {
+			listError.add("Aucun article trouvé");
+		}
+		
+		return list;
+	}
+	
+	/**
+	 * @author :ws 
+	 * 
+	 */
+	public List<ArticleVendu> selectAllArticleAvecMesEncheres(int idUtilisateur) throws BLLException {
+		listError = new ArrayList<>();
+		List<ArticleVendu> list = new ArrayList<>();
+		List<ArticleVendu> listComplete = new ArrayList<>();
+		
+		try {
+			listComplete = articleVenduDAO.selectAll();
+		} catch (DALException e) {
+			throw new BLLException("echec method selectAllArticleAvecMesEncheres");
+		}
+		
+		for (ArticleVendu av : listComplete) {
+			try {
+				Enchere enchere = null;
+				enchere = enchereDAO.recupEnchereMax(av.getNo_article());
+				if(enchere != null && enchere.getNo_utilisateur() == idUtilisateur) {
+					list.add(av);
+				}
+			} catch (DALException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		if(list.isEmpty()) {
+			listError.add("Aucun article trouvé");
+		}
+		
+		return list;
+	}
+	
+	/**
+	 * @author :ws 
+	 */
+	public List<ArticleVendu> selectAllArticleEnchereRemporte(int idUtilisateur) throws BLLException {
+		listError = new ArrayList<>();
+		List<ArticleVendu> list = new ArrayList<>();
+		List<ArticleVendu> listComplete = new ArrayList<>();
+		
+		try {
+			listComplete = articleVenduDAO.selectAllSoldOut();
+		} catch (DALException e) {
+			throw new BLLException("echec method selectAllArticleAvecMesEncheres");
+		}
+		
+		for (ArticleVendu av : listComplete) {
+			try {
+				Enchere enchere = null;
+				enchere = enchereDAO.recupEnchereMax(av.getNo_article());
+				if(enchere != null && enchere.getNo_utilisateur() == idUtilisateur) {
+					list.add(av);
+				}
+			} catch (DALException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		if(list.isEmpty()) {

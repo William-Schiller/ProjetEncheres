@@ -24,7 +24,7 @@ public class ServletDeconnexionUtilisateur extends HttpServlet {
 
 		request.getSession().removeAttribute("myUser");
 		
-		this.getServletContext().getRequestDispatcher("/Accueil.jsp").forward(request, response);
+		this.getServletContext().getRequestDispatcher("/Accueil").forward(request, response);
 	}
 
 	/**

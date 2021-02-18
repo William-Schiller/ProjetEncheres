@@ -87,11 +87,9 @@ public class ServletPageAcceuil extends HttpServlet {
 				System.out.println(categorie.toString());
 			}
 			request.setAttribute("listeCategorie", listeCategorie);
-			
-			
-				}catch (BLLException e) {
-					System.out.println("beug categorie");
-				}
+		}catch (BLLException e) {
+			System.out.println("beug categorie");
+		}
 		
 		//affichage article sans recherche achats/mesventes
 		if(sachatsVentes == null || sachatsVentes.equals("enchereouverte")) {
@@ -122,9 +120,10 @@ public class ServletPageAcceuil extends HttpServlet {
 					
 				request.setAttribute("listeArticle", listeArticle);
 			}catch (BLLException e) {
-				System.out.println("bugArticle");
+				e.printStackTrace();
 			}
 		} else if (sachatsVentes.equals("ventenondebutees")) {
+		//affichage de mes ventes non debutées
 			try {
 				listeArticleVendu = articleVenduManager.selectAllArticleVenteNonDebutee(myUser.getNo_utlisateur());
 
@@ -145,24 +144,110 @@ public class ServletPageAcceuil extends HttpServlet {
 					
 				request.setAttribute("listeArticle", listeArticle);
 			}catch (BLLException e) {
-				System.out.println("bugArticle");
+				e.printStackTrace();
 			}
-		}else if (sachatsVentes.equals("vente")) {
-			//TODO RECUPERER LES INFOS POUR SELECTION ACHATS
+		} else if (sachatsVentes.equals("mesventeencours")) {
+		//affichage de mes ventes en cours
+			try {
+				listeArticleVendu = articleVenduManager.selectAllArticleVenteEnCours(myUser.getNo_utlisateur());
+
+				if(!listeArticleVendu.isEmpty()) {
+					for(ArticleVendu a : listeArticleVendu) {
+						Enchere enchere = null;
+						Utilisateur user = null;
+						LocalDate date = a.getDate_fin_encheres().toLocalDate();
+						LocalTime heure = a.getDate_fin_encheres().toLocalTime();
+						StringBuffer datefmt = new StringBuffer();
+						datefmt.append(date.toString()).append(" ").append(heure.toString());
+						enchere = enchereManager.derniereEnchere(a);
+						user = utilisateurManager.postUser(a.getNo_utilisateur());
+						listeArticle.add(new ArticleEnVente(a, enchere, user, datefmt.toString()));
+					}
+			}
+					
+				request.setAttribute("listeArticle", listeArticle);
+			}catch (BLLException e) {
+				e.printStackTrace();
+			}
+		} else if (sachatsVentes.equals("ventesterminees")) {
+		//affichage de mes ventes terminées
+			try {
+				listeArticleVendu = articleVenduManager.selectAllArticleVenteFini(myUser.getNo_utlisateur());
+
+				if(!listeArticleVendu.isEmpty()) {
+					for(ArticleVendu a : listeArticleVendu) {
+						Enchere enchere = null;
+						Utilisateur user = null;
+						LocalDate date = a.getDate_fin_encheres().toLocalDate();
+						LocalTime heure = a.getDate_fin_encheres().toLocalTime();
+						StringBuffer datefmt = new StringBuffer();
+						datefmt.append(date.toString()).append(" ").append(heure.toString());
+						enchere = enchereManager.derniereEnchere(a);
+						user = utilisateurManager.postUser(a.getNo_utilisateur());
+						listeArticle.add(new ArticleEnVente(a, enchere, user, datefmt.toString()));
+					}
+			}
+					
+				request.setAttribute("listeArticle", listeArticle);
+			}catch (BLLException e) {
+				e.printStackTrace();
+			}
+		} else if (sachatsVentes.equals("mesenchere")) {
+		//affichage de mes Encheres
+			try {
+				listeArticleVendu = articleVenduManager.selectAllArticleAvecMesEncheres(myUser.getNo_utlisateur());
+
+				if(!listeArticleVendu.isEmpty()) {
+					for(ArticleVendu a : listeArticleVendu) {
+						Enchere enchere = null;
+						Utilisateur user = null;
+						LocalDate date = a.getDate_fin_encheres().toLocalDate();
+						LocalTime heure = a.getDate_fin_encheres().toLocalTime();
+						StringBuffer datefmt = new StringBuffer();
+						datefmt.append(date.toString()).append(" ").append(heure.toString());
+						enchere = enchereManager.derniereEnchere(a);
+						user = utilisateurManager.postUser(a.getNo_utilisateur());
+						listeArticle.add(new ArticleEnVente(a, enchere, user, datefmt.toString()));
+					}
+			}
+					
+				request.setAttribute("listeArticle", listeArticle);
+			}catch (BLLException e) {
+				e.printStackTrace();
+			}
+		}else if (sachatsVentes.equals("mesencheresremportees")) {
+		//affichage de mes Encheres Remporté
+			try {
+				listeArticleVendu = articleVenduManager.selectAllArticleEnchereRemporte(myUser.getNo_utlisateur());
+
+				if(!listeArticleVendu.isEmpty()) {
+					for(ArticleVendu a : listeArticleVendu) {
+						Enchere enchere = null;
+						Utilisateur user = null;
+						LocalDate date = a.getDate_fin_encheres().toLocalDate();
+						LocalTime heure = a.getDate_fin_encheres().toLocalTime();
+						StringBuffer datefmt = new StringBuffer();
+						datefmt.append(date.toString()).append(" ").append(heure.toString());
+						enchere = enchereManager.derniereEnchere(a);
+						user = utilisateurManager.postUser(a.getNo_utilisateur());
+						listeArticle.add(new ArticleEnVente(a, enchere, user, datefmt.toString()));
+					}
+			}
+					
+				request.setAttribute("listeArticle", listeArticle);
+			}catch (BLLException e) {
+				e.printStackTrace();
+			}
 		}
 
 		this.getServletContext().getRequestDispatcher("/WEB-INF/accueil.jsp").forward(request, response);
 	}
 
-	
-
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		doGet(request, response);
-		
 	}
 
 	/**

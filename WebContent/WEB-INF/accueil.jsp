@@ -59,9 +59,6 @@
 						</div>
 					</div>
 				</form>	
-		
-		<h1>${keyword} </h1>
-		
 					
 			</div>
 		</div>
