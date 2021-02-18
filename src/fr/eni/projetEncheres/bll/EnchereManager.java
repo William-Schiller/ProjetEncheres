@@ -107,7 +107,7 @@ public class EnchereManager {
 
 				System.out.println("update echec");
 				
-
+				
 			}
 		} catch (DALException e) {
 			throw new BLLException("Echec ajoutEnchere2");
