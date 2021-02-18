@@ -8,12 +8,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fr.eni.projetEncheres.bean.ArticleEnVente;
 import fr.eni.projetEncheres.bean.ArticleVendu;
 import fr.eni.projetEncheres.bean.Enchere;
+import fr.eni.projetEncheres.bean.Retrait;
+import fr.eni.projetEncheres.bean.Utilisateur;
 import fr.eni.projetEncheres.bll.ArticleVenduManager;
 import fr.eni.projetEncheres.bll.BLLException;
 import fr.eni.projetEncheres.bll.CategorieManager;
 import fr.eni.projetEncheres.bll.EnchereManager;
+import fr.eni.projetEncheres.bll.RetraitManager;
 import fr.eni.projetEncheres.bll.UtilisateurManager;
 
 /**
@@ -27,12 +31,14 @@ public class ServletAfficherDetailEnchere extends HttpServlet {
 	private ArticleVenduManager articleVenduManager;
 	private CategorieManager categorieManager;
 	private EnchereManager enchereManager;
+	private RetraitManager retraitManager;
        
 	public void init() throws ServletException {
 		articleVenduManager = ArticleVenduManager.getInstance();
 		utilisateurManager = UtilisateurManager.getInstance();
 		categorieManager = CategorieManager.getInstance();
 		enchereManager = EnchereManager.getInstance();
+		retraitManager = RetraitManager.getInstance();
     	super.init();
     }
 
@@ -44,8 +50,12 @@ public class ServletAfficherDetailEnchere extends HttpServlet {
 		request.setAttribute("title", getPageName(request, response)); 
 		
 		int no_article = 0;
-		ArticleVendu article = null;
+		ArticleVendu articleVendu = null;
 		Enchere derniereEnchere = null;
+		ArticleEnVente article = null;
+		Utilisateur user = null;
+		String libelleCategorie = null;
+		Retrait retrait = null;
 		
 		if(!request.getParameter("sno_article").isEmpty()) {
 			no_article = Integer.parseInt(request.getParameter("sno_article"));
@@ -53,16 +63,24 @@ public class ServletAfficherDetailEnchere extends HttpServlet {
 		}
 		
 		try {
-			articleVenduManager.selectArticleById(no_article);
+			articleVendu = articleVenduManager.selectArticleById(no_article);
+			user = utilisateurManager.postUser(articleVendu.getNo_utilisateur());
+			derniereEnchere = enchereManager.derniereEnchere(articleVendu);
+			StringBuffer date = new StringBuffer();
+			date.append(articleVendu.getDate_fin_encheres().toLocalDate().toString()).append(" ").append(articleVendu.getDate_fin_encheres().toLocalTime().toString());
 			
-			// TODO rechercher la derniere enchere faite !!
-			derniereEnchere = new Enchere(); // A Supprimer
+			article = new ArticleEnVente(articleVendu, derniereEnchere, user, date.toString());
 			
 			request.setAttribute("article", article);
-			if(derniereEnchere != null) {
-				request.setAttribute("derniereEnchere", derniereEnchere);
-			}
 			
+			libelleCategorie = categorieManager.selectNo_Categorie(articleVendu.getNo_categorie()).getLibelle();
+			
+			request.setAttribute("categorie", libelleCategorie);
+			
+			retrait = retraitManager.selectById(articleVendu.getNo_retrait());
+			
+			request.setAttribute("retrait", retrait);
+		
 			this.getServletContext().getRequestDispatcher("/WEB-INF/detailEnchere.jsp").forward(request, response);
 			
 		} catch (BLLException e) {

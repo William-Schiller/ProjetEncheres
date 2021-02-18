@@ -3,20 +3,20 @@
 		<div class="container pt-4">
 			<div class="row">
 				<div class="col-md-3 m-2">
-					<img src="<c:url value="public/imageArticle/logoPROMO.png"></c:url>" alt="image de l'article" class="img-thumbnail">
+					<img src="<c:url value="public/imageArticle/${empty article.article.image ? 'image-not-found.png' : article.article.image}"></c:url>" alt="image de l'article" class="img-thumbnail">
 				</div>
 				<div class="col-md-8 p-4 border mb-4">
 					<div class="row text-center">
 
 						<div class="row">
-							<h2>PC Gamer pour travailler</h2>
+							<h2>${article.article.nom_article}</h2>
 						</div>
 						<div class="row">
 							<div class="col-4">
 								<p>Description :</p>
 							</div>
 							<div class="col-8">
-								<p>fezfuze rnrfn rjzn zrekfn zejefn jze fhze fze fzek fzeknefekezeezfn kzekfreojvruhvksl r z gqhjre bvvbjv jrerhb</p>
+								<p>${article.article.description}</p>
 							</div>
 						</div>
 						<div class="row">
@@ -24,7 +24,7 @@
 								<p>Catégorie :</p>
 							</div>
 							<div class="col-8">
-								<p>GNAGNAGNA</p>
+								<p>${categorie}</p>
 							</div>
 						</div>
 						<div class="row">
@@ -32,7 +32,7 @@
 								<p>Meilleur offre :</p>
 							</div>
 							<div class="col-8">
-								<p>GNAGNAGNA</p>
+								<p>${empty article.meilleurEnchere ? article.article.prix_initial : article.meilleurEnchere.montant_enchere} points</p>
 							</div>
 						</div>
 						<div class="row">
@@ -40,7 +40,7 @@
 								<p>Mise à prix :</p>
 							</div>
 							<div class="col-8">
-								<p>GNAGNAGNA</p>
+								<p>${article.article.prix_initial} points</p>
 							</div>
 						</div>
 						<div class="row">
@@ -48,7 +48,7 @@
 								<p>Fin de l'enchère :</p>
 							</div>
 							<div class="col-8">
-								<p>GNAGNAGNA</p>
+								<p>${article.date_fin}</p>
 							</div>
 						</div>
 						<div class="row">
@@ -56,8 +56,8 @@
 								<p>Retrait :</p>
 							</div>
 							<div class="col-8">
-								<p>10 allée des alouettes</p>
-								<p>44800 Saint Herblain</p>
+								<p>${retrait.rue}</p>
+								<p>${retrait.code_postale} ${retrait.ville}</p>
 							</div>
 						</div>
 						<div class="row">
@@ -65,7 +65,7 @@
 								<p>Vendeur :</p>
 							</div>
 							<div class="col-8">
-								<p>jojo44</p>
+								<p>${article.user.pseudo}</p>
 							</div>
 						</div>
 						
@@ -75,7 +75,9 @@
 									<label for="idMaProposition">Ma proposition : </label>
 								</div>
 								<div class="col-4">
-									<input class="form-control" type="number" id="idMaProposition" name="smonEnchere">
+									<input class="form-control" type="number" id="idMaProposition" name="smonEnchere"
+									min="${empty article.meilleurEnchere ? article.article.prix_initial : article.meilleurEnchere.montant_enchere}"
+									max="${sessionScope.myUser.credit}">
 								</div>
 								<div class="col-4">
 									<button class="btn btn-primary me-2" name="idNo_article" value="${sno_article}" type="submit">Enchérir</button>

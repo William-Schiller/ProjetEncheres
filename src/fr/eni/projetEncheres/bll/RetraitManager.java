@@ -70,9 +70,28 @@ public class RetraitManager {
 
 	}	
 
+	/**
+	 * 
+	 * @author : AS
+	 */
+	public Retrait selectById(int id) throws BLLException {
+		Retrait r = new Retrait();
+		
+		try {
+
+			r = retraitDAO.selectByID(id);
+
+		} catch (DALException e) {
+			throw new BLLException("Echec selectById");
+		}
+		return r;
+	}
 
 
-
+	/**
+	 * 
+	 * @author : AS
+	 */
 	public void deleteRetrait(Retrait t) throws BLLException {
 
 		try {
