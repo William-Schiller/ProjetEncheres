@@ -1,21 +1,30 @@
 package fr.eni.projetEncheres.bll;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.projetEncheres.bean.ArticleVendu;
+import fr.eni.projetEncheres.bean.Enchere;
+import fr.eni.projetEncheres.bean.Utilisateur;
 import fr.eni.projetEncheres.dal.ArticleVenduDAO;
 import fr.eni.projetEncheres.dal.DALException;
 import fr.eni.projetEncheres.dal.DAOFactory;
+import fr.eni.projetEncheres.dal.EnchereDAO;
+import fr.eni.projetEncheres.dal.UtilisateurDAO;
 
 public class ArticleVenduManager {
 	private static ArticleVenduManager articleVenduManager;
 	private ArticleVenduDAO articleVenduDAO;
+	private EnchereDAO enchereDAO;
+	private UtilisateurDAO utilisateurDAO;
 	
 	private static List<String> listError;
 	
 	private ArticleVenduManager() {
 		this.articleVenduDAO = DAOFactory.getArticleVenduDAO();
+		this.enchereDAO = DAOFactory.getEnchereDAO();
+		this.utilisateurDAO = DAOFactory.getUtilisateurDAO();
 	}
 	
 	public static ArticleVenduManager getInstance() {
@@ -103,6 +112,7 @@ public class ArticleVenduManager {
 		try {
 			list = articleVenduDAO.selectByNoCategorie(idCategorie);
 		} catch (DALException e) {
+			e.printStackTrace();
 			throw new BLLException("echec method selectByCategorie");
 		}
 		
@@ -158,6 +168,7 @@ public class ArticleVenduManager {
 			try {
 				listTemp = articleVenduDAO.selectByKeyWordAndNoCategorie(keyWord, idCategorie);
 			} catch (DALException e) {
+				e.printStackTrace();
 				throw new BLLException("echec method selectByArticleAndCategorie");
 			}
 			for (ArticleVendu article : listTemp) {
@@ -194,6 +205,34 @@ public class ArticleVenduManager {
 	
 	//***************VERIFICATION******************
 	
-	
+	/**
+	 * @author ws
+	 */
+	protected List<ArticleVendu> validerVente(List<ArticleVendu> listAValider) {
+		
+		for (ArticleVendu a : listAValider) {
+			if(a.getDate_fin_encheres().isBefore(LocalDateTime.now())) {
+				Enchere enchere = null;
+				try {
+					enchere = enchereDAO.recupEnchereMax(a.getNo_article());
+				} catch (DALException e) {
+					e.printStackTrace();
+				}
+				if(enchere != null) {
+					a.setPrix_vente(enchere.getMontant_enchere());
+				} else {
+					a.setPrix_vente(0);
+				}
+				try {
+					articleVenduDAO.update(a);
+				} catch (DALException e) {
+					e.printStackTrace();
+				}
+				//TODO modifier liste
+			}
+		}
+		
+		return listAValider;
+	}
 	
 }

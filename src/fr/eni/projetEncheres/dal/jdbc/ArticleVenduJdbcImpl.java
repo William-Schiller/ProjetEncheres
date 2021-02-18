@@ -208,8 +208,8 @@ public class ArticleVenduJdbcImpl implements ArticleVenduDAO {
 		try {
 			con = ConnectionProvider.getConnection();
 			
-			String sql = "SELECT (no_article, nom_article, description, date_debut_encheres, date_fin_encheres, "
-					+ "prix_initial, prix_vente, image_article, no_utilisateur, no_categorie, no_retrait) FROM ARTICLES_VENDUS "
+			String sql = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, "
+					+ "prix_initial, prix_vente, image_article, no_utilisateur, no_categorie, no_retrait FROM ARTICLES_VENDUS "
 					+ "WHERE no_categorie=? AND prix_vente IS NULL AND date_debut_encheres < CURRENT_TIMESTAMP";
 			
 			stmt = con.prepareStatement(sql);
@@ -228,6 +228,7 @@ public class ArticleVenduJdbcImpl implements ArticleVenduDAO {
 			}
 			
 		} catch (SQLException e) {
+			e.printStackTrace();
 			throw new DALException("methode selectByNoCategorie");
 		} finally {
 			ConnectionProvider.connectionClosed(con, stmt);
@@ -249,9 +250,9 @@ public class ArticleVenduJdbcImpl implements ArticleVenduDAO {
 		try {
 			con = ConnectionProvider.getConnection();
 			
-			String sql = "SELECT (no_article, nom_article, description, date_debut_encheres, date_fin_encheres, "
-					+ "prix_initial, prix_vente, image_article, no_utilisateur, no_categorie, no_retrait) FROM ARTICLES_VENDUS "
-					+ "WHERE no_categorie=? AND (nom_article LIKE '%' + ? + '%' OR description '%' + ? + '%') AND prix_vente IS NULL "
+			String sql = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, "
+					+ "prix_initial, prix_vente, image_article, no_utilisateur, no_categorie, no_retrait FROM ARTICLES_VENDUS "
+					+ "WHERE no_categorie=? AND (nom_article LIKE '%' + ? + '%' OR description LIKE '%' + ? + '%') AND prix_vente IS NULL "
 					+ "AND date_debut_encheres < CURRENT_TIMESTAMP";
 			
 			stmt = con.prepareStatement(sql);
@@ -289,9 +290,9 @@ public class ArticleVenduJdbcImpl implements ArticleVenduDAO {
 		try {
 			con = ConnectionProvider.getConnection();
 			
-			String sql = "SELECT (no_article, nom_article, description, date_debut_encheres, date_fin_encheres, "
-					+ "prix_initial, prix_vente, image_article, no_utilisateur, no_categorie, no_retrait) FROM ARTICLES_VENDUS "
-					+ "WHERE (nom_article LIKE '%' + ? + '%' OR description '%' + ? + '%') AND prix_vente IS NULL "
+			String sql = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, "
+					+ "prix_initial, prix_vente, image_article, no_utilisateur, no_categorie, no_retrait FROM ARTICLES_VENDUS "
+					+ "WHERE (nom_article LIKE '%' + ? + '%' OR description LIKE '%' + ? + '%') AND prix_vente IS NULL "
 					+ "AND date_debut_encheres < CURRENT_TIMESTAMP";
 			
 			stmt = con.prepareStatement(sql);

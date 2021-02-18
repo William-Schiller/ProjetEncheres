@@ -98,23 +98,29 @@ public class RetraitDAOJdbcImpl implements DAO<Retrait>{
      * Aurelien
      */
 	@Override
-		public Retrait selectByID(int id) throws DALException {
-		Connection cnx=null;
+	public Retrait selectByID(int id) throws DALException {
+		Connection con=null;
 		PreparedStatement stmt=null;
 		ResultSet rs=null;
 		Retrait retrait  = null;
 
 		try {
 			
-			String sql = "select pseudo,nom,prenom,email,telephone,rue,code_postal,ville from UTILISATEURS where no_utilisateur = ?;";
-			stmt=cnx.prepareStatement(sql);
+			con = ConnectionProvider.getConnection();
+			
+			String sql = "select no_retrait,rue,code_postal,ville from RETRAITS where no_retrait = ?";
+			
+			stmt=con.prepareStatement(sql);
+			
 			stmt.setInt(1, id);
+			
 			rs=stmt.executeQuery();
 		
 			if (rs.next()){
 			
 				retrait = new Retrait();
 				
+				retrait.setNo_retrait(rs.getInt("no_retrait"));
 				retrait.setRue(rs.getString("rue"));
 				retrait.setCode_postale(Integer.parseInt(rs.getString("code_postal")));
 				retrait.setVille(rs.getString("ville"));
@@ -125,7 +131,7 @@ public class RetraitDAOJdbcImpl implements DAO<Retrait>{
 
 			throw new DALException ("Probleme - retrait - " + e.getMessage());
 		}finally{	
-			ConnectionProvider.connectionClosed(cnx, stmt);	
+			ConnectionProvider.connectionClosed(con, stmt);	
 		}
 		return retrait;
 

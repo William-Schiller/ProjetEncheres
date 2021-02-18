@@ -173,7 +173,7 @@ public class CategorieDAOJdbcImpl implements DAO<Categorie> {
 	    try {
 			cnx = ConnectionProvider.getConnection();
 			
-			String sql = "select libelle from CATEGORIE where no_categorie = ?;";
+			String sql = "select libelle from CATEGORIES where no_categorie = ?;";
 			stmt=cnx.prepareStatement(sql);
 			stmt.setInt(1, id);
 			rs=stmt.executeQuery();

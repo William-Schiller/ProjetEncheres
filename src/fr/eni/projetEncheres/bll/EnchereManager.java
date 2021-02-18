@@ -39,7 +39,22 @@ public class EnchereManager {
 	
 	
 	//***************METHODE********************
-	
+
+	/**
+	 * @author : WS
+	 */
+	public Enchere derniereEnchere(ArticleVendu av) throws BLLException {
+		Enchere enchereMax = null;
+		
+		try {
+			enchereMax = enchereDAO.recupEnchereMax(av.getNo_article());
+		} catch (DALException e) {
+			e.printStackTrace();
+			throw new BLLException("Erreur method derniereEnchere");
+		}
+		
+		return enchereMax;
+	}
 	
 	/**
 	 * @author : DR

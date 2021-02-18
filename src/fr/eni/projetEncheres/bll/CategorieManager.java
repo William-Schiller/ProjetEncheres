@@ -22,43 +22,39 @@ public class CategorieManager {
 		
 	}
 		
-		
-		public static CategorieManager getInstance() {
-			if(categorieManager == null) {
-				categorieManager = new CategorieManager();
-			}
-			return categorieManager;
+	public static CategorieManager getInstance() {
+		if(categorieManager == null) {
+			categorieManager = new CategorieManager();
 		}
+		return categorieManager;
+	}
 			
 	public List<Categorie> selectall () throws BLLException{
 		   List<Categorie> list = new ArrayList<Categorie>();
 				
-				try {
-					list = categorieDAO.selectAll();
+			try {
+				list = categorieDAO.selectAll();
 					
-						
-					} catch (DALException e) {
+				} catch (DALException e) {
 					e.printStackTrace();
-				
 				}
-				return list;
+			return list;
 		}
 
 
 	public Categorie selectNo_Categorie(int id) throws BLLException {
-	       Categorie article= null;
+	    Categorie categorie= null;
 	
-	     try {
-	   
-	    	 article = categorieDAO.selectByID(id);
+	    try {
+	    	categorie = categorieDAO.selectByID(id);
+		
+		} catch (DALException e) {
 	
-	} catch (DALException e) {
-
-		throw new BLLException("echec method selectByCategorie");
+			throw new BLLException("echec method selectByCategorie");
+		}
+		
+	    return categorie;
 	}
-	
-     return article;
-}
 
 	
 	

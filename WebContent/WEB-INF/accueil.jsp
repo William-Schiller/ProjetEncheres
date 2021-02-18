@@ -46,16 +46,16 @@
 				<div class="row justifyContentCenter">
 					<c:forEach var="art" items="${listeArticle}">
 						<form class="col-md-5 m-3" action="${empty sessionScope.myUser ? '' : './DetailEnchere' }" method="post"> 
-							<button type="submit" name="sno_article" value="${ art.no_article}">
+							<button type="submit" name="sno_article" value="${ art.article.no_article}">
 								<div class="row m-3">
 									<div class="col-md-6">
-										<img width="200" height="200" src="<c:url value="public/imageArticle/${empty art.image ? 'logoPROMO.png' : art.image}"></c:url>" alt="image de l'article" class="img-thumbnail">
+										<img width="200" height="200" src="<c:url value="public/imageArticle/${empty art.article.image ? 'image-not-found.png' : art.article.image}"></c:url>" alt="image de l'article" class="img-thumbnail">
 									</div>
 									<div class="col-md-6">
-										<p>${art.nom_article}</p>
-										<p>${art.date_fin_encheres}</p>
-										<p>${art.prix_initial}</p>
-										<p>${art.no_utilisateur}</p>
+										<p>${art.article.nom_article}</p>
+										<p>Prix : ${empty art.meilleurEnchere ? art.article.prix_initial : art.meilleurEnchere.montant_enchere} points</p>
+										<p>Fin de l'enchère :  ${art.date_fin}</p>
+										<p>Vendeur : ${art.user.pseudo}</p>
 									</div>
 								</div>
 							</button>
