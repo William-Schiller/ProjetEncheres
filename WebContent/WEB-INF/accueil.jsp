@@ -64,10 +64,8 @@
 			<c:if test="${!empty listeArticle}">
 				<div class="row justifyContentCenter">
 					<c:forEach var="art" items="${listeArticle}">
-						<form class="m-3 box-vente" style="width: 55%;height: 18%;" 
-						action="${empty sessionScope.myUser ? '' : './DetailEnchere' }" method="post"> 
-							<button class="btn btn-outline-success btn-vente" style="width: 100%;height: 100%;" 
-							type="submit" name="sno_article" value="${ art.article.no_article}">
+						<form class="m-3 box-vente" action="${empty sessionScope.myUser ? '' : './DetailEnchere' }" method="post"> 
+							<button class="btn btn-outline-success btn-vente" type="submit" name="sno_article" value="${ art.article.no_article}">
 								<div class="row m-3">
 									<div class="col-md-6">
 										<img width="300" height="300" src="
@@ -75,7 +73,8 @@
 										</c:url>" alt="image de l'article" class="img-thumbnail">
 									</div>
 									<div class="col-md-6" style="font-size:20px">
-										<p>${art.article.nom_article}</p>
+										<p style="font-weight: bold;text-decoration: underline">
+										${art.article.nom_article}</p>
 										<p>Prix : ${empty art.meilleurEnchere ? art.article.prix_initial : art.meilleurEnchere.montant_enchere} points</p>
 										<p>Fin de l'enchère :  ${art.date_fin}</p>
 										<p>Vendeur : ${art.user.pseudo}</p>
