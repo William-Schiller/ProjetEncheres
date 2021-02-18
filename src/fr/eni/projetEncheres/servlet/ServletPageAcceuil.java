@@ -61,6 +61,15 @@ public class ServletPageAcceuil extends HttpServlet {
 		String keyword = null;
 		int no_categorie = 0;
 		
+		Utilisateur myUser = (Utilisateur) request.getSession().getAttribute("myUser");
+		
+		String sachatsVentes = null;
+		
+		//Recuperer les parametres de recherche avancé 
+		if(request.getParameter("sachatsVentes") != null && !request.getParameter("sachatsVentes").isEmpty()) {
+			sachatsVentes = request.getParameter("sachatsVentes");
+		}
+		
 		if(request.getParameter("scategorie") != null && !request.getParameter("scategorie").isEmpty()) {
 		no_categorie = Integer.parseInt(request.getParameter("scategorie"));
 		request.setAttribute("no_categorie", no_categorie);
@@ -84,35 +93,62 @@ public class ServletPageAcceuil extends HttpServlet {
 					System.out.println("beug categorie");
 				}
 		
-		try {
-			if(keyword == null && no_categorie == 0) {
-				listeArticleVendu = articleVenduManager.selectAllArticle();
-			}else if(keyword == null && no_categorie != 0){
-				listeArticleVendu = articleVenduManager.selectByCategorie(no_categorie);
-			}else if(keyword != null && no_categorie ==0) {
-				listeArticleVendu = articleVenduManager.selectByArticle(keyword);
-			}else if(keyword !=null && no_categorie !=0) {
-				listeArticleVendu = articleVenduManager.selectByArticleAndCategorie(keyword, no_categorie);
-			}
-			
-			if(!listeArticleVendu.isEmpty()) {
-				for(ArticleVendu a : listeArticleVendu) {
-					Enchere enchere = null;
-					Utilisateur user = null;
-					LocalDate date = a.getDate_fin_encheres().toLocalDate();
-					LocalTime heure = a.getDate_fin_encheres().toLocalTime();
-					StringBuffer datefmt = new StringBuffer();
-					datefmt.append(date.toString()).append(" ").append(heure.toString());
-					enchere = enchereManager.derniereEnchere(a);
-					user = utilisateurManager.postUser(a.getNo_utilisateur());
-					listeArticle.add(new ArticleEnVente(a, enchere, user, datefmt.toString()));
+		//affichage article sans recherche achats/mesventes
+		if(sachatsVentes == null || sachatsVentes.equals("enchereouverte")) {
+			try {
+				if(keyword == null && no_categorie == 0) {
+					listeArticleVendu = articleVenduManager.selectAllArticle();
+				}else if(keyword == null && no_categorie != 0){
+					listeArticleVendu = articleVenduManager.selectByCategorie(no_categorie);
+				}else if(keyword != null && no_categorie ==0) {
+					listeArticleVendu = articleVenduManager.selectByArticle(keyword);
+				}else if(keyword !=null && no_categorie !=0) {
+					listeArticleVendu = articleVenduManager.selectByArticleAndCategorie(keyword, no_categorie);
 				}
+				
+				if(!listeArticleVendu.isEmpty()) {
+					for(ArticleVendu a : listeArticleVendu) {
+						Enchere enchere = null;
+						Utilisateur user = null;
+						LocalDate date = a.getDate_fin_encheres().toLocalDate();
+						LocalTime heure = a.getDate_fin_encheres().toLocalTime();
+						StringBuffer datefmt = new StringBuffer();
+						datefmt.append(date.toString()).append(" ").append(heure.toString());
+						enchere = enchereManager.derniereEnchere(a);
+						user = utilisateurManager.postUser(a.getNo_utilisateur());
+						listeArticle.add(new ArticleEnVente(a, enchere, user, datefmt.toString()));
+					}
 			}
-			
-			
-			request.setAttribute("listeArticle", listeArticle);
-		}catch (BLLException e) {
-			System.out.println("bugArticle");
+					
+				request.setAttribute("listeArticle", listeArticle);
+			}catch (BLLException e) {
+				System.out.println("bugArticle");
+			}
+		} else if (sachatsVentes.equals("ventenondebutees")) {
+			try {
+				listeArticleVendu = articleVenduManager.selectAllArticleVenteNonDebutee(myUser.getNo_utlisateur());
+
+				
+				if(!listeArticleVendu.isEmpty()) {
+					for(ArticleVendu a : listeArticleVendu) {
+						Enchere enchere = null;
+						Utilisateur user = null;
+						LocalDate date = a.getDate_fin_encheres().toLocalDate();
+						LocalTime heure = a.getDate_fin_encheres().toLocalTime();
+						StringBuffer datefmt = new StringBuffer();
+						datefmt.append(date.toString()).append(" ").append(heure.toString());
+						enchere = enchereManager.derniereEnchere(a);
+						user = utilisateurManager.postUser(a.getNo_utilisateur());
+						listeArticle.add(new ArticleEnVente(a, enchere, user, datefmt.toString()));
+					}
+			}
+					
+				request.setAttribute("listeArticle", listeArticle);
+			}catch (BLLException e) {
+				System.out.println("bugArticle");
+			}
+		}else if (sachatsVentes.equals("vente")) {
+			//TODO RECUPERER LES INFOS POUR SELECTION ACHATS
 		}
 
 		this.getServletContext().getRequestDispatcher("/WEB-INF/accueil.jsp").forward(request, response);

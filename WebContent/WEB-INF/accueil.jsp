@@ -29,27 +29,25 @@
 							
 							<c:if test="${!empty sessionScope.myUser}">
 								<div class="col-6 mt-3">
-									<input class="form-check-input" type="radio" name="sachatsVentes" value="achat" id="radioAchat">
-									<label for="radioAchat">Achats</label> <br>
+									<p>Achats</p> 
 									<div class="ms-3">
-										<input class="form-check-input" type="radio" name="sachat" value="" id="checkAchat1">
+										<input class="form-check-input" type="radio" name="sachatsVentes" value="enchereouverte" id="checkAchat1">
 										<label for="checkAchat1">Enchères ouvertes</label> <br>
-										<input class="form-check-input" type="radio" name="sachat" value="" id="checkAchat2">
+										<input class="form-check-input" type="radio" name="sachatsVentes" value="mesenchere" id="checkAchat2">
 										<label for="checkAchat2">Mes enchères</label> <br>
-										<input class="form-check-input" type="radio" name="sachat" value="" id="checkAchat3">
+										<input class="form-check-input" type="radio" name="sachatsVentes" value="mesencheresremportees" id="checkAchat3">
 										<label for="checkAchat3">Mes enchères remportées</label> <br>
 									</div>
 								</div>
 								<div class="col-6 mt-3">
-									<input class="form-check-input" type="radio" name="sachatsVentes" value="vente" id="radioVente">
-									<label for="radioVente">Mes Ventes</label>
+									<p>Mes Ventes</p>
 									<div class="ms-3">
-										<input class="form-check-input borderCheckBox" type="radio" name="svente" value="" id="checkVente1">
-										<label for="checkVente1">Enchères ouvertes</label> <br>
-										<input class="form-check-input borderCheckBox" type="radio" name="svente" value="" id="checkVente2">
-										<label for="checkVente2">Mes enchères</label> <br>
-										<input class="form-check-input borderCheckBox" type="radio" name="svente" value="" id="checkVente3">
-										<label for="checkVente3">Mes enchères remportées</label> <br>
+										<input class="form-check-input borderCheckBox" type="radio" name="sachatsVentes" value="mesventeencours" id="checkVente1">
+										<label for="checkVente1">Mes ventes en cours</label> <br>
+										<input class="form-check-input borderCheckBox" type="radio" name="sachatsVentes" value="ventenondebutees" id="checkVente2">
+										<label for="checkVente2">Ventes non débutées</label> <br>
+										<input class="form-check-input borderCheckBox" type="radio" name="sachatsVentes" value="ventesterminees" id="checkVente3">
+										<label for="checkVente3">Ventes terminées</label> <br>
 									</div>
 								</div>
 							</c:if>

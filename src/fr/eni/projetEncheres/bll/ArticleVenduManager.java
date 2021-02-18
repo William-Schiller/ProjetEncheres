@@ -83,6 +83,28 @@ public class ArticleVenduManager {
 	 * Recherche par no_article
 	 * 
 	 */
+	public List<ArticleVendu> selectAllArticleVenteNonDebutee(int idUtilisateur) throws BLLException {
+		listError = new ArrayList<>();
+		List<ArticleVendu> list = new ArrayList<>();
+		
+		try {
+			list = articleVenduDAO.selectAllBeforeDate(idUtilisateur);
+		} catch (DALException e) {
+			throw new BLLException("echec method selectAllArticleVenteNonDebutee");
+		}
+		
+		if(list.isEmpty()) {
+			listError.add("Aucun article trouvé");
+		}
+		
+		return list;
+	}
+	
+	/**
+	 * @author :ws 
+	 * Recherche par no_article
+	 * 
+	 */
 	public ArticleVendu selectArticleById(int idArticle) throws BLLException {
 		listError = new ArrayList<>();
 		ArticleVendu article = null;
