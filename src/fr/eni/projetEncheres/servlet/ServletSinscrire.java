@@ -34,7 +34,8 @@ public class ServletSinscrire extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+    	request.setCharacterEncoding("UTF-8");
+		request.setAttribute("title", getPageName(request, response)); 
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/sinscrire.jsp");
 		dispatcher.forward(request, response);
@@ -43,6 +44,7 @@ public class ServletSinscrire extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
+		request.setAttribute("title", getPageName(request, response)); 
 		
 		List<String> listeErreurs = new ArrayList<>();
 		
@@ -148,4 +150,26 @@ public class ServletSinscrire extends HttpServlet {
 		
 	}
 
+	/**
+	 * @author : ws
+	 * Recuperer le nom de la page sur un format classique
+	 */
+	protected String getPageName(HttpServletRequest request, HttpServletResponse response) {
+		String pageName = request.getServletPath().replaceAll("/.", String.valueOf(request.getServletPath().charAt(1)).toUpperCase());
+		boolean check = false;
+		
+		while(!check) {
+			for(int i=1; i<= pageName.length()-1; i++) {
+				if( (pageName.charAt(i-1) >= 'a' && pageName.charAt(i-1) <= 'z') && (pageName.charAt(i) >= 'A' && pageName.charAt(i) <= 'Z') ) {
+					pageName = pageName.substring(0, i) + " " + pageName.substring(i, pageName.length());
+				break;
+				}
+				if(i == pageName.length()-1) {
+					check =true;
+				}
+			}
+		}
+		
+		return pageName;
+	}
 }
